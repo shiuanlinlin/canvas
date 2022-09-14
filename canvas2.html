@@ -76,6 +76,7 @@
             //長條圖的寬度
             var fillwidth = (Number(xwidth) / categoryArray.length) - 10;
             let y = Number(xheight/100);
+            let h = Number(xheight/10);
 
             ctx.fillStyle = '#FFF';
             ctx.fillRect (0, xSpace, Number(xwidth)+(xSpace*2), xheight);
@@ -93,7 +94,7 @@
 
             // y 軸
             ctx.fillStyle = "rgb(206,206,206)";
-            ctx.fillRect (xSpace, 40, 1, xheight - 40);
+            ctx.fillRect (xSpace, h, 1, xheight - h);
             // X 軸
             ctx.fillStyle = "rgb(206,206,206)";
             ctx.fillRect (xSpace, xheight, xwidth, 1); // fillRect(x, y, width, height)
