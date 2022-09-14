@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="350" height="300">
+        Sorry, your browser doesn't support the <canvas> element.
+    </canvas>
+    <script>
+        var _canvas = document.getElementById('canvas');
+
+        //判斷是否支援
+        if (_canvas.getContext) {
+            var ctx = _canvas.getContext('2d');
+            draw()
+        }else {
+            alert('your browser not support canvas')
+            //如果不支援
+        }
+        function draw(){
+            //畫一個填滿色彩的正方形
+            //ctx.fillStyle = "rgb(200,0,0)"; //正方形的填滿色彩
+            //ctx.fillRect (20, 20, 155, 105); //繪製一個填滿色彩的正方形 fillRect(x, y, width, height)
+            //ctx.clearRect(20, 20, 110, 110); //摟空一個正方形區域
+
+            //共用左側基礎點
+            var xSpace = 15; // x軸左側的起始空白
+            var yTextColor = 'rgb(102,102,102)';
+
+            var ySpace = 25; // y軸虛線的 y座標
+            var yheight = 225; // y軸虛線的總長度
+
+            //長條圖的寬度
+            var fillwidth = 40;
+
+            // 虛線圖總寬度 && X 軸總寬度
+            var xWidth = 250;
+            // 總高度
+            var yH = 250;
+
+            // X 軸 : 邊距 12 + 寬度 40 + 距離 161
+            // y 軸 : 總長 250 - 50高度
+            ctx.fillStyle = "rgb(255,215,120)";
+            ctx.fillRect (205+xSpace, 230, fillwidth, 20);
+            // X 軸 : 邊距 12 + 寬度 40 + 距離 109
+            // y 軸 : 總長 250 - 50高度
+            ctx.fillStyle = "rgb(249 84 116 / 42%)";
+            ctx.fillRect (155+xSpace, 120, fillwidth, 130);
+            // X 軸 : 邊距 12 + 寬度 40 + 距離 57
+            // y 軸 : 總長 250 - 50高度
+            ctx.fillStyle = "rgb(111,205,205)";
+            ctx.fillRect (105+xSpace, 230, fillwidth, 20);
+            // X 軸 : 邊距 12 + 寬度 40 + 距離 5
+            // y 軸 : 總長 250 - 50高度
+            ctx.fillStyle = "rgb(255,215,120)";
+            ctx.fillRect (55+xSpace, 170, fillwidth, 80);
+            // X 軸 : 邊距 10
+            // y 軸 : 總長 250 - 50高度
+            ctx.fillStyle = "rgb(249 84 116 / 42%)";
+            ctx.fillRect (5+xSpace, 200, fillwidth, 50);
+
+            // X 軸虛線 ==
+            var Xborder = 11;
+            for(let i=1; i<Xborder; i++)
+            {
+                ctx.fillStyle = yTextColor;
+                ctx.fillText(100 - i*10, 0, 25*i); //左側刻度
+                ctx.fillStyle = "rgb(163 163 163 / 25%)";
+                ctx.fillRect (xSpace, 25*i, xWidth, 1); // fillRect(x, y, width, height)
+            }
+
+            // y 軸虛線 ==
+            let TextArray = ["A計畫","B計畫","C計畫","D計畫","E計畫"];
+            var Yborder = 6;
+            let j = 1;
+            for(let i=0; i<Yborder; i++)
+            {
+                if(TextArray[i] != null)
+                {
+                    ctx.fillStyle = yTextColor;
+                    ctx.textAlign="center";
+                    ctx.fillText(TextArray[i],40 * j + (j*10) - 10, 262);
+                }
+                var number = 250 - (50*i);
+                ctx.fillStyle = "rgb(163 163 163 / 25%)";
+                ctx.fillRect (number+xSpace, ySpace,  1, yheight);
+                j++;
+            }
+
+            // y 軸
+            ctx.fillStyle = "rgb(206,206,206)";
+            ctx.fillRect (xSpace, 25, 1, yH - 25);
+            // X 軸
+            ctx.fillStyle = "rgb(206,206,206)";
+            ctx.fillRect (xSpace, xWidth, xWidth, 1);
+
+        }
+    </script>
+    <style type="text/css">
+        /* canvas { border: 1px solid rgb(174, 174, 174); } */
+        canvas { margin: 20px; }
+    </style>
+</body>
+</html>
