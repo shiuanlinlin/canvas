@@ -71,11 +71,14 @@
         {
 
             //共用左側基礎點
-            let xSpace = 15; // x軸左側的起始空白
+            let xSpace = 20; // x軸左側的起始空白
             const yTextColor = 'rgb(102,102,102)';
             //長條圖的寬度
             var fillwidth = (Number(xwidth) / categoryArray.length) - 10;
             let y = Number(xheight/100);
+
+            ctx.fillStyle = '#FFF';
+            ctx.fillRect (0, xSpace, Number(xwidth)+(xSpace*2), xheight);
 
             // X 軸虛線 ==
             let Xborder = 11;
@@ -83,7 +86,7 @@
             for(let i=1; i<Xborder; i++)
             {
                 ctx.fillStyle = yTextColor;
-                ctx.fillText(100 - i*10, 0, blankNum*i); //左側刻度
+                ctx.fillText(100 - i*10, 5, blankNum*i); //左側刻度
                 ctx.fillStyle = "rgb(163 163 163 / 25%)";
                 ctx.fillRect (xSpace, blankNum*i, xwidth, 1); // fillRect(x, y, width, height)
             }
@@ -121,6 +124,8 @@
                 ctx.fillStyle = item.color;
                 ctx.fillRect (10+xSpace+x, ( Number(xheight) - Number(item.value*y)), fillwidth, Number(item.value*y));
             });
+
+
         }
 
         const submitBtn = document.querySelector('button[type="submit"]');
