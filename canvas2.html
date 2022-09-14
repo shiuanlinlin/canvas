@@ -335,8 +335,19 @@
     </script>
     <style type="text/css">
         /* canvas { border: 1px solid rgb(174, 174, 174); } */
+        body{
+            overflow: hidden;
+        }
         canvas { margin: 50px 80px; }
         #category img{ display: none; }
+        input[type='number'] {
+            -moz-appearance:textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
     </style>
 </body>
 </html>
