@@ -76,7 +76,7 @@
             //長條圖的寬度
             var fillwidth = (Number(xwidth) / categoryArray.length) - 10;
             let y = Number(xheight/100);
-            let h = Number(xheight/10);
+            let h = Number(xheight/10); // 主要y軸差距
 
             ctx.fillStyle = '#FFF';
             ctx.fillRect (0, xSpace, Number(xwidth)+(xSpace*2), xheight);
@@ -98,8 +98,6 @@
             // X 軸
             ctx.fillStyle = "rgb(206,206,206)";
             ctx.fillRect (xSpace, xheight, xwidth, 1); // fillRect(x, y, width, height)
-
-            console.log(categoryArray);
 
             // X軸文字
             categoryArray.forEach((item,index,arr)=>{
@@ -125,8 +123,6 @@
                 ctx.fillStyle = item.color;
                 ctx.fillRect (10+xSpace+x, ( Number(xheight) - Number(item.value*y)), fillwidth, Number(item.value*y));
             });
-
-
         }
 
         const submitBtn = document.querySelector('button[type="submit"]');
