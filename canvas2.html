@@ -7,6 +7,7 @@
     <title>canvas</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
     <div class="row" id="form">
@@ -183,46 +184,69 @@
                     const xwidthValue = form.querySelector('[name="width"]').value;
                     const xheightValue = form.querySelector('[name="height"]').value;
                     let categorysLists = document.querySelectorAll('[data-category="true"]');
-                    submitBtn.classList.add('d-none');
-                    Clearbtn.classList.remove('d-none');
-                    ClearlocalStorage.classList.remove('d-none');
-
-                    //將欄位鎖住
-                    let inputs = document.querySelectorAll('input[type="text"]');
-                    let inputsNum = document.querySelectorAll('input[type="number"]');
-                    let inputsColor = document.querySelectorAll('input[type="color"]');
-                    let delcategorys = document.querySelectorAll('[data-action="delcategory"]');
-
-                    inputs.forEach(item=>{
-                        item.disabled = true;
-                    });
-
-                    inputsColor.forEach(item=>{
-                        item.disabled = true;
-                    });
-
-                    inputsNum.forEach(item=>{
-                        item.disabled = true;
-                    });
-
-                    delcategorys.forEach(item=>{
-                        item.disabled = true;
-                    });
-
-                    categoryBtn.disabled = true;
 
                     //抓取類別
                     let categoryArray = [];
                     categorysLists.forEach(item =>{
-                        categoryArray.push({'name':item.querySelector('input[type="text"]').value,'color': item.querySelector('input[type="color"]').value,'value': item.querySelector('input[type="number"]').value});
+                        if( item.querySelector('input[type="number"]').value != '' && item.querySelector('input[type="number"]').value > 0 && item.querySelector('input[type="number"]').value < 91)
+                        {
+                            categoryArray.push({'name':item.querySelector('input[type="text"]').value,'color': item.querySelector('input[type="color"]').value,'value': item.querySelector('input[type="number"]').value});
+                        }
                     });
 
-                    if(xwidthValue != "" && xheightValue != "")
+                    //判斷書入的值是否有錯誤
+                    let checkValue =  CheckInput(xwidthValue,xheightValue,categoryArray);
+
+                    if(checkValue)
                     {
-                        let obj = {'xwidth':xwidthValue,'xheight':xheightValue , 'category': categoryArray};
-                        localStorage.setItem('canvas', JSON.stringify(obj));
-                        draw(xwidthValue,xheightValue,categoryArray);
+
+                        submitBtn.classList.add('d-none');
+                        Clearbtn.classList.remove('d-none');
+                        ClearlocalStorage.classList.remove('d-none');
+                        //將欄位鎖住
+                        let inputs = document.querySelectorAll('input[type="text"]');
+                        let inputsNum = document.querySelectorAll('input[type="number"]');
+                        let inputsColor = document.querySelectorAll('input[type="color"]');
+                        let delcategorys = document.querySelectorAll('[data-action="delcategory"]');
+
+                        inputs.forEach(item=>{
+                            item.disabled = true;
+                        });
+
+                        inputsColor.forEach(item=>{
+                            item.disabled = true;
+                        });
+
+                        inputsNum.forEach(item=>{
+                            item.disabled = true;
+                        });
+
+                        delcategorys.forEach(item=>{
+                            item.disabled = true;
+                        });
+
+                        categoryBtn.disabled = true;
+
+
+
+                        if(xwidthValue != "" && xheightValue != "")
+                        {
+                            let obj = {'xwidth':xwidthValue,'xheight':xheightValue , 'category': categoryArray};
+                            localStorage.setItem('canvas', JSON.stringify(obj));
+                            draw(xwidthValue,xheightValue,categoryArray);
+                        }
                     }
+                    else
+                    {
+                        swal({
+                            title: "設定錯誤",
+                            text: "請檢查輸入的資料是否正確!",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        });
+                    }
+
                     break;
                 case 'categoryBtn':
                     //添加
@@ -303,34 +327,20 @@
             }
         });
 
-        // submitBtn.addEventListener('click', event=>{
-        //     const xwidthValue = form.querySelector('[name="width"]').value;
-        //     const xheightValue = form.querySelector('[name="height"]').value;
-        //     submitBtn.classList.add('d-none');
-        //     Clearbtn.classList.remove('d-none');
-        //     ClearlocalStorage.classList.remove('d-none');
-        //     if(xwidthValue != "" && xheightValue != "")
-        //     {
-        //         let obj = {'xwidth':xwidthValue,'xheight':xheightValue};
-        //         localStorage.setItem('canvas', JSON.stringify(obj));
-        //         draw(xwidthValue,xheightValue)
-        //     }
-        // });
 
-        //清除畫布
-        // Clearbtn.addEventListener('click', event=>{
-        //     location.reload();
-        // });
+        //判斷數值是否填寫正確
+        function CheckInput(xwidthValue,xheightValue,categoryArray)
+        {
+            if(xwidthValue != '' && xheightValue != '' && Number(xwidthValue) > 299 && Number(xwidthValue) < 601 && Number(xheightValue) > 299 && Number(xheightValue) < 601 && categoryArray.length > 0)
+            {
+                return true
+            }
+            else
+            {
+                return false
+            }
+        }
 
-        //清除紀錄與畫布
-        // ClearlocalStorage.addEventListener('click', event=>{
-        //     localStorage.removeItem('canvas');
-        //     xwidth.value = '';
-        //     xheight.value = '';
-        //     setTimeout(function(){
-        //         location.reload();
-        //     },100);
-        // });
 
     </script>
     <style type="text/css">
