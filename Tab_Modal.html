@@ -45,6 +45,30 @@
         5.Modal的 <div class="d-none" data-tid="s_t4"> 內容需要新增
         6.需要在全域的Obj取名 {s_t4:key名稱}
         let TabKeyAll = {"s_t1":"s_Building","s_t2":"s_Floor","s_t3":"s_Household","s_t4":"s_Test"};
+        7.每個tap對應的ajax的url
+        let TabKeyUrlAll = {"s_t1":"/test1","s_t2":"/test2","s_t3":"/test3"};
+
+
+        Ajax 傳入的obj介紹
+        {
+            Data: { s_Building: {room_number: '第一期2棟11', house_number: '611', business_number: '211', car_number: '6211'} },
+            Tabhid: "1",
+            Tabsid: "s_t1",
+            Url: "/test1"
+        }
+        解說：
+        {
+            Data: { Tab的名稱 : { 這是input的data-name: '第一期2棟11', 這是input的data-name: '611', 這是input的data-name: '211', 這是input的data-name: '6211'} },
+            Tabhid: 在第幾行,
+            Tabsid: 哪一個Tab,
+            Url: 用來打Ajax的url
+        }
+
+        目前Obj名稱設定的意思：(可自訂)
+        s_Building = 棟
+        s_Floor = 樓
+        s_Household = 戶
+
     -->
 
         <div class="tab-content" id="myTabContent">
@@ -234,6 +258,9 @@
         // 這邊主要在取Obj key 名稱，可以減少進去裡面尋找
         //== 自訂功能 ==//
         let TabKeyAll = {"s_t1":"s_Building","s_t2":"s_Floor","s_t3":"s_Household"};
+        //== 自訂功能 ==//
+        //ajax對應的Url
+        let TabKeyUrlAll = {"s_t1":"/test1","s_t2":"/test2","s_t3":"/test3"};
 
         //Modal js
         $('#s_creationModal').on('show.bs.modal', function (event) {
@@ -348,7 +375,7 @@
                 let Job = {};
                 Job[TabKeyAll[sid]] = st1_array;
                 //寫入共用陣列
-                AllarrayS.push({'Data':Job,'Tabsid':sid,'Tabhid':hid});
+                AllarrayS.push({'Data':Job,'Tabsid':sid,'Tabhid':hid,'Url':TabKeyUrlAll[sid]});
             }
 
             //送入ajax
@@ -358,23 +385,23 @@
 
         function ajax_submit(json)
         {
+            console.log(json);
             $.ajax({
-                url: "",
+                url: json.url,
                 method: "POST",
-                data: json.Data,
+                data: json,
                 success: function (res) {
                     if (res.status == "success") {
+                        UpdatePageS();
                         alert('更新成功');
                     }else{
                         alert('發生錯誤');
                     }
-                    // console.log(res.result);
                 },
                 error: function () {
-                    //alert('存儲失敗');
-                    //alert('更新成功');
-                    //成功後送往資料更新
+                    //測試用
                     UpdatePageS();
+                    alert('存儲失敗');
 
                 },
             });
