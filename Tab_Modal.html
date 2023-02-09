@@ -29,6 +29,9 @@
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="free-tab" data-toggle="tab" href="#free" role="tab" aria-controls="free" aria-selected="false">test</a>
         </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="test2-tab" data-toggle="tab" href="#test2-tab" role="tab" aria-controls="test2-tab" aria-selected="false">test</a>
+        </li>
     </ul>
 
     <!--
@@ -39,6 +42,14 @@
         3.送到Modal的資料需要知道資料是誰，所以需要知道欄位的名稱(可在ajax處理json的時候,寫好順序 ex: {'t1': '棟號'} obj['t1'] = 棟號)
         4.每一行的tr需要有標示目前的是第幾行，用來存擋時回寫新資料 data-hid="1"
         備註：JS可搜尋 "自訂功能"四個字找到需要修改的部分，其他就可以不用修改使用
+
+        新增項目需要修改的地方：
+        1.nav-item的 id="free-tab"、 href="#free"、aria-controls="free"
+        2.tab-pane的 id="free" 、 aria-labelledby="free-tab"
+        3.tab-pane內 table 的 button， data-id="s_t4"
+        4.Modal的 <div class="d-none" data-tid="s_t4"> 內容需要新增
+        5.需要在全域的Obj取名 {s_t4:key名稱}
+        let TabKeyAll = {"s_t1":"s_Building","s_t2":"s_Floor","s_t3":"s_Household","s_t4":"s_Test"};
     -->
 
         <div class="tab-content" id="myTabContent">
@@ -142,7 +153,7 @@
                 <!-- 戶  end -->
             </div>
             <div class="tab-pane fade" id="free" role="tabpanel" aria-labelledby="free-tab">
-                <!-- 戶 -->
+                <!-- test -->
                 <table class="table" data-id="s_t4">
                     <thead>
                     <tr>
@@ -164,7 +175,32 @@
                         </tr>
                     </tbody>
                 </table>
-                <!-- 戶  end -->
+                <!-- test  end -->
+            </div>
+            <div class="tab-pane fade" id="test2" role="tabpanel" aria-labelledby="test2-tab">
+                <!-- test2 -->
+                <table class="table" data-id="s_t5">
+                    <thead>
+                    <tr>
+                        <th scope="col">户</th>
+                        <th scope="col">面积</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-hid="1">
+                            <th scope="row">1栋1樓001</th>
+                            <td>10.00</td>
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal"  data-h1="1栋1樓001"  data-h2="10.00"  data-id="s_t5" data-title="test2編輯">編輯</button></td>
+                        </tr>
+                        <tr data-hid="2">
+                            <th scope="row">1栋1樓002</th>
+                            <td>12.00</td>
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal" data-h1="1栋1樓002"  data-h2="12.00"  data-id="s_t5" data-title="test2編輯">編輯</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- test2  end -->
             </div>
         </div>
         <!-- tab-content end -->
@@ -244,6 +280,17 @@
                   <input type="number" class="form-control" data-name="acreage_number">
                 </div>
             </div>
+            <!-- Test的資料 -->
+            <div class="d-none" data-tid="s_t5">
+                <div class="form-group">
+                  <label>戶</label>
+                  <input type="text" class="form-control" data-name="floor_number">
+                </div>
+                <div class="form-group">
+                  <label>面积</label>
+                  <input type="number" class="form-control" data-name="acreage_number">
+                </div>
+            </div>
 
             <!-- modal-body Content end -->
             </div>
@@ -256,11 +303,14 @@
       </div>
 
       <script>
-        //Ｔab數量
+        //Ｔab數量(可設定數量)
         let TabNumber = 10;
         //要送出與更新頁面的資料
         let AllarrayS = [];
-        //共用Tab key設定 s_t1
+        //共用Tab key設定
+        // s_t1 表示頁面上有幾個Tab
+        // 這邊主要在取Obj key 名稱，可以減少進去裡面尋找
+        //== 自訂功能 ==//
         let TabKeyAll = {"s_t1":"s_Building","s_t2":"s_Floor","s_t3":"s_Household","s_t4":"s_Test"};
 
         //Modal js
@@ -372,7 +422,6 @@
                 });
                 //整理資料
                 AllarrayS = [];
-                //== 自訂功能 ==//
                 //== 依據Tab取名 ==//
                 let Job = {};
                 Job[TabKeyAll[sid]] = st1_array;
