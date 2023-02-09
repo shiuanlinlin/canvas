@@ -26,6 +26,9 @@
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="household-tab" data-toggle="tab" href="#household" role="tab" aria-controls="household" aria-selected="false">户</a>
         </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="Free-tab" data-toggle="tab" href="#Free" role="tab" aria-controls="household" aria-selected="false">233</a>
+        </li>
     </ul>
 
     <!--
@@ -40,9 +43,10 @@
         新增項目需要修改的地方：
         1.nav-item的 id="free-tab"、 href="#free"、aria-controls="free"
         2.tab-pane的 id="free" 、 aria-labelledby="free-tab"
-        3.tab-pane內 table 的 button， data-id="s_t4"
-        4.Modal的 <div class="d-none" data-tid="s_t4"> 內容需要新增
-        5.需要在全域的Obj取名 {s_t4:key名稱}
+        3. tab-pane內 table 的 data-id="s_t4"
+        4.table 的 button， data-id="s_t4"
+        5.Modal的 <div class="d-none" data-tid="s_t4"> 內容需要新增
+        6.需要在全域的Obj取名 {s_t4:key名稱}
         let TabKeyAll = {"s_t1":"s_Building","s_t2":"s_Floor","s_t3":"s_Household","s_t4":"s_Test"};
     -->
 
@@ -146,6 +150,31 @@
                 </table>
                 <!-- 戶  end -->
             </div>
+            <div class="tab-pane fade" id="Free" role="tabpanel" aria-labelledby="Free-tab">
+                <!-- 戶 -->
+                <table class="table" data-id="s_t4">
+                    <thead>
+                    <tr>
+                        <th scope="col">户</th>
+                        <th scope="col">面积</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-hid="1">
+                            <th scope="row">1栋1樓001</th>
+                            <td>10.00</td>
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal"  data-h1="1栋1樓001"  data-h2="10.00"  data-id="s_t4" data-title="111">編輯</button></td>
+                        </tr>
+                        <tr data-hid="2">
+                            <th scope="row">1栋1樓002</th>
+                            <td>12.00</td>
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal" data-h1="1栋1樓002"  data-h2="12.00"  data-id="s_t4" data-title="户編111輯">編輯</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- 戶  end -->
+            </div>
         </div>
         <!-- tab-content end -->
     </div>
@@ -213,6 +242,16 @@
                   <input type="number" class="form-control" data-name="acreage_number">
                 </div>
             </div>
+            <div class="d-none" data-tid="s_t4">
+                <div class="form-group">
+                  <label>戶</label>
+                  <input type="text" class="form-control" data-name="floor_number">
+                </div>
+                <div class="form-group">
+                  <label>面积</label>
+                  <input type="number" class="form-control" data-name="acreage_number">
+                </div>
+            </div>
             <!-- modal-body Content end -->
             </div>
             <div class="modal-footer">
@@ -232,7 +271,7 @@
         // s_t1 表示頁面上有幾個Tab
         // 這邊主要在取Obj key 名稱，可以減少進去裡面尋找
         //== 自訂功能 ==//
-        let TabKeyAll = {"s_t1":"s_Building","s_t2":"s_Floor","s_t3":"s_Household"};
+        let TabKeyAll = {"s_t1":"s_Building","s_t2":"s_Floor","s_t3":"s_Household","s_t4":"s_Fousehold"};
 
         //Modal js
         $('#s_creationModal').on('show.bs.modal', function (event) {
