@@ -425,24 +425,10 @@
                         let Td = Tr[Number(tableH)].querySelectorAll('td');
                         let TdButton = Td[Td.length -1].querySelector('button');
                         let newjob = {};
-                        //== 依據Tab取名，這裡為自訂非公用功能 ==//
-                        //== 自訂功能 ==//
-                        switch(sid)
-                        {
-                            case "s_t1":
-                                newjob = AllarrayS[0].Data.s_Building;
-                                break;
-                            case "s_t2":
-                                newjob = AllarrayS[0].Data.s_Floor;
-                                break;
-                            case "s_t3":
-                                newjob = AllarrayS[0].Data.s_Household;
-                                break;
-                            case "s_t4":
-                                newjob = AllarrayS[0].Data.s_Test;
-                                break;
-                        }
-                        console.log(newjob);
+                        //== 依據Tab取名==//
+                        //將資料寫進去空白Obj裏面
+                        newjob = AllarrayS[0].Data[TabKeyAll[sid]];
+                        //只有取值不取key
                         let newValue = Object.values(newjob);
                         //將資料寫回區表格裡面
                         Th.textContent = newValue[0];
