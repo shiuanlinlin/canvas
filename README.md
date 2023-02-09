@@ -1,4 +1,4 @@
 # canvas
-直線圖 canvas 
+長條圖 canvas
 
 
