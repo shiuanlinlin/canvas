@@ -431,11 +431,16 @@
             let sid = AllarrayS[0].Tabsid;
             let tableTag = document.querySelector('table[data-id="'+sid+'"]') ? document.querySelector('table[data-id="'+sid+'"]') : false;
             let tableH = AllarrayS[0].Tabhid;
+            let did = AllarrayS[0].Tabdid;
             if(tableTag)
             {
-                let Tr = tableTag.querySelectorAll('tr');
-                let Th = Tr[Number(tableH)].querySelector('th')
-                let Td = Tr[Number(tableH)].querySelectorAll('td');
+                let Tr = tableTag.querySelector('[data-did="'+did+'"]') != false ? tableTag.querySelector('[data-did="'+did+'"]') : false;
+                if(!Tr)
+                {
+                    alert('回寫資料 UpdatePageS()，無法取得did，請檢查原始碼Tr是否有 data-did');
+                }
+                let Th = Tr.querySelector('th')
+                let Td = Tr.querySelectorAll('td');
                 let TdButton = Td[Td.length -1].querySelector('button');
                 let newjob = {};
                 //== 依據Tab取名==//
