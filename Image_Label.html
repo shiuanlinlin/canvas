@@ -34,6 +34,11 @@
                 <option value="90">A棟</option>
                 <option value="98">B棟</option>
             </select>
+            <select class="form-control" id="s_SelectFloorS">
+                <option>請選擇樓層</option>
+                <option value="30">1樓</option>
+                <option value="10">10樓</option>
+            </select>
             <!-- 上下左右有8px空白邊距 -->
             <!-- 靠class 添加 active 顯示 -->
             <div class="s_img_labeBox active" data-Imgid="90">
@@ -49,6 +54,20 @@
                 <span data-simg="imag_labelspan" style="top:300px; left:320px;">三樓</span>
                 <span data-simg="imag_labelspan" style="top:400px; left:100px;">飛來飛去～</span>
                 <img src="file-name1.png" alt="">
+            </div>
+            <div class="s_img_labeBox" data-Imgid="10">
+                <span data-simg="imag_labelspan" style="top:100px; left:400px;">一樓</span>
+                <span data-simg="imag_labelspan" style="top:20px; left:300px;">二樓</span>
+                <span data-simg="imag_labelspan" style="top:300px; left:320px;">三樓</span>
+                <span data-simg="imag_labelspan" style="top:400px; left:100px;">飛來飛去～</span>
+                <img src="b1.png" alt="">
+            </div>
+            <div class="s_img_labeBox" data-Imgid="30">
+                <span data-simg="imag_labelspan" style="top:100px; left:400px;">一樓</span>
+                <span data-simg="imag_labelspan" style="top:20px; left:300px;">二樓</span>
+                <span data-simg="imag_labelspan" style="top:300px; left:320px;">三樓</span>
+                <span data-simg="imag_labelspan" style="top:400px; left:100px;">飛來飛去～</span>
+                <img src="b2.png" alt="">
             </div>
         </div>
     </div>
@@ -83,8 +102,6 @@
             {
                 console.error("取得 s_img_labeBox 的 data-Imgid 失敗");
             }
-            console.log(target);
-            console.log(value);
         });
 
         //監聽
