@@ -11,7 +11,7 @@
     <!-- 網站用版本 4.6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
-        .s_img_labeBox{ width: 700px; margin: 0 auto; position: relative;}
+        .s_img_labeBox{ width: 700px; padding:8px; margin: 0 auto; position: relative;}
         .s_img_labeBox img{ width: 100%; }
         .s_img_labeBox span { display: inline-block; padding: 2px 10px; border: 2px solid rgb(227, 76, 0); background: rgb(227, 76, 0);  color: rgb(255, 255, 255); font-size: 14px; position: absolute; cursor: pointer;}
         .s_img_labeBox span.active{border: 2px dashed #000;}
@@ -20,7 +20,7 @@
 </head>
 <body>
     <div class="container">
-         <!-- 上下左右 -->
+         <!-- 上下左右 按鈕-->
         <div class="s_ImageLabels" data-imgid="s_ImageLabels">
             <div class="s_BtnGroud my-2">
                 <button type="button" class="btn btn-light text-secondary" data-simg="left"><i class="fa-solid fa-left-long" data-simg="left"></i></button>
@@ -28,23 +28,31 @@
                 <button type="button" class="btn btn-light text-secondary" data-simg="down"><i class="fa-solid fa-down-long" data-simg="down"></i></button>
                 <button type="button" class="btn btn-light text-secondary" data-simg="right"><i class="fa-solid fa-right-long" data-simg="right"></i></button>
             </div>
-            <div class="s_img_labeBox" data-imgid="s_img_labeBox">
-                <span data-simg="imag_labelspan" style="top:0px; left:10px;">一樓</span>
-                <span data-simg="imag_labelspan" style="top:50px; left:0px;">二樓</span>
-                <span data-simg="imag_labelspan" style="top:100px; left:0px;">三樓</span>
+            <!-- 上下左右有8px空白邊距 -->
+            <div class="s_img_labeBox active" data-imgid="s_img_labeBox">
+                <span data-simg="imag_labelspan" style="top:600px; left:600px;">一樓</span>
+                <span data-simg="imag_labelspan" style="top:50px; left:100px;">二樓</span>
+                <span data-simg="imag_labelspan" style="top:100px; left:50px;">三樓</span>
+                <span data-simg="imag_labelspan" style="top:500px; left:50px;">飛來飛去～</span>
                 <img src="file-name.png" alt="">
             </div>
         </div>
     </div>
     <script>
+        //抓取按鈕(上下左右)
         const s_ImageLabels = document.querySelector('[data-imgid="s_ImageLabels"]');
+        //抓取圖片外框的div
         const s_img_labeBox = document.querySelector('[data-imgid="s_img_labeBox"]');
+        //抓取圖片
+        const s_img_labeBoxImg = s_img_labeBox.querySelector('img');
+        //監聽
         s_ImageLabels.addEventListener("click",(event)=>{
             let target = event.target;
             let simg = ("simg" in target.dataset) ? target.dataset.simg : false;
-            console.log(simg);
+            //console.log(simg);
             switch(simg)
             {
+                //判斷被點擊的標籤span
                 case "imag_labelspan":
                     if(target.dataset.simg == "imag_labelspan")
                     {   //先清除之前被選取的標籤
@@ -55,20 +63,101 @@
                         target.classList.add('active');
                     }
                     break;
+                //上下左右移動
                 case "right":
                         //找出被選取的span
-                        let s_Allspan = s_ImageLabels.querySelectorAll('span');
-                        let s_Span = document.querySelector('.s_img_labeBox span.active') != null ? document.querySelector('.s_img_labeBox span.active') : false;
-                        if(s_Span && (s_Span.style.left != "" || s_Span.style.left !=null))
-                        {
-                            let oldleft = s_Span.style.left;
-                            let oldleftnumber = oldleft.split('px');
-                            let newleft = Number(oldleftnumber[0]) + 10;
-                            s_Span.style.left = newleft + "px";
-                        }
+                        SmoveImageLabel(s_ImageLabels,"right");
+                    break;
+                case "left":
+                        //找出被選取的span
+                        SmoveImageLabel(s_ImageLabels,"left");
+                    break;
+                case "up":
+                        //找出被選取的span
+                        SmoveImageLabel(s_ImageLabels,"up");
+                    break;
+                case "down":
+                        //找出被選取的span
+                        SmoveImageLabel(s_ImageLabels,"down");
                     break;
             }
         });
+
+        function SmoveImageLabel(s_ImageLabels,status)
+        {
+            let s_Allspan = s_ImageLabels.querySelectorAll('span');
+            let s_Span = document.querySelector('.s_img_labeBox span.active') != null ? document.querySelector('.s_img_labeBox span.active') : false;
+            //圖片外框寬度
+            let ImageWidths = s_img_labeBox.offsetWidth;
+            let ImageHeight = s_img_labeBoxImg.offsetHeight;
+            // console.log(ImageWidths);
+            // console.log(ImageHeight);
+            //出現錯誤跳出 function
+            if(!s_Span)
+            {
+                alert("未選取標籤！");
+                return false;
+            }
+
+            //向右
+            if(status == "right")
+            {
+                if(s_Span.style.left != "" || s_Span.style.left !=null)
+                {
+                    let s_SpanWidth = s_Span.offsetWidth;
+                    //console.log(s_SpanWidth);
+                    let oldleft = s_Span.style.left;
+                    let oldleftnumber = oldleft.split('px');
+                    let newleft = Number(oldleftnumber[0]) + 10;
+                    //console.log(Number(ImageWidths - s_SpanWidth));
+                    s_Span.style.left = (newleft >= Number(ImageWidths - s_SpanWidth) ? Number(oldleftnumber[0]) : newleft) + "px";
+                }
+            }
+            //向左
+            if(status == "left")
+            {
+                if(s_Span.style.left != "" || s_Span.style.left !=null)
+                {
+                    let s_SpanWidth = s_Span.offsetWidth;
+                    let oldleft = s_Span.style.left;
+                    let oldleftnumber = oldleft.split('px');
+                    let newleft = Number(oldleftnumber[0]) - 10;
+                    s_Span.style.left = (newleft <= 8 ) ? 8  : newleft + "px";
+                }
+            }
+
+            //向上
+            if(status == "up")
+            {
+                if(s_Span.style.top != "" || s_Span.style.top !=null)
+                {
+                    let oldtop = s_Span.style.top;
+                    let oldtopnumber = oldtop.split('px');
+                    let newtop = Number(oldtopnumber[0]) - 10;
+                    s_Span.style.top = (newtop <= 8 ) ? 8  : newtop + "px";
+                }
+            }
+
+            //向下
+            if(status == "down")
+            {
+                if(s_Span.style.top != "" || s_Span.style.top !=null)
+                {
+                    let s_SpanHeight = s_Span.offsetHeight;
+                    let oldtop = s_Span.style.top;
+                    let oldtopnumber = oldtop.split('px');
+                    let newtop = Number(oldtopnumber[0]) + 10;
+                    s_Span.style.top = (newtop >= (ImageHeight - (s_SpanHeight/2)) ) ?  ImageHeight : newtop + "px";
+                }
+            }
+
+            //移除監聽
+            s_ImageLabels.removeEventListener("click",SmoveImageLabel);
+
+
+        }
+
+
     </script>
 </body>
 </html>
