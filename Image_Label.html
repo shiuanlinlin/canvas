@@ -63,11 +63,16 @@
         const s_img_labeBoxImg = s_img_labeBox.querySelector('img');
         //選單開啟對應的圖片
         const s_SelectImageS = document.getElementById('s_ImageLabelAll');
+        //切換棟數
         s_SelectImageS.addEventListener('change',(event)=>{
             let target = event.target;
             let value = target.value;
             let AllImgBoXs = document.querySelectorAll('.s_img_labeBox');
+            let AllLabelSpans = document.querySelectorAll('[data-simg="imag_labelspan"]');
             AllImgBoXs.forEach(item=>{
+                item.classList.remove('active');
+            });
+            AllLabelSpans.forEach(item=>{
                 item.classList.remove('active');
             });
             if(document.querySelector('[data-Imgid="'+value+'"]'))
