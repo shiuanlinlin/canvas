@@ -99,15 +99,19 @@
                             *注意這邊 Tab有增加或減少都要處理一下，下方 Modal 與 js資料
 
                             data-title="棟編輯" 顯示Modal的標題
+
+                            data-hid需要按照順序，對應顯示第幾行
+
+                            data-did表示資料庫的id，只做傳送給資料庫的id，js不做任何修改
                          -->
-                        <tr data-hid="1">
+                        <tr data-hid="1" data-did="93">
                             <th scope="row">第一期一棟</th>
                             <td>9</td>
                             <td>12</td>
                             <td>1</td>
                             <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal"  data-h1="第一期一棟"  data-h2="9" data-h3="12" data-h4="1" data-id="s_t1" data-title="棟編輯">編輯</button></td>
                         </tr>
-                        <tr data-hid="2">
+                        <tr data-hid="2" data-did="90">
                             <th scope="row">第一期2棟</th>
                             <td>6</td>
                             <td>2</td>
@@ -130,13 +134,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr data-hid="1">
+                        <tr data-hid="1" data-did="9">
                             <th scope="row">1樓</th>
                             <td>30.00</td>
                             <td>3</td>
                             <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal"  data-h1="1樓"  data-h2="30.00" data-h3="3" data-id="s_t2" data-title="樓編輯">編輯</button></td>
                         </tr>
-                        <tr data-hid="2">
+                        <tr data-hid="2" data-did="8">
                             <th scope="row">2樓</th>
                             <td>30.00</td>
                             <td>4</td>
@@ -157,12 +161,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr data-hid="1">
+                        <tr data-hid="1" data-did="3">
                             <th scope="row">1栋1樓001</th>
                             <td>10.00</td>
                             <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal"  data-h1="1栋1樓001"  data-h2="10.00"  data-id="s_t3" data-title="户編輯">編輯</button></td>
                         </tr>
-                        <tr data-hid="2">
+                        <tr data-hid="2" data-did="1">
                             <th scope="row">1栋1樓002</th>
                             <td>12.00</td>
                             <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal" data-h1="1栋1樓002"  data-h2="12.00"  data-id="s_t3" data-title="户編輯">編輯</button></td>
@@ -275,6 +279,11 @@
             console.log('Tab id :'+Tabid);
             console.log(document.querySelector('[data-tid="'+Tabid+'"]'));
 
+            //== 取得 data-did ==//
+            let Tab_didTag = event.relatedTarget.parentElement != false ?  (event.relatedTarget.parentElement.parentElement != false ? event.relatedTarget.parentElement.parentElement : false ) : false;
+            let Tab_did = Tab_didTag !=false ? (Tab_didTag.dataset.did !=false ? Tab_didTag.dataset.did : false ) : false;
+            console.log('Tab_did :'+Tab_did);
+
             //== 取得目前第幾行 有順序問題不可以移動編輯按鈕==//
             let Tabhid = false;
             if(event.relatedTarget.parentElement.parentElement)
@@ -284,7 +293,6 @@
                 //取得 data-hid 的值
                 Tabhid = TabTr.dataset.hid ? TabTr.dataset.hid : false;
             }
-
 
             //== 判斷Modal顯示的資料 ==//
             if(Tabid != false && document.querySelector('[data-tid="'+Tabid+'"]'))
@@ -336,14 +344,15 @@
             //標題
             modal.find('.modal-title').text(ModalTitle);
              //== 將送出按鈕添加 目前顯示的資料是哪個tab ==//
-            if(Tabid && Tabhid)
+            if(Tabid && Tabhid && Tab_did)
             {
                 modal.find('#s_submit').attr('data-id',Tabid);
                 modal.find('#s_submit').attr('data-hid',Tabhid);
+                modal.find('#s_submit').attr('data-did',Tab_did);
             }
             else
             {
-                console.error("取得列表欄位出錯");
+                console.error("取得列表欄位出錯，data-id、data-hid、Tab_did 取得失敗");
             }
         });
 
@@ -351,10 +360,19 @@
         //儲存按鈕送出
         $('#s_submit').on('click',function(event){
             let target = event.target;
-            //取得 Tab id  與 行數id (用來回寫)
+            //== 取得 Tab id  與 行數id (用來回寫) ==//
             console.log(event);
             let sid = target.dataset.id ? target.dataset.id: false;
             let hid = target.dataset.hid ? target.dataset.hid: false;
+            let did = target.dataset.did ? target.dataset.did: false;
+            console.log("sid :" + sid);
+            console.log("hid :" + hid);
+            console.log("did :" + did);
+            //以下都不可以是false
+            if(!sid && !hid && !did)
+            {
+                alert("取得 sid、hid、did 失敗，請檢查");
+            }
             //Modal id
             let Modal = document.getElementById('s_creationModal');
 
@@ -375,7 +393,7 @@
                 let Job = {};
                 Job[TabKeyAll[sid]] = st1_array;
                 //寫入共用陣列
-                AllarrayS.push({'Data':Job,'Tabsid':sid,'Tabhid':hid,'Url':TabKeyUrlAll[sid]});
+                AllarrayS.push({'Data':Job,'Tabsid':sid,'Tabhid':hid,'Tabdid':did,'Url':TabKeyUrlAll[sid]});
             }
 
             //送入ajax
@@ -411,35 +429,32 @@
         {
             //抓取共用陣列來知道目前更新的是誰
             let sid = AllarrayS[0].Tabsid;
-
-
-                    let tableTag = document.querySelector('table[data-id="'+sid+'"]') ? document.querySelector('table[data-id="'+sid+'"]') : false;
-                    let tableH = AllarrayS[0].Tabhid;
-                    if(tableTag)
-                    {
-                        let Tr = tableTag.querySelectorAll('tr');
-                        console.log(Tr[Number(tableH)]);
-                        let Th = Tr[Number(tableH)].querySelector('th')
-                        let Td = Tr[Number(tableH)].querySelectorAll('td');
-                        let TdButton = Td[Td.length -1].querySelector('button');
-                        let newjob = {};
-                        //== 依據Tab取名==//
-                        //將資料寫進去空白Obj裏面
-                        newjob = AllarrayS[0].Data[TabKeyAll[sid]];
-                        //只有取值不取key
-                        let newValue = Object.values(newjob);
-                        //將資料寫回區表格裡面
-                        Th.textContent = newValue[0];
-                        for(let i=0; i<(newValue.length - 1);i++)
-                        {
-                            Td[i].textContent = newValue[i+1];
-                        }
-                        //修改按鈕上的欄位
-                        for(let i=0; i<=newValue.length;i++)
-                        {
-                            TdButton.dataset['h'+Number(i+1)] = newValue[i];
-                        }
-                    }
+            let tableTag = document.querySelector('table[data-id="'+sid+'"]') ? document.querySelector('table[data-id="'+sid+'"]') : false;
+            let tableH = AllarrayS[0].Tabhid;
+            if(tableTag)
+            {
+                let Tr = tableTag.querySelectorAll('tr');
+                let Th = Tr[Number(tableH)].querySelector('th')
+                let Td = Tr[Number(tableH)].querySelectorAll('td');
+                let TdButton = Td[Td.length -1].querySelector('button');
+                let newjob = {};
+                //== 依據Tab取名==//
+                //將資料寫進去空白Obj裏面
+                newjob = AllarrayS[0].Data[TabKeyAll[sid]];
+                //只有取值不取key
+                let newValue = Object.values(newjob);
+                //將資料寫回區表格裡面
+                Th.textContent = newValue[0];
+                for(let i=0; i<(newValue.length - 1);i++)
+                {
+                    Td[i].textContent = newValue[i+1];
+                }
+                //修改按鈕上的欄位
+                for(let i=0; i<=newValue.length;i++)
+                {
+                    TdButton.dataset['h'+Number(i+1)] = newValue[i];
+                }
+            }
 
             $('#s_creationModal').modal('hide');
         }
