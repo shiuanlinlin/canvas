@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖片標籤效果</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    <!-- 網站用版本 4.6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        .s_img_labeBox{ width: 700px; margin: 0 auto; position: relative;}
+        .s_img_labeBox img{ width: 100%; }
+        .s_img_labeBox span { display: inline-block; padding: 2px 10px; border: 2px solid rgb(227, 76, 0); background: rgb(227, 76, 0);  color: rgb(255, 255, 255); font-size: 14px; position: absolute; cursor: pointer;}
+        .s_img_labeBox span.active{border: 2px dashed #000;}
+        .s_BtnGroud{ text-align: center;}
+    </style>
+</head>
+<body>
+    <div class="container">
+         <!-- 上下左右 -->
+        <div class="s_ImageLabels" data-imgid="s_ImageLabels">
+            <div class="s_BtnGroud my-2">
+                <button type="button" class="btn btn-light text-secondary" data-simg="left"><i class="fa-solid fa-left-long" data-simg="left"></i></button>
+                <button type="button" class="btn btn-light text-secondary" data-simg="up"><i class="fa-solid fa-up-long" data-simg="up"></i></button>
+                <button type="button" class="btn btn-light text-secondary" data-simg="down"><i class="fa-solid fa-down-long" data-simg="down"></i></button>
+                <button type="button" class="btn btn-light text-secondary" data-simg="right"><i class="fa-solid fa-right-long" data-simg="right"></i></button>
+            </div>
+            <div class="s_img_labeBox" data-imgid="s_img_labeBox">
+                <span data-simg="imag_labelspan" style="top:0px; left:10px;">一樓</span>
+                <span data-simg="imag_labelspan" style="top:50px; left:0px;">二樓</span>
+                <span data-simg="imag_labelspan" style="top:100px; left:0px;">三樓</span>
+                <img src="file-name.png" alt="">
+            </div>
+        </div>
+    </div>
+    <script>
+        const s_ImageLabels = document.querySelector('[data-imgid="s_ImageLabels"]');
+        const s_img_labeBox = document.querySelector('[data-imgid="s_img_labeBox"]');
+        s_ImageLabels.addEventListener("click",(event)=>{
+            let target = event.target;
+            let simg = ("simg" in target.dataset) ? target.dataset.simg : false;
+            console.log(simg);
+            switch(simg)
+            {
+                case "imag_labelspan":
+                    if(target.dataset.simg == "imag_labelspan")
+                    {   //先清除之前被選取的標籤
+                        let s_Allspan = s_ImageLabels.querySelectorAll('span');
+                        s_Allspan.forEach(item=>{
+                            item.classList.remove('active');
+                        });
+                        target.classList.add('active');
+                    }
+                    break;
+                case "right":
+                        //找出被選取的span
+                        let s_Allspan = s_ImageLabels.querySelectorAll('span');
+                        let s_Span = document.querySelector('.s_img_labeBox span.active') != null ? document.querySelector('.s_img_labeBox span.active') : false;
+                        if(s_Span && (s_Span.style.left != "" || s_Span.style.left !=null))
+                        {
+                            let oldleft = s_Span.style.left;
+                            let oldleftnumber = oldleft.split('px');
+                            let newleft = Number(oldleftnumber[0]) + 10;
+                            s_Span.style.left = newleft + "px";
+                        }
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
