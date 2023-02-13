@@ -105,18 +105,18 @@
                             data-did表示資料庫的id，只做傳送給資料庫的id，js不做任何修改
                          -->
                         <tr data-hid="1" data-did="93">
-                            <th scope="row">第一期一棟</th>
+                            <th scope="row"></th>
                             <td>9</td>
                             <td>12</td>
                             <td>1</td>
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal"  data-h1="第一期一棟"  data-h2="9" data-h3="12" data-h4="1" data-id="s_t1" data-title="棟編輯">編輯</button></td>
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal"  data-h1="null"  data-h2="9" data-h3="12" data-h4="1" data-id="s_t1" data-title="棟編輯">編輯</button></td>
                         </tr>
                         <tr data-hid="2" data-did="90">
                             <th scope="row">第一期2棟</th>
-                            <td>6</td>
+                            <td></td>
                             <td>2</td>
                             <td>6</td>
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal" data-h1="第一期2棟"  data-h2="6" data-h3="2" data-h4="6" data-id="s_t1" data-title="棟編輯">編輯</button></td>
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal" data-h1="第一期2棟"  data-h2="null" data-h3="2" data-h4="6" data-id="s_t1" data-title="棟編輯">編輯</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -143,8 +143,8 @@
                         <tr data-hid="2" data-did="8">
                             <th scope="row">2樓</th>
                             <td>30.00</td>
-                            <td>4</td>
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal" data-h1="2樓"  data-h2="30.00" data-h3="4" data-id="s_t2" data-title="樓編輯">編輯</button></td>
+                            <td></td>
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal" data-h1="2樓"  data-h2="30.00" data-h3="null" data-id="s_t2" data-title="樓編輯">編輯</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -206,6 +206,7 @@
                 <div class="form-group">
                   <label>住宅(户)</label>
                   <select class="form-control" data-name="house_number" data-guise="input">
+                    <option value="null">請選擇</option>
                     <option value="6">6</option>
                     <option value="9">9</option>
                     <option value="12">12</option>
@@ -215,6 +216,7 @@
                 <div class="form-group">
                     <label>商业(户)</label>
                     <select class="form-control" data-name="business_number" data-guise="input">
+                        <option value="null">請選擇</option>
                         <option value="0">0</option>
                         <option value="2">2</option>
                         <option value="12">12</option>
@@ -224,6 +226,7 @@
                 <div class="form-group">
                     <label>车位(位)</label>
                     <select class="form-control" data-name="car_number" data-guise="input">
+                        <option value="null">請選擇</option>
                         <option value="11">11</option>
                         <option value="9">9</option>
                         <option value="6">6</option>
@@ -357,7 +360,14 @@
             console.log(stInpus);
             let i = 1;
             stInpus.forEach(item=>{
-                item.value = array["h"+i];
+                if(item.nodeName == "INPUT" && array["h"+i] == "null" )
+                {
+                    item.value = "";
+                }
+                else
+                {
+                    item.value = array["h"+i];
+                }
                 i++;
             });
 
@@ -408,7 +418,7 @@
                 console.log(" //將資料整理到obj");
                 console.log(st1Inpus);
                 st1Inpus.forEach(item=>{
-                    st1_array[item.dataset.name] = item.value;
+                    st1_array[item.dataset.name] = (item.value == "null" ? "":item.value);
                     console.log(item.value);
                 });
                 //整理資料
@@ -463,6 +473,9 @@
                 {
                     alert('回寫資料 UpdatePageS()，無法取得did，請檢查原始碼Tr是否有 data-did');
                 }
+                let Trchild = Tr.children;
+                //(最後一欄是按鈕)
+                let TrLength = Trchild.length - 1;
                 let Th = Tr.querySelector('th')
                 let Td = Tr.querySelectorAll('td');
                 let TdButton = Td[Td.length -1].querySelector('button');
@@ -472,16 +485,16 @@
                 newjob = AllarrayS[0].Data[TabKeyAll[sid]];
                 //只有取值不取key
                 let newValue = Object.values(newjob);
-                //將資料寫回區表格裡面
-                Th.textContent = newValue[0];
-                for(let i=0; i<(newValue.length - 1);i++)
+                //將資料寫回區表格裡面 (最後一欄是按鈕)
+                for(let i=0; i<TrLength;i++)
                 {
-                    Td[i].textContent = newValue[i+1];
+                    Trchild[i].textContent = newValue[i];
                 }
                 //修改按鈕上的欄位
-                for(let i=0; i<=newValue.length;i++)
+                for(let i=0; i<TrLength;i++)
                 {
-                    TdButton.dataset['h'+Number(i+1)] = newValue[i];
+                    //空的按鈕寫回去null
+                    TdButton.dataset['h'+Number(i+1)] = newValue[i] == "" ? "null" : newValue[i] ;
                 }
             }
 
