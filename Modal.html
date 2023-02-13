@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    <!-- 網站用版本 4.6 -->
+</head>
+<body>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SchangeDatasS" data-sh1="資料1" data-sh3="資料2" data-sh4="null">我是按鈕</button>
+
+    <div class="modal fade" id="SchangeDatasS" tabindex="-1" aria-labelledby="SchangeDatasSLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="SchangeDatasSLabel">New message</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Recipient:</label>
+                  <input type="text" class="form-control" data-name="a" data-guise="input">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Message:</label>
+                    <select data-guise="input" data-name="b">
+                        <option value="null">請選擇</option>
+                        <option value="1">1</option>
+                        <option value="資料2">資料2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Recipient:</label>
+                    <input type="text" class="form-control" data-guise="input" data-name="c">
+                  </div>
+                  <div class="form-group">
+                    <label for="message-text" class="col-form-label">Message:</label>
+                      <select data-guise="input" data-name="d">
+                          <option value="null">請選擇</option>
+                          <option value="1">1</option>
+                          <option value="資料2">資料2</option>
+                      </select>
+                  </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="s_Saves_submit">Send message</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+<script>
+    $('#SchangeDatasS').on('show.bs.modal', function (event) {
+        //資料長度
+        let DataLength = 10;
+        let button = event.relatedTarget;
+        let DatajOB = [];
+        for(let i=0; i<DataLength;i++)
+        {
+            if(button.dataset['sh'+(i+1)])
+            {
+                DatajOB['sh'+(i+1)] = button.dataset['sh'+(i+1)];
+            }
+        }
+        var modal = $(this);
+        let Inputs = document.getElementById('SchangeDatasS').querySelectorAll('[data-guise="input"]');
+
+        let i = 1;
+        Inputs.forEach(item=>{
+            if( DatajOB["sh"+i] != undefined )
+            {
+                if(item.nodeName == "INPUT" && DatajOB["sh"+i] == "null")
+                {
+                    item.value = "";
+                }
+                else
+                {
+                    item.value = DatajOB["sh"+i];
+                }
+            }
+            else
+            {
+                item.value = "";
+            }
+            i++;
+        });
+        console.log(DatajOB);
+    });
+
+    $('#s_Saves_submit').on('click',function(event){
+        let target = event.target;
+        let Modals = document.getElementById('SchangeDatasS');
+        let st1Inpus = Modals.querySelectorAll('[data-guise="input"]') ? Modals.querySelectorAll('[data-guise="input"]') : false;
+        if(st1Inpus)
+        {
+            let st1_array = {};
+            //將資料整理到obj
+            console.log(" //將資料整理到obj");
+            console.log(st1Inpus);
+            st1Inpus.forEach(item=>{
+                st1_array[item.dataset.name] = (item.value == "null" ? "":item.value);
+                console.log(item.value);
+            });
+            //整理資料
+            AllarrayS = [];
+            //== 依據Tab取名 ==//
+            let Job = {};
+            Job = st1_array;
+            //寫入共用陣列
+            AllarrayS.push({'Data':Job});
+            console.log(Job);
+        }
+    });
+</script>
+</html>
