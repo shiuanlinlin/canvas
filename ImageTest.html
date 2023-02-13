@@ -12,7 +12,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link id="sleek-css" rel="stylesheet" href="css/admin.css?id=a3617cb76c3aa6234410eb11f813f3b1">
     <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
-<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <style>
+        .s_img_labeBox{ position: relative; }
+        .s_img_labeBox span { display: inline-block; padding: 2px 10px; border: 2px solid rgb(227, 76, 0); background: rgb(227, 76, 0);  color: rgb(255, 255, 255); font-size: 14px; position: absolute; cursor: pointer;}
+        .s_img_labeBox span.active{border: 2px dashed #000;}
+    </style>
 </head>
 <body>
     <div class="card-body pt-0">
@@ -80,19 +85,19 @@
         <button type="button" class="btn btn-gk-view text-secondary border" data-simg="right"><i class="fa-solid fa-right-long" data-simg="right"></i></button>
     </div>
     <!-- 添加標籤 end-->
-        <a href="#" class="d-block active" data-labelname="imgbox">
+        <a href="#" class="s_img_labeBox d-block active" data-labelname="imgbox">
             <!-- 區 -->
             <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
         </a>
-        <a href="#" class="d-none" data-labelname="imgbox">
+        <a href="#" class="s_img_labeBox d-none" data-labelname="imgbox">
             <!-- 棟 -->
             <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
         </a>
-        <a href="#" class="d-none" data-labelname="imgbox">
+        <a href="#" class="s_img_labeBox d-none" data-labelname="imgbox">
             <!-- 樓 -->
             <img src="https://rdm.geekers.tw/upload/case/1/5590ca604d9baee9fa98f6bb94a9031088571435.png" class="img-fluid" alt="" style="width: 100%;height: auto">
         </a>
-        <a href="#" class="d-none" data-labelname="imgbox">
+        <a href="#" class="s_img_labeBox d-none" data-labelname="imgbox">
             <!-- 戶 -->
             <img src="https://rdm.geekers.tw/upload/case/1/5590ca604d9baee9fa98f6bb94a9031088571435.png" class="img-fluid" alt="" style="width: 100%;height: auto">
         </a>
@@ -104,6 +109,7 @@
         // data-labelname='span' ==  標籤用<span>
         // data-labelname='addbutton' ==  新增用<button>
         // data-labelname='delbutton' ==  移除用<button>
+        // data-labelname='move' == 移動<button>
         // data-labelname="titleinput" ==  標題用<input>
         // data-labelname="imgbox" ==  圖片外框
         //id規則： s_Label_1 ~ s_Label_10 不可以重複
@@ -113,18 +119,37 @@
         //== 多個新增
         //== 1.Demoobj ==//
         let LabelObj = [
-            {"name":"標籤1","id":"193","left":"100","top":""},
-            {"name":"標籤2","id":"12","left":"200","top":""},
-            {"name":"標籤3","id":"13"},
-            {"name":"標籤4","id":"10","left":"300","top":""},
-            {"name":"標籤5","id":"3","left":"","top":""},
+            {"name":"標籤1","id":193,"left":100,"top":200},
+            {"name":"標籤2","id":12,"left":200,"top":""},
+            {"name":"標籤3","id":3},
+            {"name":"標籤4","id":10,"left":300,"top":10},
+            {"name":"標籤5","id":9,"left":"","top":""},
         ];
 
         //新增標籤
-        function S_LabelAdd()
+        function S_LabelAdd(LabelObj)
         {
-
+            let LabelLength = LabelObj.length;
+            if(LabelLength > 0)
+            {
+                let LabeHtml = '';
+                LabelObj.forEach(item=>{
+                    LabeHtml += "<span data-labelname='span' style='top:"+(item.top != "" && item.top ? item.top : "8")+"px; left:"+(item.left != "" && item.left ? item.left : "8")+"px;'>"+item.name+"</span>";
+                    console.log(item);
+                });
+                //目前顯示的圖片
+                let SthisImage = $('[data-labelname="imgbox"].active');
+                SthisImage.append(LabeHtml);
+            }
         }
+
+        //新增標籤
+        S_LabelAdd(LabelObj);
+
+        $("span[data-labelname='span']").on('click',function(event){
+            $(this).addClass('active');
+            console.log(event);
+        });
 
 
         (function () {
