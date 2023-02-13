@@ -228,7 +228,7 @@
       <script type="text/javascript">
         // sky
             //Tab數量(可設定上限，全出、棟、樓、戶)
-            let TabNumber = 10;
+            let TabNumber = 30;
             //要送出與更新頁面的資料(丟後端)
             let AllarrayS = [];
             //共用Tab key設定
@@ -313,10 +313,22 @@
 
                 console.log(array);
                 stInpus.forEach(item=>{
-                    console.log("寫回Modal");
-                    console.log("h"+i);
-                    console.log(array["h"+i]);
-                    item.value = array["h"+i];
+                    if( array["h"+i] != undefined )
+                    {
+                        if(item.nodeName == "INPUT" && array["h"+i] == "null")
+                        {
+                            item.value = "";
+                        }
+                        else
+                        {
+                            item.value = array["h"+i];
+                        }
+
+                    }
+                    else
+                    {
+                        item.value = "";
+                    }
                     i++;
                 });
 
