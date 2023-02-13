@@ -11,7 +11,9 @@
     <!-- 網站用版本 4.6 -->
 </head>
 <body>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SchangeDatasS" data-sh1="資料1" data-sh3="資料2" data-sh4="null">我是按鈕</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SchangeDatasS" data-sh1="資料1" data-sh3="null" data-sh4="null" data-ssid="1" data-title="A">我是按鈕</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SchangeDatasS" data-sh1="資料1" data-sh3="資料2" data-ssid="2" data-title="B">我是按鈕</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SchangeDatasS" data-sh1="資料1" data-sh2="33" data-ssid="3" data-title="C">我是按鈕</button>
 
     <div class="modal fade" id="SchangeDatasS" tabindex="-1" aria-labelledby="SchangeDatasSLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -23,32 +25,76 @@
               </button>
             </div>
             <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Recipient:</label>
-                  <input type="text" class="form-control" data-name="a" data-guise="input">
-                </div>
-                <div class="form-group">
-                  <label for="message-text" class="col-form-label">Message:</label>
-                    <select data-guise="input" data-name="b">
-                        <option value="null">請選擇</option>
-                        <option value="1">1</option>
-                        <option value="資料2">資料2</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">Recipient:</label>
-                    <input type="text" class="form-control" data-guise="input" data-name="c">
-                  </div>
-                  <div class="form-group">
-                    <label for="message-text" class="col-form-label">Message:</label>
-                      <select data-guise="input" data-name="d">
-                          <option value="null">請選擇</option>
-                          <option value="1">1</option>
-                          <option value="資料2">資料2</option>
-                      </select>
-                  </div>
-              </form>
+            <!-- 棟的資料 -->
+            <div data-title="棟的資料" data-tid="s_ssid1">
+              <div class="form-group">
+                <label>AAAA</label>
+                <input type="text" class="form-control" data-name="room_number" data-guise="input">
+              </div>
+              <div class="form-group">
+                <label>住宅(户)</label>
+                <select class="form-control" data-name="house_number" data-guise="input">
+                  <option value="null">請選擇</option>
+                  <option value="6">6</option>
+                  <option value="9">9</option>
+                  <option value="12">12</option>
+                  <option value="1">1</option>
+                </select>
+              </div>
+              <div class="form-group">
+                  <label>商业(户)</label>
+                  <select class="form-control" data-name="business_number" data-guise="input">
+                      <option value="null">請選擇</option>
+                      <option value="0">0</option>
+                      <option value="2">2</option>
+                      <option value="12">12</option>
+                      <option value="16">16</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label>车位(位)</label>
+                  <select class="form-control" data-name="car_number" data-guise="input">
+                      <option value="null">請選擇</option>
+                      <option value="11">11</option>
+                      <option value="9">9</option>
+                      <option value="6">6</option>
+                      <option value="1">1</option>
+                  </select>
+              </div>
+            </div>
+            <!-- 楼的資料 -->
+            <div class="d-none" data-title="楼的資料" data-tid="s_ssid2">
+              <div class="form-group">
+                <label>BBBB</label>
+                <input type="text" class="form-control" data-name="floor_number" data-guise="input">
+              </div>
+              <div class="form-group">
+                <label>面积</label>
+                <input type="text" class="form-control" data-name="acreage_number" data-guise="input">
+              </div>
+              <div class="form-group">
+                  <label>户，位</label>
+                  <input type="text" class="form-control" data-name="household_number" data-guise="input">
+              </div>
+            </div>
+            <!-- 戶的資料 -->
+            <div class="d-none" data-title="戶的資料" data-tid="s_ssid3">
+              <div class="form-group">
+                <label>CCC</label>
+                <input type="text" class="form-control" data-name="floor_number" data-guise="input">
+              </div>
+              <div class="form-group">
+                <label>面积</label>
+                <select class="form-control" data-name="acreage_number" data-guise="input">
+                  <option value="null">請選擇</option>
+                  <option value="33">33</option>
+                  <option value="10.00">10.00</option>
+                  <option value="9">9</option>
+                  <option value="6">6</option>
+                  <option value="12.00">12.00</option>
+              </select>
+              </div>
+            </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -59,20 +105,59 @@
       </div>
 </body>
 <script>
+    let AllarrayS = [];
     $('#SchangeDatasS').on('show.bs.modal', function (event) {
         //資料長度
         let DataLength = 10;
-        let button = event.relatedTarget;
+        let button = $(event.relatedTarget);
+        let buttonData = event.relatedTarget;
+
+        //== Modal標題資料 ==//
+        let ModalTitle = button.data('title') ? button.data('title') : false;
+        console.log('標題 :'+ModalTitle);
+
+        //== 取得 data-id ==//
+        let SSid = button.data('ssid') ? button.data('ssid') : false;
+        console.log('ssid :'+SSid);
+        console.log(document.querySelector('[data-tid="s_ssid'+SSid+'"]'));
+
+        //== 判斷Modal顯示的資料 ==//
+        if(SSid != false && document.querySelector('[data-tid="s_ssid'+SSid+'"]'))
+          {
+              //== 先將所有Modal資料隱藏 ==//
+              for(let i=1; i<= DataLength; i++)
+              {
+                    //== 判斷data-tid是否存在 ==//
+                  if(document.querySelector('[data-tid="s_ssid'+i+'"]'))
+                  {
+                      document.querySelector('[data-tid="s_ssid'+i+'"]').classList.add('d-none');
+                  }
+              }
+              //== 顯示正確資料 ==//
+              document.querySelector('[data-tid="s_ssid'+SSid+'"]').classList.remove('d-none');
+          }
+          else
+          {
+              console.error("Modal資料顯示出錯");
+          }
+
+        //== 取得資料的詳細名稱 ==//
+        let TabClass = document.querySelector('[data-tid="s_ssid'+SSid+'"]');
+        let stInpus = TabClass.querySelectorAll('[data-guise="input"]');
+        let titles = TabClass.dataset.title;
+        console.log(TabClass);
+        console.log(stInpus);
+
         let DatajOB = [];
         for(let i=0; i<DataLength;i++)
         {
-            if(button.dataset['sh'+(i+1)])
+            if(buttonData.dataset['sh'+(i+1)])
             {
-                DatajOB['sh'+(i+1)] = button.dataset['sh'+(i+1)];
+                DatajOB['sh'+(i+1)] = buttonData.dataset['sh'+(i+1)];
             }
         }
         var modal = $(this);
-        let Inputs = document.getElementById('SchangeDatasS').querySelectorAll('[data-guise="input"]');
+        let Inputs = stInpus;
 
         let i = 1;
         Inputs.forEach(item=>{
@@ -94,12 +179,33 @@
             i++;
         });
         console.log(DatajOB);
+        //== 將資料寫上去Modal ==//
+        var modal = $(this);
+        //標題
+        modal.find('.modal-title').text(ModalTitle);
+        //== 將送出按鈕添加 目前顯示的資料是哪個tab ==//
+        if(SSid && titles)
+          {
+              modal.find('#s_Saves_submit').attr('data-id','s_ssid'+SSid);
+              modal.find('#s_Saves_submit').attr('data-title',titles);
+          }
+          else
+          {
+              console.error("取得Modal與按鈕出錯，data-ssid、data-title 取得失敗");
+          }
     });
 
     $('#s_Saves_submit').on('click',function(event){
         let target = event.target;
+        let ssid = target.dataset.id ? target.dataset.id: false;
+        //以下都不可以是false
+        if(!ssid)
+            {
+                alert("取得 sid、hid、did 失敗，請檢查");
+            }
         let Modals = document.getElementById('SchangeDatasS');
-        let st1Inpus = Modals.querySelectorAll('[data-guise="input"]') ? Modals.querySelectorAll('[data-guise="input"]') : false;
+        let st1Tag = Modals.querySelector('[data-tid="'+ssid+'"]') ? Modals.querySelector('[data-tid="'+ssid+'"]') : false;
+        let st1Inpus = st1Tag.querySelectorAll('[data-guise="input"]') ? st1Tag.querySelectorAll('[data-guise="input"]') : false;
         if(st1Inpus)
         {
             let st1_array = {};
@@ -107,7 +213,7 @@
             console.log(" //將資料整理到obj");
             console.log(st1Inpus);
             st1Inpus.forEach(item=>{
-                st1_array[item.dataset.name] = (item.value == "null" ? "":item.value);
+                st1_array[item.dataset.name] = (item.value == "null" ? "" : item.value);
                 console.log(item.value);
             });
             //整理資料
@@ -116,8 +222,43 @@
             let Job = {};
             Job = st1_array;
             //寫入共用陣列
-            AllarrayS.push({'Data':Job});
-            console.log(Job);
+            if(target.dataset.id && target.dataset.title)
+            {
+              AllarrayS.push({'Data':Job,'id':target.dataset.id,'title':target.dataset.title});
+            }
+            else
+            {
+              console.error("Modal送出按鈕出錯， data-ssid、data-title 取得失敗");
+            }
+
+            console.log(AllarrayS);
+            //送入ajax
+            //ajax_submit(AllarrayS[0])
+            UpdateDataDetail()
+        }
+
+        //資料回寫button ata-ssid="1"
+        function UpdateDataDetail()
+        {
+          console.log(AllarrayS);
+          let ssid = AllarrayS[0].id;
+          let splitid = ssid.split('s_ssid');
+          let newjob = {};
+          //== 依據Tab取名==//
+          //將資料寫進去空白Obj裏面
+          newjob = AllarrayS[0].Data;
+          //只有取值不取key
+          let newValue = Object.values(newjob);
+          let newbutton = document.querySelector('[data-ssid="'+splitid[1]+'"]');
+
+          for(let i=0; i<newValue.length;i++)
+          {
+            document.querySelector('[data-ssid="'+splitid[1]+'"]').dataset['sh'+(i+1)] = newValue[i] == "" ? "null" : newValue[i];
+          }
+
+          console.log(newValue);
+          console.log(splitid[1]);
+          console.log(document.querySelector('[data-ssid="'+splitid[1]+'"]'));
         }
     });
 </script>
