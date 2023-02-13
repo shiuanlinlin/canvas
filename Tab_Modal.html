@@ -108,8 +108,8 @@
                             <th scope="row"></th>
                             <td>9</td>
                             <td>12</td>
-                            <td>1</td>
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal"  data-h1="null"  data-h2="9" data-h3="12" data-h4="1" data-id="s_t1" data-title="棟編輯">編輯</button></td>
+                            <td></td>
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal"  data-h1="null"  data-h2="9" data-h3="12" data-id="s_t1" data-title="棟編輯">編輯</button></td>
                         </tr>
                         <tr data-hid="2" data-did="90">
                             <th scope="row">第一期2棟</th>
@@ -135,10 +135,10 @@
                     </thead>
                     <tbody>
                         <tr data-hid="1" data-did="9">
-                            <th scope="row">1樓</th>
+                            <th scope="row"></th>
                             <td>30.00</td>
                             <td>3</td>
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal"  data-h1="1樓"  data-h2="30.00" data-h3="3" data-id="s_t2" data-title="樓編輯">編輯</button></td>
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#s_creationModal" data-h2="30.00" data-h3="3" data-id="s_t2" data-title="樓編輯">編輯</button></td>
                         </tr>
                         <tr data-hid="2" data-did="8">
                             <th scope="row">2樓</th>
@@ -277,6 +277,8 @@
       </div>
 
       <script>
+        //最大欄位數 h1~h30
+        let HText_Number ="31";
         //Ｔab數量(可設定數量)
         let TabNumber = 10;
         //要送出與更新頁面的資料
@@ -343,7 +345,7 @@
             let array = {};
             let k = 0;
             //取得欄位名稱
-            for(let i=0; i<= 10; i++)
+            for(let i=0; i<=HText_Number; i++)
             {
                 k= i+1;
                 //檢查是否有data-h1 ~ data-h10
@@ -358,15 +360,24 @@
             let TabClass = document.querySelector('[data-tid="'+Tabid+'"]');
             let stInpus = TabClass.querySelectorAll('[data-guise="input"]');
             console.log(stInpus);
+            console.log(array);
             let i = 1;
             stInpus.forEach(item=>{
-                if(item.nodeName == "INPUT" && array["h"+i] == "null" )
+                if( array["h"+i] != undefined )
                 {
-                    item.value = "";
+                    if(item.nodeName == "INPUT" && array["h"+i] == "null")
+                    {
+                        item.value = "";
+                    }
+                    else
+                    {
+                        item.value = array["h"+i];
+                    }
+
                 }
                 else
                 {
-                    item.value = array["h"+i];
+                    item.value = "";
                 }
                 i++;
             });
