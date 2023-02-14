@@ -16,7 +16,7 @@
     <style>
         .s_img_labeBox{ position: relative; }
         .s_img_labeBox span { display: inline-block; padding: 2px 10px; border: 2px solid rgb(227, 76, 0); background: rgb(227, 76, 0);  color: rgb(255, 255, 255); font-size: 14px; position: absolute; cursor: pointer;}
-        .s_img_labeBox span.active{border: 2px dashed #000;}
+        .s_img_labeBox span.active{border: 2px dashed #000; background: red;}
     </style>
 </head>
 <body>
@@ -68,40 +68,68 @@
             <div class="search-input-group">
                 <div>
                     <!-- 標籤名稱 -->
-                    <input type="text" class="form-control" data-labelname="titleinput">
+                    <input type="text" class="form-control" id="s_titleinputLabel">
                 </div>
             </div>
             <div class="search-btn-group text-nowrap">
                 <!-- 新增按鈕 -->
-                <button type="button" class="btn btn-gk-view"  data-labelname="addbutton">添加標籤</button>
-                <button type="button" class="btn btn-gk-del"  data-labelname="delbutton">移除標籤</button>
+                <button type="button" class="btn btn-gk-view" id="s_addbuttonLabel">添加標籤</button>
+                <button type="button" class="btn btn-gk-view" id="s_EditbuttonLabel">修改標籤</button>
+                <button type="button" class="btn btn-gk-del" id="s_delbuttonLabel">移除標籤</button>
             </div>
         </div>
     </div>
+    <!-- 棟別 -->
+    <div class="d-flex">
+        <div class="form-group mt-4">
+            <select class="form-control">
+            <option>棟別</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            </select>
+        </div>
+        <div class="form-group mt-4">
+            <select class="form-control">
+            <option>樓層</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            </select>
+        </div>
+        <div class="form-group mt-4">
+            <select class="form-control">
+            <option>戶別</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            </select>
+        </div>
+    </div>
     <div class="s_BtnGroud my-2">
-        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="left"><i class="fa-solid fa-left-long" data-simg="left"></i></button>
-        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="up"><i class="fa-solid fa-up-long" data-simg="up"></i></button>
-        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="down"><i class="fa-solid fa-down-long" data-simg="down"></i></button>
-        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="right"><i class="fa-solid fa-right-long" data-simg="right"></i></button>
+        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="left"><i class="fa-solid fa-left-long"></i></button>
+        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="up"><i class="fa-solid fa-up-long"></i></button>
+        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="down"><i class="fa-solid fa-down-long"></i></button>
+        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="right"><i class="fa-solid fa-right-long"></i></button>
     </div>
     <!-- 添加標籤 end-->
-        <a href="#" class="s_img_labeBox d-block active" data-labelname="imgbox">
-            <!-- 區 -->
-            <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
-        </a>
-        <a href="#" class="s_img_labeBox d-none" data-labelname="imgbox">
-            <!-- 棟 -->
-            <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
-        </a>
-        <a href="#" class="s_img_labeBox d-none" data-labelname="imgbox">
-            <!-- 樓 -->
-            <img src="https://rdm.geekers.tw/upload/case/1/5590ca604d9baee9fa98f6bb94a9031088571435.png" class="img-fluid" alt="" style="width: 100%;height: auto">
-        </a>
-        <a href="#" class="s_img_labeBox d-none" data-labelname="imgbox">
-            <!-- 戶 -->
-            <img src="https://rdm.geekers.tw/upload/case/1/5590ca604d9baee9fa98f6bb94a9031088571435.png" class="img-fluid" alt="" style="width: 100%;height: auto">
-        </a>
+        <div id="s_ImageLabelAll">
+            <a href="#" class="s_img_labeBox d-block active" data-imgidbox="ImageArea" data-labelname="imgbox">
+                <!-- 區 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="ImageBuilding" data-labelname="imgbox">
+                <!-- 棟 -->
+                <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="ImageFloor" data-labelname="imgbox">
+                <!-- 樓 -->
+                <img src="b3.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="ImageHousehold" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b4.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+        </div>
     </div>
+
     <script>
 
         //標籤按鈕，新增移除效果
@@ -115,41 +143,307 @@
         //id規則： s_Label_1 ~ s_Label_10 不可以重複
         let ssidname = "s_Label";
         let ssLabelsPan = "<span data-labelname='span'></span>";
+        //圖片區塊
+        const ImageLabelAll = document.getElementById('s_ImageLabelAll');
+        //名稱輸入
+        const s_titleinputLabel = document.getElementById('s_titleinputLabel');
 
-        //== 多個新增
+        //== 標籤開始
         //== 1.Demoobj ==//
-        let LabelObj = [
-            {"name":"標籤1","id":193,"left":100,"top":200},
-            {"name":"標籤2","id":12,"left":200,"top":""},
-            {"name":"標籤3","id":3},
-            {"name":"標籤4","id":10,"left":300,"top":10},
-            {"name":"標籤5","id":9,"left":"","top":""},
-        ];
-
-        //新增標籤
-        function S_LabelAdd(LabelObj)
-        {
-            let LabelLength = LabelObj.length;
-            if(LabelLength > 0)
+        let LabelObj =
             {
-                let LabeHtml = '';
-                LabelObj.forEach(item=>{
-                    LabeHtml += "<span data-labelname='span' style='top:"+(item.top != "" && item.top ? item.top : "8")+"px; left:"+(item.left != "" && item.left ? item.left : "8")+"px;'>"+item.name+"</span>";
-                    console.log(item);
-                });
-                //目前顯示的圖片
-                let SthisImage = $('[data-labelname="imgbox"].active');
-                SthisImage.append(LabeHtml);
+                "ImageArea" : [
+                    {"name":"標籤1","id":1,"left":100,"top":200},
+                    {"name":"標籤2","id":2,"left":200,"top":""},
+                    {"name":"標籤3","id":6},
+                    {"name":"標籤4","id":10,"left":1100,"top":10},
+                    {"name":"標籤5","id":13,"left":"","top":1100},
+                ],
+            };
+
+        //載入標籤
+        function S_LabelLOAD()
+        {
+            //抓區被選取的img div
+            if(document.querySelector('.s_img_labeBox.active'))
+            {
+                //抓取json
+                let Imagejson = thisImageJson();
+                console.log(Imagejson);
+
+                let LabelLength = Imagejson ? Imagejson.length : 0;
+                if(LabelLength > 0 )
+                {
+                    let LabeHtml = '';
+                    Imagejson.forEach(item=>{
+                        LabeHtml += "<span data-labelname='span' data-labelid='"+item.id+"' style='top:"+(item.top != "" && item.top ? item.top : "8")+"px; left:"+(item.left != "" && item.left ? item.left : "8")+"px;'>"+item.name+"</span>";
+                        console.log(item);
+                    });
+                    //目前顯示的圖片
+                    let SthisImage = $('[data-labelname="imgbox"].active');
+                    SthisImage.append(LabeHtml);
+                }
+
             }
         }
 
-        //新增標籤
-        S_LabelAdd(LabelObj);
+        //載入標籤
+        S_LabelLOAD();
 
-        $("span[data-labelname='span']").on('click',function(event){
-            $(this).addClass('active');
-            console.log(event);
+        //選取標籤
+        // $("span[data-labelname='span']").on('click',function(event){
+        //     let AllSpan = document.querySelector("span[data-labelname='span'].active");
+        //     if(AllSpan)
+        //     {
+        //         AllSpan.classList.remove('active');
+        //     }
+        //     $(this).addClass('active');
+        // });
+        ImageLabelAll.addEventListener("click",(event)=>{
+            let target = event.target;
+            let labelname = ('labelname' in target.dataset) ? target.dataset.labelname : false;
+            console.log(labelname);
+            if(labelname == "span")
+            {
+                if(document.querySelector("span[data-labelname='span'].active"))
+                {
+                    document.querySelector("span[data-labelname='span'].active").classList.remove('active');
+                }
+
+                target.classList.add('active');
+                s_titleinputLabel.value = document.querySelector("span[data-labelname='span'].active").textContent;
+            }
         });
+
+        //移動標籤
+        $(".s_BtnGroud button").on('click',function(event){
+            //先找尋是否有標籤被選取了
+            if(document.querySelector("span[data-labelname='span'].active"))
+            {
+                let s_Span = document.querySelector("span[data-labelname='span'].active");
+                switch($(this).data('simg'))
+                {
+                    case "left":
+                        if(s_Span.style.left != "" || s_Span.style.left !=null)
+                        {
+                            let s_SpanWidth = s_Span.offsetWidth;
+                            let oldleft = s_Span.style.left;
+                            let oldleftnumber = oldleft.split('px');
+                            let newleft = Number(oldleftnumber[0]) - 10;
+                            let leftvalue = (newleft <= 0 ) ? 0  : newleft;
+                            s_Span.style.left = leftvalue + "px";
+                            let spanid = s_Span.dataset.labelid;
+                            thisPositionImageJson(spanid,"left",leftvalue);
+                        }
+                        break;
+                    case "right":
+                        if(s_Span.style.left != "" || s_Span.style.left !=null)
+                        {
+                            //圖片外框寬度
+                            let ImageWidths = document.querySelector('.s_img_labeBox.active') !=null ? document.querySelector('.s_img_labeBox.active').offsetWidth : false;
+                            console.log(ImageWidths);
+
+                            let s_SpanWidth = s_Span.offsetWidth;
+                            let oldleft = s_Span.style.left;
+                            let oldleftnumber = oldleft.split('px');
+                            let newleft = Number(oldleftnumber[0]) + 10;
+                            console.log((ImageWidths - s_SpanWidth));
+                            let leftvalue = (newleft > (ImageWidths - s_SpanWidth)) ? ImageWidths : newleft;
+                            s_Span.style.left = leftvalue + "px";
+                            let spanid = s_Span.dataset.labelid;
+                            thisPositionImageJson(spanid,"left",leftvalue);
+                        }
+                        break;
+                        case "up":
+                            if(s_Span.style.top != "" || s_Span.style.top !=null)
+                            {
+                                let oldtop = s_Span.style.top;
+                                let oldtopnumber = oldtop.split('px');
+                                let newtop = Number(oldtopnumber[0]) - 10;
+                                let topvalue = (newtop <= 0 ) ? 0  : newtop;
+                                s_Span.style.top = topvalue + "px";
+                                let spanid = s_Span.dataset.labelid;
+                                thisPositionImageJson(spanid,"top",topvalue);
+                            }
+                        break;
+                        case "down":
+                            if(s_Span.style.top != "" || s_Span.style.top !=null)
+                            {
+                                //圖片高度
+                                let ImageHeight = document.querySelector('.s_img_labeBox.active img').offsetHeight !=null ? document.querySelector('.s_img_labeBox.active img').offsetHeight : false;
+                                console.log(ImageHeight);
+                                let s_SpanHeight = s_Span.offsetHeight;
+                                let oldtop = s_Span.style.top;
+                                let oldtopnumber = oldtop.split('px');
+                                let newtop = Number(oldtopnumber[0]) + 10;
+                                console.log(ImageHeight);
+                                let topvalue = (newtop >= (ImageHeight - s_SpanHeight) ) ?  ImageHeight : newtop;
+                                s_Span.style.top =  topvalue + "px";
+                                let spanid = s_Span.dataset.labelid;
+                                thisPositionImageJson(spanid,"top",topvalue);
+                            }
+                        break;
+                }
+            }
+            else
+            {
+                alert("未選取標籤");
+            }
+
+        });
+
+        //新增標籤
+        $('#s_addbuttonLabel').on('click',function(event){
+            if($('#s_titleinputLabel').val() != "")
+            {
+                //判斷目前被選擇的圖片外框
+                if(document.querySelector('.s_img_labeBox.active'))
+                {
+                    //抓取json
+                    let Imagejson = thisImageJson();
+                    console.log(Imagejson);
+
+                    //判斷是否有舊的資料
+                    //計算目前原有的Label數量
+                    let oldLabelLenght = Imagejson ? Imagejson.length : 0;
+                    //給予新的id
+                    let endid = oldLabelLenght > 0 ?  Imagejson[oldLabelLenght - 1].id : false;
+                    //給予新的id(如果無資料就給予 id = 1)
+                    let newid = endid ? endid+1 : 1;
+                    console.log(newid);
+                    //頁面上給予新的HTML
+                    $('.s_img_labeBox.active').append("<span data-labelname='span' data-labelid='"+newid+"' style='top:0px;left:0px;'>"+$('#s_titleinputLabel').val()+"</span>");
+                    //寫回json
+                    if(oldLabelLenght == 0)
+                    {
+                        //抓出對應id
+                        let Thisbox = document.querySelector('.s_img_labeBox.active');
+                        let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
+                        LabelObj[Loadid] = {"name":$('#s_titleinputLabel').val(),"id":newid,"left":0,"top":0};
+                    }
+                    else
+                    {
+                        Imagejson[oldLabelLenght] = {"name":$('#s_titleinputLabel').val(),"id":newid,"left":0,"top":0};
+                    }
+
+
+                    console.log('newjson');
+                    console.log(LabelObj);
+
+
+                }
+            }
+            else
+            {
+                alert("未輸入名稱");
+            }
+        });
+
+
+        //抓出目前當下的json
+        function thisImageJson()
+        {
+            //抓出對應id
+            let Thisbox = document.querySelector('.s_img_labeBox.active');
+            let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
+            console.log(Loadid);
+            //抓取json
+            let Imagejson = LabelObj[Loadid];
+            console.log(Imagejson);
+
+            return Imagejson;
+        }
+
+        //將位置寫回標籤 spanid 標籤的id  ,Position 位置 left or top  ,values 值
+        function thisPositionImageJson(spanid,Position,values)
+        {
+            //抓出對應id
+            let Thisbox = document.querySelector('.s_img_labeBox.active');
+            let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
+            //抓取json
+            let Imagejson = LabelObj[Loadid];
+            Imagejson.forEach(item=>{
+                if(item.id == spanid)
+                {
+                    item[Position] = values;
+                }
+            });
+            console.log("將位置寫回標籤");
+            console.log(LabelObj);
+        }
+
+
+        //修改標籤(更改名稱)
+        $('#s_EditbuttonLabel').on('click',function(event){
+            if(document.querySelector('span[data-labelname="span"].active') && s_titleinputLabel.value != "")
+            {
+                //抓出對應id
+                let Thisbox = document.querySelector('.s_img_labeBox.active');
+                let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
+                //抓取json
+                let Imagejson = LabelObj[Loadid];
+                console.log(Imagejson);
+                let s_Span = document.querySelector('span[data-labelname="span"].active');
+                let spanid = s_Span.dataset.labelid;
+                s_Span.textContent = s_titleinputLabel.value;
+                Imagejson.forEach(item=>{
+                    if(item.id == spanid)
+                    {
+                        item['name'] = s_titleinputLabel.value;
+                    }
+                });
+                console.log("修改標籤(更改名稱)");
+                console.log(LabelObj);
+            }
+            else
+            {
+                alert("未選取標籤");
+            }
+        });
+
+
+        //移除標籤
+        $('#s_delbuttonLabel').on('click',function(event){
+            if(document.querySelector('span[data-labelname="span"].active'))
+            {
+                //抓出對應id
+                let Thisbox = document.querySelector('.s_img_labeBox.active');
+                let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
+                //抓取json
+                let Imagejson = LabelObj[Loadid];
+                console.log(Imagejson);
+                let s_Span = document.querySelector('span[data-labelname="span"].active');
+                let spanid = s_Span.dataset.labelid;
+                let index = -1;
+                //取得在第幾列
+                let filteredObj = Imagejson.find(function(item, i){
+                    console.log(item.id);
+                    if(item.id == spanid){
+                        index = i;
+                        return i;
+                    }
+                });
+                if(index >= 0)
+                {
+                    console.log(Imagejson[index]);
+                    delete Imagejson[index];
+                    s_Span.remove();
+                }
+                else
+                {
+                    console.error("移除標籤功能出錯！計算位置出錯");
+                }
+            }else
+            {
+                alert("未選取標籤");
+            }
+
+            console.log("移除標籤");
+            console.log(LabelObj);
+
+        });
+
+
 
 
         (function () {
