@@ -74,8 +74,6 @@
             <div class="search-btn-group text-nowrap">
                 <!-- 新增按鈕 -->
                 <button type="button" class="btn btn-gk-view" id="s_addbuttonLabel">添加標籤</button>
-                <button type="button" class="btn btn-gk-view" id="s_EditbuttonLabel">修改標籤</button>
-                <button type="button" class="btn btn-gk-del" id="s_delbuttonLabel">移除標籤</button>
                 <button type="button" class="btn btn-gk-print" id="s_SavebuttonLabel">儲存標籤</button>
             </div>
         </div>
@@ -654,19 +652,15 @@
         //載入標籤
         function S_LabelLOAD(json)
         {
-            console.log("載入標籤");
-            console.log(json);
             //抓區被選取的img div
             if(document.querySelector('.s_img_labeBox.active'))
             {
                 //整理好的json
                 let Imagejson = json;
-                console.log(Imagejson);
                 //label長度
                 let LabelLength = Imagejson ? Imagejson.length : 0;
                 if(LabelLength > 0 )
                 {
-                    console.log("大於0加標籤");
                     let LabeHtml = '';
                     Imagejson.forEach(item=>{
                         LabeHtml += "<span data-labelname='span' data-labelid='"+item.id+"' style='top:"+(item.top != "" && item.top ? item.top : "8")+"px; left:"+(item.left != "" && item.left ? item.left : "8")+"px;'>"+item.name+"</span>";
@@ -793,8 +787,6 @@
                 //抓出對應id
                 let Thisbox = document.querySelector('.s_img_labeBox.active');
                 let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
-                console.log("Loadid");
-                console.log(Loadid);
                 let area = AllLabeljson['List']['area'];
                 //input抓去
                 let areaTag = document.querySelector('[data-status="area"]');
@@ -895,7 +887,6 @@
             //抓出對應id
             let Thisbox = document.querySelector('.s_img_labeBox.active');
             let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
-            console.log(Loadid);
             let area = AllLabeljson['List']['area'];
             //區域
             //input抓去
@@ -973,7 +964,6 @@
                     let householdkey = areaTag.value + "_"+buildingTag.value+"_"+floorTag.value + "_" + householdTag.value;
                     let householdindex = FindIndexPotion(floorjson,householdkey);
                     let householdjson = floorjson[householdindex].label;
-                    console.log(householdjson);
                     let spanindex = FindSpanPotion(householdjson,Number(spanid));
                     let spanjson = householdjson[spanindex];
                 }
@@ -1005,81 +995,12 @@
 
             return index;
         }
-        //修改標籤(更改名稱)
-        $('#s_EditbuttonLabel').on('click',function(event){
-            if(document.querySelector('span[data-labelname="span"].active') && s_titleinputLabel.value != "")
-            {
-                //抓出對應id
-                let Thisbox = document.querySelector('.s_img_labeBox.active');
-                let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
-                //抓取json
-                let Imagejson = LabelObj[Loadid];
-                let s_Span = document.querySelector('span[data-labelname="span"].active');
-                let spanid = s_Span.dataset.labelid;
-                s_Span.textContent = s_titleinputLabel.value;
-                Imagejson.forEach(item=>{
-                    if(item.id == spanid)
-                    {
-                        item['name'] = s_titleinputLabel.value;
-                    }
-                });
-                console.log("修改標籤(更改名稱)");
-                console.log(LabelObj);
-            }
-            else
-            {
-                alert("未選取標籤");
-            }
-        });
-
-
-        //移除標籤
-        $('#s_delbuttonLabel').on('click',function(event){
-            if(document.querySelector('span[data-labelname="span"].active'))
-            {
-                //抓出對應id
-                let Thisbox = document.querySelector('.s_img_labeBox.active');
-                let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
-                //抓取json
-                let Imagejson = LabelObj[Loadid];
-                let s_Span = document.querySelector('span[data-labelname="span"].active');
-                let spanid = s_Span.dataset.labelid;
-                let index = -1;
-                //取得在第幾列
-                let filteredObj = Imagejson.find(function(item, i){
-                    if(item.id == spanid){
-                        index = i;
-                        return i;
-                    }
-                });
-                if(index >= 0)
-                {
-                    delete Imagejson[index];
-                    s_Span.remove();
-                }
-                else
-                {
-                    console.error("移除標籤功能出錯！計算位置出錯");
-                }
-            }else
-            {
-                alert("未選取標籤");
-            }
-
-            console.log("移除標籤");
-            console.log(LabelObj);
-
-        });
-
 
         //切換棟別
         s_ChangeTypeImage.addEventListener('change',event =>{
             let target = event.target;
             let values = target.value;
             let status = ('status' in target.dataset) ? target.dataset.status : false;
-            console.log(target);
-            console.log(values);
-            console.log(status);
             try {
                 ChangeAllSelect(target,values,status);
             }
@@ -1092,9 +1013,6 @@
         function ChangeAllSelect(target,values,status)
         {
             //棟
-            console.log("buildingbuilding");
-            console.log(status);
-
             //區域開啟切換
             if(status == "area")
             {
@@ -1325,11 +1243,9 @@
             if(document.querySelector('[data-labelname="imgbox"].active'))
             {
                 let oldimgbox = document.querySelector('[data-labelname="imgbox"].active');
-                console.log('清除舊標籤span標籤');
                 //清除舊標籤
                 let spanAll = document.querySelectorAll('[data-labelname="span"]');
                     spanAll.forEach(item=>{
-                        console.log(item);
                         item.remove();
                 });
                 //關閉舊的圖片
@@ -1340,9 +1256,6 @@
 
             //開啟新的
             let newbox = document.querySelector('[data-imgidbox="'+status+'"]');
-            console.log("//開啟新的，取得值");
-            console.log(status);
-            console.log(newbox);
             if(newbox)
             {
                 newbox.classList.add('active');
@@ -1393,9 +1306,6 @@
             let area = newJson["List"]['area'];
             let LabelObjlenght = LabelObj.length;
             let LabelObjkey = Object.keys(LabelObj);
-            // console.log(area);
-            // console.log(LabelObj);
-            // console.log(Object.keys(LabelObj));
             //區域回寫
             for(let i=0; i<LabelObjkey.length; i++)
             {
@@ -1509,16 +1419,11 @@
                 householdArray[householdindex].label = LabelObj[keyhousehold];
 
             }
-
-            console.log(newJson);
         }
 
         //存儲標籤
         $('#s_SavebuttonLabel').on('click',function(event){
             let typeid = $('#type').val();
-            // console.log("typeid");
-            // console.log(typeid);
-
             SaveImageBuTTon();
         });
 
