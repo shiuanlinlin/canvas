@@ -896,24 +896,104 @@
             let Thisbox = document.querySelector('.s_img_labeBox.active');
             let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
             console.log(Loadid);
-            let List = AllLabeljson['List']['area'];
-            if(Loadid.length == 2)
+            let area = AllLabeljson['List']['area'];
+            //區域
+            //input抓去
+            let areaTag = document.querySelector('[data-status="area"]');
+            let buildingTag = document.querySelector('[data-status="building"]');
+            let floorTag = document.querySelector('[data-status="floor"]');
+            let householdTag = document.querySelector('[data-status="household"]');
+            //區域
+            if(buildingTag.value == 0 && floorTag.value == 0 && householdTag.value == 0)
             {
-                var index = $.map(List, function(item, index) {
-                    return item.tag;
-                }).indexOf(Loadid);
+                try{
+                    let index = FindIndexPotion(area,Loadid);
+                    let areajson = area[index].label;
+                    let spanindex = FindSpanPotion(areajson,Number(spanid));
+                    let spanjson = areajson[spanindex];
+                    spanjson[Position] = values;
+                }
+                catch (e)
+                {
+                    console.error("區域移動寫回發生錯誤");
+                }
 
-                let SpanArray = List[index]['label'];
-
-                SpanArray.forEach(item=>{
-                    if(item.id == spanid)
-                    {
-                        item[Position] = values;
-                    }
-                });
+            }
+            //棟
+            if(buildingTag.value != 0 && floorTag.value == 0 && householdTag.value == 0)
+            {
+                try{
+                    let index = FindIndexPotion(area,areaTag.value);
+                    let areajson = area[index]['building'];
+                    let areakey = areaTag.value+"_"+buildingTag.value;
+                    let buildingindex = FindIndexPotion(areajson,areakey);
+                    let buildingjson = areajson[buildingindex]['label'];
+                    let spanindex = FindSpanPotion(buildingjson,Number(spanid));
+                    let spanjson = buildingjson[spanindex];
+                    spanjson[Position] = values;
+                }
+                catch (e)
+                {
+                    console.error("棟移動寫回發生錯誤");
+                }
+            }
+            //樓
+            if(buildingTag.value != 0 && floorTag.value != 0 && householdTag.value == 0)
+            {
+                try{
+                    let index = FindIndexPotion(area,areaTag.value);
+                    let areajson = area[index]['building'];
+                    let areakey = areaTag.value+"_"+buildingTag.value;
+                    let buildingindex = FindIndexPotion(areajson,areakey);
+                    let buildingjson = areajson[buildingindex]['floor'];
+                    let floorkey = areaTag.value + "_"+buildingTag.value+"_"+floorTag.value;
+                    let floorindex = FindIndexPotion(buildingjson,floorkey);
+                    let floorjson = buildingjson[floorindex].label;
+                    let spanindex = FindSpanPotion(floorjson,Number(spanid));
+                    let spanjson = floorjson[spanindex];
+                    spanjson[Position] = values;
+                }
+                catch (e)
+                {
+                    console.error("棟移動寫回發生錯誤");
+                }
+            }
+            //戶
+            if(buildingTag.value != 0 && floorTag.value != 0 && householdTag.value != 0)
+            {
+                try{
+                    let index = FindIndexPotion(area,areaTag.value);
+                    let areajson = area[index]['building'];
+                    let areakey = areaTag.value+"_"+buildingTag.value;
+                    let buildingindex = FindIndexPotion(areajson,areakey);
+                    let buildingjson = areajson[buildingindex]['floor'];
+                    let floorkey = areaTag.value + "_"+buildingTag.value+"_"+floorTag.value;
+                    let floorindex = FindIndexPotion(buildingjson,floorkey);
+                    let floorjson = buildingjson[floorindex]['household'];
+                    let householdkey = areaTag.value + "_"+buildingTag.value+"_"+floorTag.value + "_" + householdTag.value;
+                    let householdindex = FindIndexPotion(floorjson,householdkey);
+                    let householdjson = floorjson[householdindex].label;
+                    console.log(householdjson);
+                    let spanindex = FindSpanPotion(householdjson,Number(spanid));
+                    let spanjson = householdjson[spanindex];
+                }
+                catch (e)
+                {
+                    console.error("棟移動寫回發生錯誤");
+                }
             }
             console.log("將位置寫回標籤");
             console.log(AllLabeljson);
+        }
+
+        //尋找所在位置回傳span
+        function FindSpanPotion(List,spanid)
+        {
+            var index = $.map(List, function(item, index) {
+                return item.id;
+            }).indexOf(spanid);
+
+            return index;
         }
 
         //尋找所在位置回傳index
