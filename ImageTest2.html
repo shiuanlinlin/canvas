@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    <!-- 網站用版本 4.6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link id="sleek-css" rel="stylesheet" href="css/admin.css?id=a3617cb76c3aa6234410eb11f813f3b1">
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <style>
+        .s_img_labeBox{ position: relative; }
+        .s_img_labeBox span { display: inline-block; padding: 2px 10px; border: 2px solid rgb(227, 76, 0); background: rgb(227, 76, 0);  color: rgb(255, 255, 255); font-size: 14px; position: absolute; cursor: pointer;}
+        .s_img_labeBox span.active{border: 2px dashed #000; background: red;}
+    </style>
+</head>
+<body>
+    <div class="card-body pt-0">
+        <form method="POST" action="https://rdm.geekers.tw/estate/change_background" accept-charset="UTF-8" id="changeBgForm" enctype="multipart/form-data"><input name="_token" type="hidden" value="2vrgaVrW81v5dvyxzOQ29ySod5cd8hTSjbPVZAxV">
+            <input type="hidden" name="company" value="2">
+            <input type="hidden" name="case" value="1">
+            <input type="file" class="d-none" name="background" id="background" accept="image/png,image/jpeg">
+        </form>
+
+    <div class="d-flex flex-row justify-content-between pt-4 pb-0">
+        <div class="d-flex w-100">
+        <div class="search-input-group">
+            <div class="SumoSelect sumo_company" tabindex="0" role="button" aria-expanded="false">
+                <select class="form-control default-SumoSelect SumoUnder" id="company" name="company" tabindex="-1">
+                    <option value="">请选择公司</option>
+                    <option value="2" selected="">數位玩家</option>
+                    <option value="3">夢想人生</option>
+                    <option value="4">geekers</option>
+                </select>
+                <p class="CaptionCont SelectBox form-control default-SumoSelect search" title=" 數位玩家"><span> 數位玩家</span><label><i></i></label><input type="text" class="search-txt" value="" autocomplete="off"></p><div class="optWrapper"><ul class="options"><li class="opt"><label>请选择公司</label></li><li class="opt selected"><label>數位玩家</label></li><li class="opt"><label>夢想人生</label></li><li class="opt"><label>geekers</label></li></ul><p class="no-match"></p></div></div>
+            </div>
+            <div class="search-input-group">
+                <div class="SumoSelect sumo_case" tabindex="0" role="button" aria-expanded="false"><select class="form-control default-SumoSelect SumoUnder" id="case" name="case" tabindex="-1">
+                <option value="">建案</option>
+                            <option value="1" selected="">test</option>
+                            <option value="2">項目0209簡</option>
+                    </select><p class="CaptionCont SelectBox form-control default-SumoSelect search" title=" test"><span> test</span><label><i></i></label><input type="text" class="search-txt" value="" autocomplete="off"></p><div class="optWrapper"><ul class="options"><li class="opt"><label>建案</label></li><li class="opt selected"><label>test</label></li><li class="opt"><label>項目0209簡</label></li></ul><p class="no-match"></p></div></div>
+                </div>
+            <div class="search-input-group">
+                <div class="SumoSelect sumo_type" tabindex="0" role="button" aria-expanded="false">
+                    <select class="form-control default-SumoSelect SumoUnder" id="type" name="type" tabindex="-1">
+                        <option value="info" selected="">全区资料</option>
+                        <option value="standard">標準套型</option>
+                    </select>
+                    <p class="CaptionCont SelectBox form-control default-SumoSelect search" title=" 全区资料"><span> 全区资料</span><label><i></i></label><input type="text" class="search-txt" value="" autocomplete="off"></p><div class="optWrapper"><ul class="options"><li class="opt selected"><label>全区资料</label></li><li class="opt"><label>標準套型</label></li></ul><p class="no-match"></p></div></div>
+                </div>
+            </div>
+            <div class="search-btn-group text-nowrap">
+                <button class="btn btn-gk-search" onclick="document.getElementById('background').click()">更换背景总图</button>
+                <button type="button" class="btn btn-gk-view" data-toggle="modal" data-target="#addBuildingModal">添加房屋</button>
+                <button class="btn btn-gk-print">排列栋号</button>
+                <button class="btn btn-gk-del">鎖定</button>
+            </div>
+        </div>
+    <!-- 添加標籤 -->
+    <div class="d-flex flex-row justify-content-between pt-1">
+        <div class="d-flex w-100">
+            <div class="search-input-group">
+                <div>
+                    <!-- 標籤名稱 -->
+                    <input type="text" class="form-control" id="s_titleinputLabel">
+                </div>
+            </div>
+            <div class="search-btn-group text-nowrap">
+                <!-- 新增按鈕 -->
+                <button type="button" class="btn btn-gk-view" id="s_addbuttonLabel">添加標籤</button>
+                <button type="button" class="btn btn-gk-view" id="s_EditbuttonLabel">修改標籤</button>
+                <button type="button" class="btn btn-gk-del" id="s_delbuttonLabel">移除標籤</button>
+                <button type="button" class="btn btn-gk-print" id="s_SavebuttonLabel">儲存標籤</button>
+            </div>
+        </div>
+    </div>
+    <!-- 棟別 -->
+    <div class="d-flex" id="s_ChangeTypeImage">
+        <div class="form-group mt-4">
+            <select class="form-control" data-status="area">
+                <option value="A1">A</option>
+                <option value="A2">B</option>
+            </select>
+        </div>
+        <div class="form-group mt-4">
+            <select class="form-control" data-status="building">
+            <option value="0">棟別</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            </select>
+        </div>
+        <div class="form-group mt-4">
+            <select class="form-control" data-status="floor">
+            <option value="0">樓層</option>
+            <option value="F1">1</option>
+            <option value="F2">2</option>
+            </select>
+        </div>
+        <div class="form-group mt-4">
+            <select class="form-control" data-status="household">
+            <option value="0">戶別</option>
+            <option value="H1">1</option>
+            <option value="H2">2</option>
+            </select>
+        </div>
+    </div>
+    <div class="s_BtnGroud my-2">
+        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="left"><i class="fa-solid fa-left-long"></i></button>
+        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="up"><i class="fa-solid fa-up-long"></i></button>
+        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="down"><i class="fa-solid fa-down-long"></i></button>
+        <button type="button" class="btn btn-gk-view text-secondary border" data-simg="right"><i class="fa-solid fa-right-long"></i></button>
+    </div>
+    <!-- 添加標籤 end-->
+        <div id="s_ImageLabelAll">
+            <a href="#" class="s_img_labeBox d-block active" data-imgidbox="A1" data-labelname="imgbox">
+                <!-- 區 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2" data-labelname="imgbox">
+                <!-- 區 -->
+                <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_A" data-labelname="imgbox">
+                <!-- A棟 -->
+                <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_B" data-labelname="imgbox">
+                <!-- B棟 -->
+                <img src="b3.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_A" data-labelname="imgbox">
+                <!-- 樓 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_B" data-labelname="imgbox">
+                <!-- 樓 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_A_F1" data-labelname="imgbox">
+                <!-- 樓 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_A_F2" data-labelname="imgbox">
+                <!-- 樓 -->
+                <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_B_F1" data-labelname="imgbox">
+                <!-- 樓 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_B_F2" data-labelname="imgbox">
+                <!-- 樓 -->
+                <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="B1_A_F1" data-labelname="imgbox">
+                <!-- 樓 -->
+                <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="B1_A_F2" data-labelname="imgbox">
+                <!-- 樓 -->
+                <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_A_F1_H1" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_A_F1_H1" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_A_F2_H1" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_B_F1_H1" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_B_F2_H1" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_A_F1_H2" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_A_F2_H2" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_B_F1_H2" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_B_F2_H2" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_B_F1_H1" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_A_F1" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_B_F2" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_A_F2" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_A_F1_H2" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_A_F2_H1" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_A_F2_H2" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_B_F2_H1" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_B_F2_H2" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_B_F1_H2" data-labelname="imgbox">
+                <!-- 戶 -->
+                <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
+            </a>
+        </div>
+    </div>
+
+    <script>
+
+        //標籤按鈕，新增移除效果
+        //屬性設定：
+        // data-labelname='span' ==  標籤用<span>
+        // data-labelname='addbutton' ==  新增用<button>
+        // data-labelname='delbutton' ==  移除用<button>
+        // data-labelname='move' == 移動<button>
+        // data-labelname="titleinput" ==  標題用<input>
+        // data-labelname="imgbox" ==  圖片外框
+        //id規則： s_Label_1 ~ s_Label_10 不可以重複
+        let ssidname = "s_Label";
+        let ssLabelsPan = "<span data-labelname='span'></span>";
+        //圖片區塊
+        const ImageLabelAll = document.getElementById('s_ImageLabelAll');
+        //名稱輸入
+        const s_titleinputLabel = document.getElementById('s_titleinputLabel');
+
+        //== 標籤開始
+        //== 1.Demoobj ==//
+        let AllLabeljson = {
+                "List": {
+                    "area":[
+                            {
+                                "name":"全区资料",
+                                "tag":"A1",
+                                "id":1,
+                                "img": "b1.png",
+                                "label": [
+                                    {"name":"A區域標籤1","id":1,"left":100,"top":200},
+                                    {"name":"A區域標籤2","id":2,"left":200,"top":""},
+                                    {"name":"A區域標籤3","id":6},
+                                    {"name":"A區域標籤4","id":10,"left":900,"top":10},
+                                    {"name":"A區域標籤5","id":13,"left":"","top":1100},
+                                ],
+                                "building": [
+                                    {
+                                        "name":"A棟",
+                                        "tag":"A1_A",
+                                        "id":1,
+                                        "img": "b2.png",
+                                        "label": [
+                                            {"name":"A區A棟域標籤1","id":1,"left":100,"top":200},
+                                            {"name":"A區A棟域標籤2","id":2,"left":200,"top":""},
+                                            {"name":"A區A棟域標籤3","id":6},
+                                            {"name":"A區A棟域標籤4","id":10,"left":900,"top":10},
+                                            {"name":"A區A棟域標籤5","id":13,"left":"","top":100},
+                                        ],
+                                        "floor": [
+                                            {
+                                                "name":"1樓",
+                                                "tag":"A1_A_F1",
+                                                "id":1,
+                                                "img": "b1.png",
+                                                "label": [
+                                                    {"name":"A區A棟1樓1","id":1,"left":100,"top":200},
+                                                    {"name":"A區A棟1樓2","id":2,"left":200,"top":""},
+                                                    {"name":"A區A棟1樓3","id":6},
+                                                    {"name":"A區A棟1樓4","id":10,"left":900,"top":10},
+                                                    {"name":"A區A棟1樓5","id":13,"left":"","top":1100},
+                                                ],
+                                                "household": [
+                                                    {
+                                                        "name":"1戶",
+                                                        "tag":"A1_A_F1_H1",
+                                                        "id":1,
+                                                        "img": "b2.png",
+                                                        "label": [
+                                                            {"name":"A區A棟1樓1戶1","id":1,"left":100,"top":200},
+                                                            {"name":"A區A棟1樓1戶2","id":2,"left":200,"top":""},
+                                                            {"name":"A區A棟1樓1戶3","id":6},
+                                                            {"name":"A區A棟1樓1戶4","id":10,"left":900,"top":10},
+                                                            {"name":"A區A棟1樓1戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    },
+                                                    {
+                                                        "name":"2戶",
+                                                        "tag":"A1_A_F1_H2",
+                                                        "id":2,
+                                                        "img": "b1.png",
+                                                        "label": [
+                                                            {"name":"A區A棟1樓2戶1","id":1,"left":100,"top":200},
+                                                            {"name":"A區A棟1樓2戶2","id":2,"left":200,"top":""},
+                                                            {"name":"A區A棟1樓2戶3","id":6},
+                                                            {"name":"A區A棟1樓2戶4","id":10,"left":900,"top":10},
+                                                            {"name":"A區A棟1樓2戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name":"2樓",
+                                                "tag":"A1_A_F2",
+                                                "id":1,
+                                                "img": "b3.png",
+                                                "label": [
+                                                    {"name":"A區A棟2樓1","id":1,"left":100,"top":200},
+                                                    {"name":"A區A棟2樓2","id":2,"left":200,"top":""},
+                                                    {"name":"A區A棟2樓3","id":6},
+                                                    {"name":"A區A棟2樓4","id":10,"left":900,"top":10},
+                                                    {"name":"A區A棟2樓5","id":13,"left":"","top":1100},
+                                                ],
+                                                "household": [
+                                                    {
+                                                        "name":"1戶",
+                                                        "tag":"A1_A_F2_H1",
+                                                        "id":1,
+                                                        "img": "b1.png",
+                                                        "label": [
+                                                            {"name":"A區A棟2樓1戶1","id":1,"left":100,"top":200},
+                                                            {"name":"A區A棟2樓1戶2","id":2,"left":200,"top":""},
+                                                            {"name":"A區A棟2樓1戶3","id":6},
+                                                            {"name":"A區A棟2樓1戶4","id":10,"left":900,"top":10},
+                                                            {"name":"A區A棟2樓1戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                    },
+                                    {
+                                        "name":"B棟",
+                                        "tag":"A1_B",
+                                        "id":2,
+                                        "img": "b1.png",
+                                        "label": [],
+                                        "floor": [
+                                            {
+                                                "name":"1樓",
+                                                "tag":"A1_B_F1",
+                                                "id":1,
+                                                "img": "b2.png",
+                                                "label": [
+                                                    {"name":"A區B棟1樓1","id":1,"left":100,"top":200},
+                                                    {"name":"A區B棟1樓2","id":2,"left":200,"top":""},
+                                                    {"name":"A區B棟1樓3","id":6},
+                                                    {"name":"A區B棟1樓4","id":10,"left":900,"top":10},
+                                                    {"name":"A區B棟1樓5","id":13,"left":"","top":1100},
+                                                ],
+                                                "household": [
+                                                    {
+                                                        "name":"1戶",
+                                                        "tag":"A1_B_F1_H1",
+                                                        "id":1,
+                                                        "img": "b2.png",
+                                                        "label": [
+                                                            {"name":"A區B棟1樓1戶1","id":1,"left":100,"top":200},
+                                                            {"name":"A區B棟1樓1戶2","id":2,"left":200,"top":""},
+                                                            {"name":"A區B棟1樓1戶3","id":6},
+                                                            {"name":"A區B棟1樓1戶4","id":10,"left":900,"top":10},
+                                                            {"name":"A區B棟1樓1戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    },
+                                                    {
+                                                        "name":"2戶",
+                                                        "tag":"A1_B_F1_H2",
+                                                        "id":1,
+                                                        "img": "b1.png",
+                                                        "label": [
+                                                            {"name":"A區B棟1樓2戶1","id":1,"left":100,"top":200},
+                                                            {"name":"A區B棟1樓2戶2","id":2,"left":200,"top":""},
+                                                            {"name":"A區B棟1樓2戶3","id":6},
+                                                            {"name":"A區B棟1樓2戶4","id":10,"left":900,"top":10},
+                                                            {"name":"A區B棟1樓2戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name":"2樓",
+                                                "tag":"A1_B_F2",
+                                                "id":1,
+                                                "img": "b2.png",
+                                                "label": [
+                                                    {"name":"A區B棟2樓1","id":1,"left":100,"top":200},
+                                                    {"name":"A區B棟2樓2","id":2,"left":200,"top":""},
+                                                    {"name":"A區B棟2樓3","id":6},
+                                                    {"name":"A區B棟2樓4","id":10,"left":900,"top":10},
+                                                    {"name":"A區B棟2樓5","id":13,"left":"","top":1100},
+                                                ],
+                                                "household": [
+                                                    {
+                                                        "name":"1戶",
+                                                        "tag":"A1_B_F2_H1",
+                                                        "id":1,
+                                                        "img": "b2.png",
+                                                        "label": [
+                                                            {"name":"A區B棟2樓1戶1","id":1,"left":100,"top":200},
+                                                            {"name":"A區B棟2樓1戶2","id":2,"left":200,"top":""},
+                                                            {"name":"A區B棟2樓1戶3","id":6},
+                                                            {"name":"A區B棟2樓1戶4","id":10,"left":900,"top":10},
+                                                            {"name":"A區B棟2樓1戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    },
+                                                    {
+                                                        "name":"2戶",
+                                                        "tag":"A1_B_F2_H2",
+                                                        "id":1,
+                                                        "img": "b1.png",
+                                                        "label": [
+                                                            {"name":"A區B棟2樓2戶1","id":1,"left":100,"top":200},
+                                                            {"name":"A區B棟2樓2戶2","id":2,"left":200,"top":""},
+                                                            {"name":"A區B棟2樓2戶3","id":6},
+                                                            {"name":"A區B棟2樓2戶4","id":10,"left":900,"top":10},
+                                                            {"name":"A區B棟2樓2戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                            },
+                            {
+                                "name":"B全区资料",
+                                "tag":"A2",
+                                "id":1,
+                                "img": "b2.png",
+                                "label": [
+                                    {"name":"B區域標籤1","id":1,"left":200,"top":200},
+                                    {"name":"B區域標籤2","id":2,"left":300,"top":100},
+                                    {"name":"B區域標籤3","id":6},
+                                    {"name":"B區域標籤4","id":10,"left":600,"top":10},
+                                    {"name":"B區域標籤5","id":13,"left":"","top":160},
+                                ],
+                                "building": [
+                                    {
+                                        "name":"A棟",
+                                        "tag":"A2_A",
+                                        "id":1,
+                                        "img": "b1.png",
+                                        "label": [
+                                            {"name":"B區A棟1","id":1,"left":100,"top":200},
+                                            {"name":"B區A棟2","id":2,"left":200,"top":""},
+                                            {"name":"B區A棟3","id":6},
+                                            {"name":"B區A棟4","id":10,"left":900,"top":10},
+                                            {"name":"B區A棟5","id":13,"left":"","top":1100},
+                                        ],
+                                        "floor": [
+                                            {
+                                                "name":"1樓",
+                                                "tag":"A2_A_F1",
+                                                "id":1,
+                                                "img": "b2.png",
+                                                "label": [
+                                                    {"name":"B區A棟1樓1","id":1,"left":100,"top":200},
+                                                    {"name":"B區A棟1樓2","id":2,"left":200,"top":""},
+                                                    {"name":"B區A棟1樓3","id":6},
+                                                    {"name":"B區A棟1樓4","id":10,"left":900,"top":10},
+                                                    {"name":"B區A棟1樓5","id":13,"left":"","top":1100},
+                                                ],
+                                                "household": [
+                                                    {
+                                                        "name":"1戶",
+                                                        "tag":"A2_A_F1_H1",
+                                                        "id":1,
+                                                        "img": "b2.png",
+                                                        "label": [
+                                                            {"name":"B區A棟1樓1戶1","id":1,"left":100,"top":200},
+                                                            {"name":"B區A棟1樓1戶2","id":2,"left":200,"top":""},
+                                                            {"name":"B區A棟1樓1戶3","id":6},
+                                                            {"name":"B區A棟1樓1戶4","id":10,"left":900,"top":10},
+                                                            {"name":"B區A棟1樓1戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    },
+                                                    {
+                                                        "name":"2戶",
+                                                        "tag":"A2_A_F1_H2",
+                                                        "id":2,
+                                                        "img": "b1.png",
+                                                        "label": [
+                                                            {"name":"B區A棟1樓2戶1","id":1,"left":100,"top":200},
+                                                            {"name":"B區A棟1樓2戶2","id":2,"left":200,"top":""},
+                                                            {"name":"B區A棟1樓2戶3","id":6},
+                                                            {"name":"B區A棟1樓2戶4","id":10,"left":900,"top":10},
+                                                            {"name":"B區A棟1樓2戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name":"2樓",
+                                                "tag":"A2_A_F2",
+                                                "id":1,
+                                                "label": [],
+                                                "household": [
+                                                    {
+                                                        "name":"1戶",
+                                                        "tag":"A2_A_F2_H1",
+                                                        "id":1,
+                                                        "img": "b2.png",
+                                                        "label": [
+                                                            {"name":"B區A棟2樓1","id":1,"left":100,"top":200},
+                                                            {"name":"B區A棟2樓2","id":2,"left":200,"top":""},
+                                                            {"name":"B區A棟2樓3","id":6},
+                                                            {"name":"B區A棟2樓4","id":10,"left":900,"top":10},
+                                                            {"name":"B區A棟2樓5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                    },
+                                    {
+                                        "name":"B棟",
+                                        "tag":"A2_B",
+                                        "id":2,
+                                        "img": "b1.png",
+                                        "label": [
+                                            {"name":"B區B棟1","id":1,"left":100,"top":200},
+                                            {"name":"B區B棟2","id":2,"left":200,"top":""},
+                                            {"name":"B區B棟3","id":6},
+                                            {"name":"B區B棟4","id":10,"left":900,"top":10},
+                                            {"name":"B區B棟5","id":13,"left":"","top":1100},
+                                        ],
+                                        "floor": [
+                                            {
+                                                "name":"1樓",
+                                                "tag":"A2_B_F1",
+                                                "id":1,
+                                                "img": "b2.png",
+                                                "label": [
+                                                    {"name":"B區B棟1樓1","id":1,"left":100,"top":200},
+                                                    {"name":"B區B棟1樓2","id":2,"left":200,"top":""},
+                                                    {"name":"B區B棟1樓3","id":6},
+                                                    {"name":"B區B棟1樓4","id":10,"left":900,"top":10},
+                                                    {"name":"B區B棟1樓5","id":13,"left":"","top":1100},
+                                                ],
+                                                "household": [
+                                                    {
+                                                        "name":"1戶",
+                                                        "tag":"A2_B_F1_H1",
+                                                        "id":1,
+                                                        "img": "b2.png",
+                                                        "label": [
+                                                            {"name":"B區B棟1樓1戶1","id":1,"left":100,"top":200},
+                                                            {"name":"B區B棟1樓1戶2","id":2,"left":200,"top":""},
+                                                            {"name":"B區B棟1樓1戶3","id":6},
+                                                            {"name":"B區B棟1樓1戶4","id":10,"left":900,"top":10},
+                                                            {"name":"B區B棟1樓1戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    },
+                                                    {
+                                                        "name":"2戶",
+                                                        "tag":"A2_B_F1_H2",
+                                                        "id":1,
+                                                        "img": "b2.png",
+                                                        "label": [
+                                                            {"name":"B區B棟1樓2戶1","id":1,"left":100,"top":200},
+                                                            {"name":"B區B棟1樓2戶2","id":2,"left":200,"top":""},
+                                                            {"name":"B區B棟1樓2戶3","id":6},
+                                                            {"name":"B區B棟1樓2戶4","id":10,"left":900,"top":10},
+                                                            {"name":"B區B棟1樓2戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name":"2樓",
+                                                "tag":"A2_B_F2",
+                                                "id":1,
+                                                "img": "b2.png",
+                                                "label": [
+                                                    {"name":"B區B棟2樓1","id":1,"left":100,"top":200},
+                                                    {"name":"B區B棟2樓2","id":2,"left":200,"top":""},
+                                                    {"name":"B區B棟2樓3","id":6},
+                                                    {"name":"B區B棟2樓4","id":10,"left":900,"top":10},
+                                                    {"name":"B區B棟2樓5","id":13,"left":"","top":1100},
+                                                ],
+                                                "household": [
+                                                    {
+                                                        "name":"1戶",
+                                                        "tag":"A2_B_F2_H1",
+                                                        "id":1,
+                                                        "img": "b2.png",
+                                                        "label": [
+                                                            {"name":"B區B棟2樓1戶1","id":1,"left":100,"top":200},
+                                                            {"name":"B區B棟2樓1戶2","id":2,"left":200,"top":""},
+                                                            {"name":"B區B棟2樓1戶3","id":6},
+                                                            {"name":"B區B棟2樓1戶4","id":10,"left":900,"top":10},
+                                                            {"name":"B區B棟2樓1戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    },
+                                                    {
+                                                        "name":"2戶",
+                                                        "tag":"A2_B_F2_H2",
+                                                        "id":1,
+                                                        "img": "b2.png",
+                                                        "label": [
+                                                            {"name":"B區B棟2樓2戶1","id":1,"left":100,"top":200},
+                                                            {"name":"B區B棟2樓2戶2","id":2,"left":200,"top":""},
+                                                            {"name":"B區B棟2樓2戶3","id":6},
+                                                            {"name":"B區B棟2樓2戶4","id":10,"left":900,"top":10},
+                                                            {"name":"B區B棟2樓2戶5","id":13,"left":"","top":1100},
+                                                        ],
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                            },
+                        ]
+                }
+            };
+
+        //載入標籤
+        function S_LabelLOAD(json)
+        {
+            console.log("載入標籤");
+            console.log(json);
+            //抓區被選取的img div
+            if(document.querySelector('.s_img_labeBox.active'))
+            {
+                //整理好的json
+                let Imagejson = json;
+                console.log(Imagejson);
+                //label長度
+                let LabelLength = Imagejson ? Imagejson.length : 0;
+                if(LabelLength > 0 )
+                {
+                    console.log("大於0加標籤");
+                    let LabeHtml = '';
+                    Imagejson.forEach(item=>{
+                        LabeHtml += "<span data-labelname='span' data-labelid='"+item.id+"' style='top:"+(item.top != "" && item.top ? item.top : "8")+"px; left:"+(item.left != "" && item.left ? item.left : "8")+"px;'>"+item.name+"</span>";
+                    });
+                    //目前顯示的圖片
+                    let SthisImage = $('.s_img_labeBox.active');
+                    SthisImage.append(LabeHtml);
+                }
+
+            }
+        }
+
+        //載入標籤(//預設顯示A區)
+        S_LabelLOAD(AllLabeljson['List']['area'][0].label);
+
+
+        //選取標籤
+        ImageLabelAll.addEventListener("click",(event)=>{
+            let target = event.target;
+            let labelname = ('labelname' in target.dataset) ? target.dataset.labelname : false;
+            if(labelname == "span")
+            {
+                if(document.querySelector("span[data-labelname='span'].active"))
+                {
+                    document.querySelector("span[data-labelname='span'].active").classList.remove('active');
+                }
+
+                target.classList.add('active');
+                s_titleinputLabel.value = document.querySelector("span[data-labelname='span'].active").textContent;
+            }
+        });
+
+        //移動標籤
+        $(".s_BtnGroud button").on('click',function(event){
+            //先找尋是否有標籤被選取了
+            if(document.querySelector("span[data-labelname='span'].active"))
+            {
+                let s_Span = document.querySelector("span[data-labelname='span'].active");
+                switch($(this).data('simg'))
+                {
+                    case "left":
+                        if(s_Span.style.left != "" || s_Span.style.left !=null)
+                        {
+                            let s_SpanWidth = s_Span.offsetWidth;
+                            let oldleft = s_Span.style.left;
+                            let oldleftnumber = oldleft.split('px');
+                            let newleft = Number(oldleftnumber[0]) - 10;
+                            let leftvalue = (newleft <= 0 ) ? 0  : newleft;
+                            s_Span.style.left = leftvalue + "px";
+                            let spanid = s_Span.dataset.labelid;
+                            thisPositionImageJson(spanid,"left",leftvalue);
+                        }
+                        break;
+                    case "right":
+                        if(s_Span.style.left != "" || s_Span.style.left !=null)
+                        {
+                            //圖片外框寬度
+                            let ImageWidths = document.querySelector('.s_img_labeBox.active') !=null ? document.querySelector('.s_img_labeBox.active').offsetWidth : false;
+
+                            let s_SpanWidth = s_Span.offsetWidth;
+                            let oldleft = s_Span.style.left;
+                            let oldleftnumber = oldleft.split('px');
+                            let newleft = Number(oldleftnumber[0]) + 10;
+                            let leftvalue = (newleft > (ImageWidths - s_SpanWidth)) ? ImageWidths : newleft;
+                            s_Span.style.left = leftvalue + "px";
+                            let spanid = s_Span.dataset.labelid;
+                            thisPositionImageJson(spanid,"left",leftvalue);
+                        }
+                        break;
+                        case "up":
+                            if(s_Span.style.top != "" || s_Span.style.top !=null)
+                            {
+                                let oldtop = s_Span.style.top;
+                                let oldtopnumber = oldtop.split('px');
+                                let newtop = Number(oldtopnumber[0]) - 10;
+                                let topvalue = (newtop <= 0 ) ? 0  : newtop;
+                                s_Span.style.top = topvalue + "px";
+                                let spanid = s_Span.dataset.labelid;
+                                thisPositionImageJson(spanid,"top",topvalue);
+                            }
+                        break;
+                        case "down":
+                            if(s_Span.style.top != "" || s_Span.style.top !=null)
+                            {
+                                //圖片高度
+                                let ImageHeight = document.querySelector('.s_img_labeBox.active img').offsetHeight !=null ? document.querySelector('.s_img_labeBox.active img').offsetHeight : false;
+                                let s_SpanHeight = s_Span.offsetHeight;
+                                let oldtop = s_Span.style.top;
+                                let oldtopnumber = oldtop.split('px');
+                                let newtop = Number(oldtopnumber[0]) + 10;
+                                let topvalue = (newtop >= (ImageHeight - s_SpanHeight) ) ?  ImageHeight : newtop;
+                                s_Span.style.top =  topvalue + "px";
+                                let spanid = s_Span.dataset.labelid;
+                                thisPositionImageJson(spanid,"top",topvalue);
+                            }
+                        break;
+                }
+            }
+            else
+            {
+                alert("未選取標籤");
+            }
+
+        });
+
+        //新增標籤
+        $('#s_addbuttonLabel').on('click',function(event){
+            if($('#s_titleinputLabel').val() != "")
+            {
+                //判斷目前被選擇的圖片外框
+                if(document.querySelector('.s_img_labeBox.active'))
+                {
+                    //抓出對應id
+                    let Thisbox = document.querySelector('.s_img_labeBox.active');
+                    let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
+                    console.log(Loadid);
+                    let List = AllLabeljson['List']['area'];
+                    if(Loadid.length == 2)
+                    {
+                        var index = $.map(List, function(item, index) {
+                            return item.tag;
+                        }).indexOf(Loadid);
+                        let spanlength = List[index]['label'].length;
+                        let newid = List[index]['label'].length > 0 ? List[index]['label'][spanlength - 1].id + 1 : 1;
+                        List[index]['label'].push({"name":$('#s_titleinputLabel').val(),"id":newid,"left":0,"top":0});
+                        $('.s_img_labeBox.active').append("<span data-labelname='span' data-labelid='"+newid+"' style='top:0px;left:0px;'>"+$('#s_titleinputLabel').val()+"</span>");
+                    }
+                    console.log(AllLabeljson);
+                }
+            }
+            else
+            {
+                alert("未輸入名稱");
+            }
+        });
+
+
+        //將位置寫回標籤 spanid 標籤的id  ,Position 位置 left or top  ,values 值
+        function thisPositionImageJson(spanid,Position,values)
+        {
+            //抓出對應id
+            let Thisbox = document.querySelector('.s_img_labeBox.active');
+            let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
+            console.log(Loadid);
+            let List = AllLabeljson['List']['area'];
+            if(Loadid.length == 2)
+            {
+                var index = $.map(List, function(item, index) {
+                    return item.tag;
+                }).indexOf(Loadid);
+
+                let SpanArray = List[index]['label'];
+
+                SpanArray.forEach(item=>{
+                    if(item.id == spanid)
+                    {
+                        item[Position] = values;
+                    }
+                });
+            }
+            console.log("將位置寫回標籤");
+            console.log(AllLabeljson);
+        }
+
+
+        //修改標籤(更改名稱)
+        $('#s_EditbuttonLabel').on('click',function(event){
+            if(document.querySelector('span[data-labelname="span"].active') && s_titleinputLabel.value != "")
+            {
+                //抓出對應id
+                let Thisbox = document.querySelector('.s_img_labeBox.active');
+                let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
+                //抓取json
+                let Imagejson = LabelObj[Loadid];
+                let s_Span = document.querySelector('span[data-labelname="span"].active');
+                let spanid = s_Span.dataset.labelid;
+                s_Span.textContent = s_titleinputLabel.value;
+                Imagejson.forEach(item=>{
+                    if(item.id == spanid)
+                    {
+                        item['name'] = s_titleinputLabel.value;
+                    }
+                });
+                console.log("修改標籤(更改名稱)");
+                console.log(LabelObj);
+            }
+            else
+            {
+                alert("未選取標籤");
+            }
+        });
+
+
+        //移除標籤
+        $('#s_delbuttonLabel').on('click',function(event){
+            if(document.querySelector('span[data-labelname="span"].active'))
+            {
+                //抓出對應id
+                let Thisbox = document.querySelector('.s_img_labeBox.active');
+                let Loadid = ('imgidbox' in Thisbox.dataset ) ? Thisbox.dataset.imgidbox : false;
+                //抓取json
+                let Imagejson = LabelObj[Loadid];
+                let s_Span = document.querySelector('span[data-labelname="span"].active');
+                let spanid = s_Span.dataset.labelid;
+                let index = -1;
+                //取得在第幾列
+                let filteredObj = Imagejson.find(function(item, i){
+                    if(item.id == spanid){
+                        index = i;
+                        return i;
+                    }
+                });
+                if(index >= 0)
+                {
+                    delete Imagejson[index];
+                    s_Span.remove();
+                }
+                else
+                {
+                    console.error("移除標籤功能出錯！計算位置出錯");
+                }
+            }else
+            {
+                alert("未選取標籤");
+            }
+
+            console.log("移除標籤");
+            console.log(LabelObj);
+
+        });
+
+
+        //切換棟別
+        s_ChangeTypeImage.addEventListener('change',event =>{
+            let target = event.target;
+            let values = target.value;
+            let status = ('status' in target.dataset) ? target.dataset.status : false;
+            console.log(target);
+            console.log(values);
+            console.log(status);
+            ChangeAllSelect(target,values,status);
+
+
+        });
+
+        //切換區、棟、樓、戶
+        function ChangeAllSelect(target,values,status)
+        {
+            //棟
+            console.log("buildingbuilding");
+            console.log(status);
+
+            //區域開啟切換
+            if(status == "area")
+            {
+                //開啟新的圖諞
+                let newactivebox = document.querySelector('[data-imgidbox="'+values+'');
+                newactivebox.classList.add('active');
+                newactivebox.classList.add('d-block');
+                newactivebox.classList.remove('d-none');
+
+                //抓取資料
+                let area = AllLabeljson['List']['area'];
+                var index = $.map(area, function(item, index) {
+                    return item.tag;
+                }).indexOf(values);
+
+                //如果棟別切換，其他下拉選單清除
+                //取得區域
+                let areavalue = document.querySelector('[data-status="area"]');
+                let buildingvalue = document.querySelector('[data-status="building"]');
+                let floorvalue = document.querySelector('[data-status="floor"]');
+                let householdvalue = document.querySelector('[data-status="household"]');
+                buildingvalue.value = 0;
+                floorvalue.value = 0;
+                householdvalue.value = 0;
+                //取得區域值
+                let areakey = areavalue.value;
+
+                //清除其他選項
+                Clear_Changebar("area");
+
+                //開啟新的圖片
+                NewImageBoxOpen(areakey);
+
+                //載入標籤
+                S_LabelLOAD(area[index].label);
+            }
+
+            //棟
+            if(status == "building")
+            {
+                //清除其他選項
+                Clear_Changebar("building");
+
+                let area = AllLabeljson['List']['area'];
+                //取得區域值
+                let areavalue = document.querySelector('[data-status="area"]');
+                let areakey = areavalue.value;
+                console.log("區域值");
+                console.log(areakey);
+                //取得棟別值
+                let buildingvalue = document.querySelector('[data-status="building"]');
+                let buildingkey = buildingvalue.value;
+                console.log("棟別值");
+                console.log(buildingkey);
+                //組合值
+                let buildingsum = areakey+"_"+buildingkey;
+                console.log("組合值");
+                console.log(buildingsum);
+                console.log(document.querySelector('[data-imgidbox="'+buildingsum+''));
+
+                if(document.querySelector('[data-imgidbox="'+buildingsum+''))
+                {
+                    //開啟圖片
+                    let buildingTag = document.querySelector('[data-imgidbox="'+buildingsum+'');
+                    buildingTag.classList.add('active');
+                    buildingTag.classList.remove('d-block');
+                    buildingTag.classList.remove('d-none');
+                    //抓取資料(區)
+                    let area = AllLabeljson['List']['area'];
+                    var index = $.map(area, function(item, index) {
+                        return item.tag;
+                    }).indexOf(areakey);
+                    //抓取資料(棟)
+                    let building = AllLabeljson['List']['area'][index].building;
+                    var buindex = $.map(building, function(item, index) {
+                        return item.tag;
+                    }).indexOf(buildingsum);
+                    let buildingjson = building[buindex];
+
+                    //開啟圖片
+                    NewImageBoxOpen(buildingsum);
+
+                    //載入標籤
+                    S_LabelLOAD(buildingjson.label);
+                }
+            }
+            //樓
+            if(status == "floor")
+            {
+
+                //清除其他選項
+                Clear_Changebar("floor");
+
+                //取得區域值
+                let areavalue = document.querySelector('[data-status="area"]');
+                let areakey = areavalue.value;
+                console.log("區域值");
+                console.log(areakey);
+                //取得棟別值
+                let buildingvalue = document.querySelector('[data-status="building"]');
+                let buildingkey = buildingvalue.value != 0 ? buildingvalue.value : false;
+                console.log("棟別值");
+                console.log(buildingkey);
+                //取得樓
+                let floorvalue = document.querySelector('[data-status="floor"]');
+                let floorvaluevalue = floorvalue.value;
+
+                //取得json資料區域
+                let area = AllLabeljson['List']['area'];
+                var index = $.map(area, function(item, index) {
+                    return item.tag;
+                }).indexOf(areakey);
+
+                //取得json資料棟
+                let building = AllLabeljson['List']['area'][index]['building'];
+                var buindex = $.map(building, function(item, index) {
+                    return item.tag;
+                }).indexOf(areakey+"_"+buildingkey);
+
+                //取得json資料棟樓
+                let floor = AllLabeljson['List']['area'][index]['building'][buindex]['floor'];
+                var flindex = $.map(floor, function(item, index) {
+                    return item.tag;
+                }).indexOf(areakey+"_"+buildingkey+"_"+floorvaluevalue);
+                if(!buildingkey || flindex == -1)
+                {
+                    floorvalue.value = 0;
+                    alert('未選取棟別!');
+                    console.error('可能json與頁面html不同步，沒有'+areakey+"_"+buildingkey+"_"+floorvaluevalue);
+                }
+                else
+                {
+                    let floorkey = areakey + "_"+ buildingkey + "_" + floorvaluevalue;
+                    //開啟圖片
+                    NewImageBoxOpen(floorkey);
+                    //載入標籤
+                    S_LabelLOAD(floor[flindex].label);
+                }
+            }
+
+            //戶
+            if(status == "household")
+            {
+                //取得區域值
+                let areavalue = document.querySelector('[data-status="area"]');
+                let areakey = areavalue.value;
+                console.log("區域值");
+                console.log(areakey);
+                //取得棟別值
+                let buildingvalue = document.querySelector('[data-status="building"]');
+                let buildingkey = buildingvalue.value != 0 ? buildingvalue.value : false;
+                console.log("棟別值");
+                console.log(buildingkey);
+                //取得樓
+                let floorvalue = document.querySelector('[data-status="floor"]');
+                let floorvaluevalue = floorvalue.value;
+                console.log("樓值");
+                console.log(floorvaluevalue);
+                //取得戶
+                let householdvalue = document.querySelector('[data-status="household"]');
+                let householdvaluevalue = householdvalue.value;
+                console.log("戶值");
+                console.log(householdvaluevalue);
+
+                //取得json資料區域
+                let area = AllLabeljson['List']['area'];
+                var index = $.map(area, function(item, index) {
+                    return item.tag;
+                }).indexOf(areakey);
+
+                //取得json資料棟
+                let building = AllLabeljson['List']['area'][index]['building'];
+                var buindex = $.map(building, function(item, index) {
+                    return item.tag;
+                }).indexOf(areakey+"_"+buildingkey);
+
+                //取得json資料棟樓
+                let floor = AllLabeljson['List']['area'][index]['building'][buindex]['floor'];
+                var flindex = $.map(floor, function(item, index) {
+                    return item.tag;
+                }).indexOf(areakey+"_"+buildingkey+"_"+floorvaluevalue);
+
+                //取得json資料棟樓
+                let household = AllLabeljson['List']['area'][index]['building'][buindex]['floor'][flindex]['household'];
+                var hoindex = $.map(household, function(item, index) {
+                    return item.tag;
+                }).indexOf(areakey+"_"+buildingkey+"_"+floorvaluevalue+"_"+householdvaluevalue);
+
+                let Endjson = household[hoindex];
+
+                //開啟圖片
+                NewImageBoxOpen(areakey+"_"+buildingkey+"_"+floorvaluevalue+"_"+householdvaluevalue);
+                //載入標籤
+                if(!Endjson)
+                {
+                    console.error('json檔案內無此資料'+areakey+"_"+buildingkey+"_"+floorvaluevalue+"_"+householdvaluevalue);
+                }
+                else
+                {
+                    S_LabelLOAD(Endjson.label);
+                }
+            }
+        }
+
+        //開啟新的圖片
+        function NewImageBoxOpen(status)
+        {
+            //清除輸入名稱的欄位
+            $('#s_titleinputLabel').val("");
+
+            //移除舊的
+            if(document.querySelector('[data-labelname="imgbox"].active'))
+            {
+                let oldimgbox = document.querySelector('[data-labelname="imgbox"].active');
+                console.log('清除舊標籤span標籤');
+                //清除舊標籤
+                let spanAll = document.querySelectorAll('[data-labelname="span"]');
+                    spanAll.forEach(item=>{
+                        console.log(item);
+                        item.remove();
+                });
+                //關閉舊的圖片
+                oldimgbox.classList.remove('active');
+                oldimgbox.classList.remove('d-block');
+                oldimgbox.classList.add('d-none');
+            }
+
+            //開啟新的
+            let newbox = document.querySelector('[data-imgidbox="'+status+'"]');
+            console.log("//開啟新的，取得值");
+            console.log(status);
+            console.log(newbox);
+            if(newbox)
+            {
+                newbox.classList.add('active');
+                newbox.classList.add('d-block');
+                newbox.classList.remove('d-none');
+            }
+            else
+            {
+                console.error('讀取切換數值出錯,可能沒有這個圖片框');
+            }
+        }
+
+        //清除切換
+        function Clear_Changebar(status)
+        {
+            //取得區域
+            let areavalue = document.querySelector('[data-status="area"]');
+            let buildingvalue = document.querySelector('[data-status="building"]');
+            let floorvalue = document.querySelector('[data-status="floor"]');
+            let householdvalue = document.querySelector('[data-status="household"]');
+            if(status == "area")
+            {
+                buildingvalue.value = 0;
+                floorvalue.value = 0;
+                householdvalue.value = 0;
+            }
+
+            if(status == "building")
+            {
+                floorvalue.value = 0;
+                householdvalue.value = 0;
+            }
+
+            if(status == "floor")
+            {
+                householdvalue.value = 0;
+            }
+
+        }
+
+
+        //儲存目前的標籤
+        function SaveImageBuTTon()
+        {
+
+            //取得區域key
+            let newJson = AllLabeljson;
+            let area = newJson["List"]['area'];
+            let LabelObjlenght = LabelObj.length;
+            let LabelObjkey = Object.keys(LabelObj);
+            // console.log(area);
+            // console.log(LabelObj);
+            // console.log(Object.keys(LabelObj));
+            //區域回寫
+            for(let i=0; i<LabelObjkey.length; i++)
+            {
+                if(area[i] && LabelObj[area[i].tag && area[i].tag])
+                {
+                    area[i].label = LabelObj[area[i].tag];
+                }
+            }
+            //棟抓出key
+            let areassplit = [];
+            let floorsplit = [];
+            let householdsplit = [];
+            for(let i=0; i<LabelObjkey.length; i++)
+            {
+                console.log(LabelObjkey[i]);
+                if(LabelObjkey[i].length == 4)
+                {
+                    //拆解字串，抓出區域
+                    areassplit.push(LabelObjkey[i].split('_'));
+
+                }
+                if(LabelObjkey[i].length == 7)
+                {
+                    //拆解字串，抓出樓
+                    floorsplit.push(LabelObjkey[i].split('_'));
+                }
+
+                if(LabelObjkey[i].length == 10)
+                {
+                    //拆解字串，抓出戶
+                    householdsplit.push(LabelObjkey[i].split('_'));
+                }
+            }
+            //棟回寫
+            for(let i=0; i<areassplit.length; i++)
+            {
+                //先找出區域的位置
+                var result = $.map(area, function(item, index) {
+                    return item.tag;
+                }).indexOf(areassplit[i][0]);
+
+                let buildingArray = area[result]["building"];
+
+                //找出樓的棟
+                let key = areassplit[i][0]+"_"+areassplit[i][1];
+                var building = $.map(buildingArray, function(item, index) {
+                    return item.tag;
+                }).indexOf(key);
+                buildingArray[building].label = LabelObj[key];
+            }
+            //樓回寫
+            //console.log(floorsplit);
+            for(let i=0; i<floorsplit.length; i++)
+            {
+                //先找出區域的位置
+                var result = $.map(area, function(item, index) {
+                    return item.tag;
+                }).indexOf(floorsplit[i][0]);
+
+                let buildingArray = area[result]["building"];
+
+                //找出棟
+                let key = floorsplit[i][0]+"_"+floorsplit[i][1];
+                var building = $.map(buildingArray, function(item, index) {
+                    return item.tag;
+                }).indexOf(key);
+
+                let floorArray = area[result]["building"][building].floor;
+
+                //找出樓
+                let keyfloor = floorsplit[i][0]+"_"+floorsplit[i][1]+"_"+floorsplit[i][2];
+                var floorindex = $.map(floorArray, function(item, index) {
+                    return item.tag;
+                }).indexOf(keyfloor);
+
+                //將樓寫回去
+                floorArray[floorindex].label = LabelObj[keyfloor];
+            }
+            //戶回寫
+            for(let i=0; i<householdsplit.length; i++)
+            {
+                //先找出區域的位置
+                var result = $.map(area, function(item, index) {
+                    return item.tag;
+                }).indexOf(householdsplit[i][0]);
+
+                let buildingArray = area[result]["building"];
+
+                //找出棟
+                let key = householdsplit[i][0]+"_"+householdsplit[i][1];
+                var building = $.map(buildingArray, function(item, index) {
+                    return item.tag;
+                }).indexOf(key);
+
+                let floorArray = area[result]["building"][building].floor;
+
+                //找出樓
+                let keyfloor = householdsplit[i][0]+"_"+householdsplit[i][1]+"_"+householdsplit[i][2];
+                var floorindex = $.map(floorArray, function(item, index) {
+                    return item.tag;
+                }).indexOf(keyfloor);
+
+                let householdArray = area[result]["building"][building].floor[floorindex].household;
+
+                let keyhousehold = householdsplit[i][0]+"_"+householdsplit[i][1]+"_"+householdsplit[i][2]+"_"+householdsplit[i][3];
+                var householdindex = $.map(householdArray, function(item, index) {
+                    return item.tag;
+                }).indexOf(keyhousehold);
+
+                //戶 寫回去
+                householdArray[householdindex].label = LabelObj[keyhousehold];
+
+            }
+
+            console.log(newJson);
+        }
+
+        //存儲標籤
+        $('#s_SavebuttonLabel').on('click',function(event){
+            let typeid = $('#type').val();
+            // console.log("typeid");
+            // console.log(typeid);
+
+            SaveImageBuTTon();
+        });
+
+
+
+        (function () {
+            $('#addType').change(function () {
+                var $this = $(this);
+                $('.add-type-check.for-' + this.value).toggle(true);
+                $('.add-type-check:not(.for-' + this.value + ')').toggle(false);
+            }).trigger('change');
+
+            const companyEle = $("#company"),
+                caseEle = $("#case"),
+                typeEle = $("#type"),
+                backgroundEle = $("#background"),
+                url = 'https://rdm.geekers.tw/estate/index',
+                companyId = '2',
+                caseId = '1';
+
+            companyEle.change(function () {
+                reloadPage();
+            });
+
+            caseEle.change(function () {
+                reloadPage();
+            });
+
+            typeEle.change(function () {
+                reloadPage();
+            });
+
+            backgroundEle.change(function () {
+                formSubmit('changeBgForm');
+            });
+
+            function reloadPage() {
+                var _url = url,
+                    _companyId = companyEle.val(),
+                    _caseId = caseEle.val(),
+                    _type = typeEle.val();
+
+                if (_companyId) {
+                    _url += '/' + _companyId;
+                    if (_caseId) {
+                        _url += '/' + _caseId;
+                        if (_type) {
+                            _url += "/" + _type;
+                        }
+                    }
+                }
+                GoUrl(_url);
+            }
+
+
+            const addTypeEle = $("#addType"),
+                infoFormValidate = $("#infoForm").validate({
+                    rules: {
+                        name: {
+                            required: function () {
+                                return addTypeEle.val() === 'standard';
+                            }
+                        },
+                        area: {
+                            required: function () {
+                                return addTypeEle.val() === 'info';
+                            }
+                        },
+                        start_dong: {
+                            required: function () {
+                                return addTypeEle.val() === 'info';
+                            },
+                            number: true,
+                            max: function () {
+                                const endDong = $("#end_dong").val();
+                                return isNaN(endDong) || !endDong ? 999 : endDong;
+                            }
+                        },
+                        end_dong: {
+                            required: function () {
+                                return addTypeEle.val() === 'info';
+                            },
+                            number: true,
+                            min: function () {
+                                const startDong = $("#start_dong").val();
+                                return isNaN(startDong) || !startDong ? -999 : startDong;
+                            }
+                        },
+                        start_on_ground: {
+                            required: function () {
+                                return isNaN($("#end_on_ground").val())
+                            },
+                            number: true,
+                            max: function () {
+                                const endDong = $("#end_on_ground").val();
+                                return isNaN(endDong) || !endDong ? 999 : endDong;
+                            }
+                        },
+                        end_on_ground: {
+                            required: function () {
+                                return isNaN($("#start_on_ground").val())
+                            },
+                            number: true,
+                            min: function () {
+                                const startDong = $("#start_on_ground").val();
+                                return isNaN(startDong) || !startDong ? -999 : startDong;
+                            }
+                        },
+                        on_ground_site: {
+                            number: true
+                        },
+                        on_ground_site_area: {
+                            number: true
+                        },
+                        start_under_ground: {
+                            required: function () {
+                                return isNaN($("#end_under_ground").val())
+                            },
+                            number: true,
+                            max: function () {
+                                const endDong = $("#end_under_ground").val();
+                                return isNaN(endDong) || !endDong ? 999 : endDong;
+                            }
+                        },
+                        end_under_ground: {
+                            required: function () {
+                                return isNaN($("#start_under_ground").val())
+                            },
+                            number: true,
+                            min: function () {
+                                const startDong = $("#start_under_ground").val();
+                                return isNaN(startDong) || !startDong ? -999 : startDong;
+                            }
+                        },
+                        under_ground_site: {
+                            number: true
+                        },
+                        under_ground_site_area: {
+                            number: true
+                        }
+
+                    },
+                    messages: {
+                        name: '请输入套型名稱',
+                        area: '请输入分区',
+                        period: '请输入分期',
+                        start_dong: {
+                            required: '请输入自第(幢)',
+                            number: '請輸入正確的數值',
+                            max: '数值需小于' + $("#end_dong").val()
+                        },
+                        end_dong: {
+                            required: '请输入第(幢)',
+                            number: '請輸入正確的數值',
+                            min: '数值需大于' + $("#start_dong").val()
+                        },
+                        start_on_ground: {
+                            required: '请输入自第(層)',
+                            number: '請輸入正確的數值',
+                            max: '数值需小于' + $("#end_on_ground").val()
+                        },
+                        end_on_ground: {
+                            required: '请输入第(層)',
+                            number: '請輸入正確的數值',
+                            min: '数值需大于' + $("#start_on_ground").val()
+                        },
+                        on_ground_site: {
+                            number: '請輸入正確的數值'
+                        },
+                        on_ground_site_area: {
+                            number: '請輸入正確的數值'
+                        },
+                        start_under_ground: {
+                            required: '请输入自第(層)',
+                            number: '請輸入正確的數值',
+                            max: '数值需小于' + $("#end_under_ground").val()
+                        },
+                        end_under_ground: {
+                            required: '请输入第(層)',
+                            number: '請輸入正確的數值',
+                            min: '数值需大于' + $("#start_under_ground").val()
+                        },
+                        under_ground_site: {
+                            number: '請輸入正確的數值'
+                        },
+                        under_ground_site_area: {
+                            number: '請輸入正確的數值'
+                        }
+                    }
+                });
+
+            $("#standard").change(function () {
+                const val = $(this).val();
+                if (isNaN(val) || !val) {
+                    $("#addHouseWrapper").find('input,select').removeAttr('disabled');
+                    $('#on_ground_use')[0].sumo.enable();
+                    $('#on_ground_site_unit')[0].sumo.enable();
+                    $('#under_ground_use')[0].sumo.enable();
+                    $('#under_ground_site_unit')[0].sumo.enable();
+                } else {
+                    $("#addHouseWrapper").find('input,select').attr('disabled', true).val('');
+                    $('#on_ground_use')[0].sumo.disable().unSelectAll();
+                    ;
+                    $('#on_ground_site_unit')[0].sumo.disable().unSelectAll();
+                    ;
+                    $('#under_ground_use')[0].sumo.disable().unSelectAll();
+                    ;
+                    $('#under_ground_site_unit')[0].sumo.disable().unSelectAll();
+                    ;
+                }
+            });
+
+            $("#infoAddBtn").click(function () {
+                if (infoFormValidate.form()) formSubmit('infoForm');
+            });
+        })();
+    </script>
+
+    <script type="text/javascript">
+        $("#reload_page_button").on('click', function (){
+            location.reload();
+        });
+        $(".chuang_del_btn").on('click', function (){
+            let chid = $(this).data("chid");
+            // $("#trch_"+chid).remove();
+            console.log(chid);
+            chuang_del(chid);
+        });
+        $(".hu_edit").on('click', function (){
+            let hudata = $(this).data("huid");
+            console.log(hudata);
+        });
+
+    </script>
+
+
+    <script type="text/javascript">
+    // sky
+        //Tab數量(可設定上限，全出、棟、樓、戶)
+        let TabNumber = 10;
+        //要送出與更新頁面的資料(丟後端)
+        let AllarrayS = [];
+        //共用Tab key設定
+        // s_t1 表示頁面上有幾個Tab
+        // 這邊主要在取Obj key 名稱，可以減少進去裡面尋找
+        //== 自訂功能 ==// (s_Building可修改，作為辨識修改哪個檔案)
+        let TabKeyAll = {"s_t1":"s_Building","s_t2":"s_Floor","s_t3":"s_Household"};
+        //== 自訂功能 ==//
+        //ajax對應的Url
+        let TabKeyUrlAll = {"s_t1":"/ajax_chuang_edit", "s_t2":"/test2", "s_t3":"/test3"};
+
+        //Modal js
+        $('#s_creationModal').on('show.bs.modal', function (event) {
+            let button = $(event.relatedTarget);
+
+            //== Modal標題資料 ==//
+            let ModalTitle = button.data('title') ? button.data('title') : false;
+            console.log('標題 :'+ModalTitle);
+
+            //== 取得 data-id ==//
+            let Tabid = button.data('id') ? button.data('id') : false;
+            console.log('Tab id :'+Tabid);
+            // console.log(document.querySelector('[data-tid="'+Tabid+'"]'));
+
+            //== 取得 data-did ==//
+            let Tab_didTag = event.relatedTarget.parentElement != false ?  (event.relatedTarget.parentElement.parentElement != false ? event.relatedTarget.parentElement.parentElement : false ) : false;
+            let Tab_did = Tab_didTag !=false ? (Tab_didTag.dataset.did !=false ? Tab_didTag.dataset.did : false ) : false;
+            console.log('Tab_did :'+Tab_did);
+
+            //== 取得目前第幾行 有順序問題不可以移動編輯按鈕==//
+            let Tabhid = false;
+            if(event.relatedTarget.parentElement.parentElement)
+            {
+                //取得按鈕上層位置
+                let TabTr = event.relatedTarget.parentElement.parentElement;
+                //取得 data-hid 的值
+                Tabhid = TabTr.dataset.hid ? TabTr.dataset.hid : false;
+            }
+
+            //== 判斷Modal顯示的資料 ==//
+            if(Tabid != false && document.querySelector('[data-tid="'+Tabid+'"]'))
+            {
+                //== 先將所有Modal資料隱藏 ==//
+                for(let i=1; i<= TabNumber; i++)
+                {
+                     //== 判斷data-tid是否存在 ==//
+                    if(document.querySelector('[data-tid="s_t'+i+'"]'))
+                    {
+                        document.querySelector('[data-tid="s_t'+i+'"]').classList.add('d-none');
+                    }
+                }
+                //== 顯示正確資料 ==//
+                document.querySelector('[data-tid="'+Tabid+'"]').classList.remove('d-none');
+            }
+            else
+            {
+                console.error("Modal資料顯示出錯");
+            }
+
+            //== 取得列表資料 ==//
+            //data-h1資料有10個
+            let array = {};
+            let k = 0;
+            //取得欄位名稱
+            for(let i=0; i<= 10; i++)
+            {
+                k= i+1;
+                //檢查是否有data-h1 ~ data-h10
+                if(event.relatedTarget.getAttribute('data-h'+k))
+                {
+                    //array["h"+k] = button.data('h'+k);
+                    array["h"+k] = event.relatedTarget.getAttribute('data-h'+k);
+                }
+            }
+
+            //== 取得資料的詳細名稱 ==//
+            let TabClass = document.querySelector('[data-tid="'+Tabid+'"]');
+            // let stInpus = TabClass.querySelectorAll('input');
+            let stInpus = TabClass.querySelectorAll('[data-guise="input"]');
+            console.log(stInpus);
+            let i = 1;
+            stInpus.forEach(item=>{
+                item.value = array["h"+i];
+                i++;
+            });
+
+            //== 將資料寫上去Modal ==//
+            var modal = $(this);
+            //標題
+            modal.find('.modal-title').text(ModalTitle);
+             //== 將送出按鈕添加 目前顯示的資料是哪個tab ==//
+            if(Tabid && Tabhid && Tab_did)
+            {
+                modal.find('#s_submit').attr('data-id',Tabid);
+                modal.find('#s_submit').attr('data-hid',Tabhid);
+                modal.find('#s_submit').attr('data-did',Tab_did);
+            }
+            else
+            {
+                console.error("取得列表欄位出錯，data-id、data-hid、Tab_did 取得失敗");
+            }
+        });
+
+        //儲存按鈕送出
+        $('#s_submit').on('click',function(event){
+            let target = event.target;
+            //== 取得 Tab id  與 行數id (用來回寫) ==//
+            // console.log(event);
+            let sid = target.dataset.id ? target.dataset.id: false;
+            let hid = target.dataset.hid ? target.dataset.hid: false;
+            let did = target.dataset.did ? target.dataset.did: false;
+            console.log("sid :" + sid);
+            console.log("hid :" + hid);
+            console.log("did :" + did);
+            //以下都不可以是false
+            if(!sid && !hid && !did)
+            {
+                alert("取得 sid、hid、did 失敗，請檢查");
+            }
+            //Modal id
+            let Modal = document.getElementById('s_creationModal');
+
+            //抓Modal的欄位(抓取上方修改的資料)
+            let st1Tag = Modal.querySelector('[data-tid="'+sid+'"]') ? Modal.querySelector('[data-tid="'+sid+'"]') : false;
+            // let st1Inpus = st1Tag.querySelectorAll('input') ? st1Tag.querySelectorAll('input') : false;
+            let st1Inpus = st1Tag.querySelectorAll('[data-guise="input"]') ? st1Tag.querySelectorAll('[data-guise="input"]') : false;
+            if(st1Inpus)
+            {
+                let st1_array = {};
+                //將資料整理到obj
+                st1Inpus.forEach(item=>{
+                    st1_array[item.dataset.name] = item.value;
+                    // console.log(item.value);
+                });
+                //整理資料
+                AllarrayS = [];
+                //== 依據Tab取名 ==//
+                let Job = { _token: $("meta[name='csrf-token']").attr('content') };
+                Job[TabKeyAll[sid]] = st1_array;
+                //寫入共用陣列
+                AllarrayS.push({'Data':Job,'Tabsid':sid,'Tabhid':hid,'Tabdid':did,'Url':TabKeyUrlAll[sid]});
+            }
+
+            let this_url = '';
+            if(sid=='s_t1'){ this_url = '/ajax_chuang_edit';
+            }else if(sid=='s_t2'){ this_url = '/ajax_lou_edit';
+            }else if(sid=='s_t3'){ this_url = '/ajax_hu_edit'; }
+
+            //送入ajax
+            ajax_submit(AllarrayS[0], this_url);
+
+        });
+
+        function ajax_submit(json, this_url)
+        {
+            $.ajax({
+                // url: json.url,
+                url:this_url,
+                method: "post",
+                data:
+                {
+                    _token: $("meta[name='csrf-token']").attr('content'),
+                    json
+                },
+                success: function (res) {
+                    if (res.status == "success") {
+                        UpdatePageS();
+                        alert('src.更新成功');
+                    }else{
+                        alert('發生錯誤');
+                    }
+                },
+                error: function () {
+                    UpdatePageS();
+                    alert('src.存儲失敗');
+
+                },
+            });
+        }
+
+        function UpdatePageS()
+        {
+            //抓取共用陣列來知道目前更新的是誰
+            let sid = AllarrayS[0].Tabsid;
+            let tableTag = document.querySelector('table[data-id="'+sid+'"]') ? document.querySelector('table[data-id="'+sid+'"]') : false;
+            let tableH = AllarrayS[0].Tabhid;
+            let did = AllarrayS[0].Tabdid;
+            if(tableTag)
+            {
+                let Tr = tableTag.querySelector('[data-did="'+did+'"]') != false ? tableTag.querySelector('[data-did="'+did+'"]') : false;
+                if(!Tr)
+                {
+                    alert('回寫資料 UpdatePageS()，無法取得did，請檢查原始碼Tr是否有 data-did');
+                }
+                let Th = Tr.querySelector('th')
+                let Td = Tr.querySelectorAll('td');
+                let TdButton = Td[Td.length -1].querySelector('button');
+                let newjob = {};
+                //== 依據Tab取名==//
+                //將資料寫進去空白Obj裏面
+                newjob = AllarrayS[0].Data[TabKeyAll[sid]];
+                //只有取值不取key
+                let newValue = Object.values(newjob);
+                //將資料寫回區表格裡面
+                Th.textContent = newValue[0];
+                for(let i=0; i<(newValue.length - 1);i++)
+                {
+                    Td[i].textContent = newValue[i+1];
+                }
+                //修改按鈕上的欄位
+                for(let i=0; i<=newValue.length;i++)
+                {
+                    TdButton.dataset['h'+Number(i+1)] = newValue[i];
+                }
+            }
+
+            $('#s_creationModal').modal('hide');
+        }
+    </script>
+
+    <script type="text/javascript">
+        // ajax
+        function chuang_del(chuangid)
+        {
+        $.ajax({
+                url: "/ajax_chuang_del",
+                method: "post",
+                data: {
+                    _token: $("meta[name='csrf-token']").attr('content'),
+                    chuangid: chuangid
+                },
+                error: function () {
+                    Swal.close();
+                    alert('發生錯誤(estate_index_ajax0)');
+                },
+                success: function (res) {
+                    Swal.close();
+                    if (res.status != "success") {
+                        alert('發生錯誤(estate_index_ajax1)');
+                    }else{
+                        if(res.result=="del_data_not_exist"){
+                            alert('刪除資料不存在');
+                        }else if(res.result=="wrong"){
+                            alert('發生錯誤(estate_index_ajax2)');
+                        }else if(res.result=="deleted"){
+                            $("#trch_"+chuangid).remove();
+                        }
+                    }
+                    // console.log(res.result);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
