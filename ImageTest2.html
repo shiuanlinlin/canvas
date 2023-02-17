@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>標籤</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
@@ -1385,7 +1385,6 @@
             //區域
             //input抓去
             $('#s_ImageLabelfile').click();
-
         });
 
         $('#s_ImageLabelfile').on('change',function(event){
@@ -1458,6 +1457,9 @@
                 $('[data-imgidbox="'+householdkey+'"]').find('img').attr('src',householdImage);
             }
 
+
+            //移除標籤
+            DelSpanLabel();
             //ajax
 
             // $.ajax({
@@ -1477,6 +1479,85 @@
             //     }
             // });
         });
+
+        //移除標籤
+        function DelSpanLabel()
+        {
+            let activeTag = document.querySelector('.s_img_labeBox.active');
+            if(activeTag)
+            {
+                //移除span標籤
+                let spanAll = activeTag.querySelectorAll('[data-labelname="span"]');
+                spanAll.forEach(item=>{
+                    item.remove();
+                });
+                //移除json內的span標籤
+                JsonDelSpanLabel();
+            }
+            else
+            {
+                consle.error('沒有被選擇的圖片外框 s_img_labeBox 缺少 active');
+            }
+        }
+
+        function JsonDelSpanLabel()
+        {
+            let area = document.querySelector('[data-status="area"]');
+            let building = document.querySelector('[data-status="building"]');
+            let floor = document.querySelector('[data-status="floor"]');
+            let household = document.querySelector('[data-status="household"]');
+
+            let areajson = AllLabeljson['List']['area'];
+            //區域移除span
+            if(building.value == 0 && floor.value == 0 && household.value == 0)
+            {
+                let areavalue = area.value;
+                let areaindex = FindIndexPotion(areajson,areavalue);
+                let areafilter = areajson[areaindex];
+                areafilter.label = [];
+            }
+            //棟(展示用)
+            if(building.value != 0 && floor.value == 0 && household.value == 0)
+            {
+                let areaindex = FindIndexPotion(areajson,area.value);
+                let areafilter = areajson[areaindex]['building'];
+                let buildingkey = area.value+"_"+building.value;
+                let buildingindex = FindIndexPotion(areafilter,buildingkey);
+                let buildingfilter = areafilter[buildingindex];
+                buildingfilter.label = [];
+            }
+            //樓(展示用)
+            if(building.value != 0 && floor.value != 0 && household.value == 0)
+            {
+                let areaindex = FindIndexPotion(areajson,area.value);
+                let areafilter = areajson[areaindex]['building'];
+                let buildingkey = area.value+"_"+building.value;
+                let buildingindex = FindIndexPotion(areafilter,buildingkey);
+                let buildingfilter = areafilter[buildingindex]['floor'];
+                let floorkey = buildingkey+"_"+floor.value;
+                let floorindex = FindIndexPotion(buildingfilter,floorkey);
+                let floorfilter = buildingfilter[floorindex];
+                floorfilter.label = [];
+            }
+            //戶(展示用)
+            if(building.value != 0 && floor.value != 0 && household.value != 0)
+            {
+                let areaindex = FindIndexPotion(areajson,area.value);
+                let areafilter = areajson[areaindex]['building'];
+                let buildingkey = area.value+"_"+building.value;
+                let buildingindex = FindIndexPotion(areafilter,buildingkey);
+                let buildingfilter = areafilter[buildingindex]['floor'];
+                let floorkey = buildingkey+"_"+floor.value;
+                let floorindex = FindIndexPotion(buildingfilter,floorkey);
+                let floorfilter = buildingfilter[floorindex]['household'];
+                let householdkey = floorkey + "_"+household.value;
+                let householdindex = FindIndexPotion(floorfilter,householdkey);
+                let householdfilter = floorfilter[householdindex];
+                householdfilter.label = [];
+            }
+
+            console.log(AllLabeljson);
+        }
 
 
         //存儲標籤
