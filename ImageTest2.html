@@ -51,29 +51,29 @@
     <div class="d-flex" id="s_ChangeTypeImage">
         <div class="form-group mt-4">
             <select class="form-control" data-status="area">
-                <option value="A1">A</option>
+                <option value="A0">A</option>
                 <option value="A2">B</option>
             </select>
         </div>
-        <div class="form-group mt-4">
+        <!-- <div class="form-group mt-4">
             <select class="form-control" data-status="building">
             <option value="0">棟別</option>
             <option value="A">A</option>
             <option value="B">B</option>
             </select>
-        </div>
+        </div> -->
         <div class="form-group mt-4">
             <select class="form-control" data-status="floor">
             <option value="0">樓層</option>
-            <option value="F1">1</option>
-            <option value="F2">2</option>
+            <option value="30">1樓</option>
+            <option value="50">2樓</option>
             </select>
         </div>
         <div class="form-group mt-4">
             <select class="form-control" data-status="household">
             <option value="0">戶別</option>
-            <option value="H1">1</option>
-            <option value="H2">2</option>
+            <option value="11">1</option>
+            <option value="12">2</option>
             </select>
         </div>
     </div>
@@ -101,23 +101,23 @@
                 <!-- B棟 -->
                 <img src="b3.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </a>
-            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_A" data-labelname="imgbox">
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A0_F30" data-labelname="imgbox">
                 <!-- 樓 -->
                 <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </a>
-            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A2_B" data-labelname="imgbox">
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A0_F50" data-labelname="imgbox">
                 <!-- 樓 -->
                 <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </a>
-            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_A_F1" data-labelname="imgbox">
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A0_F30_H11" data-labelname="imgbox">
                 <!-- 樓 -->
                 <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </a>
-            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_A_F2" data-labelname="imgbox">
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A0_F30_H12" data-labelname="imgbox">
                 <!-- 樓 -->
                 <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </a>
-            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_B_F1" data-labelname="imgbox">
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A0_F50_H11" data-labelname="imgbox">
                 <!-- 樓 -->
                 <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </a>
@@ -205,7 +205,7 @@
                 <!-- 戶 -->
                 <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </a>
-            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A1_B_F1_H2" data-labelname="imgbox">
+            <a href="#" class="s_img_labeBox d-none" data-imgidbox="A0_F50_H12" data-labelname="imgbox">
                 <!-- 戶 -->
                 <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </a>
@@ -237,8 +237,8 @@
                     "area":[
                             {
                                 "name":"全区资料",
-                                "tag":"A1",
-                                "id":1,
+                                "tag":"A0",
+                                "id":0,
                                 "img": "b1.png",
                                 "label": [
                                     {"name":"A區域標籤1","id":1,"left":100,"top":200},
@@ -247,373 +247,93 @@
                                     {"name":"A區域標籤4","id":10,"left":900,"top":10},
                                     {"name":"A區域標籤5","id":13,"left":"","top":1100},
                                 ],
-                                "building": [
+                                "floor": [
                                     {
-                                        "name":"A棟",
-                                        "tag":"A1_A",
-                                        "id":1,
+                                        "name":"1樓",
+                                        "tag":"A0_F30",
+                                        "id":30,
                                         "img": "b2.png",
                                         "label": [
-                                            {"name":"A區A棟域標籤1","id":1,"left":100,"top":200},
-                                            {"name":"A區A棟域標籤2","id":2,"left":200,"top":""},
-                                            {"name":"A區A棟域標籤3","id":6},
-                                            {"name":"A區A棟域標籤4","id":10,"left":900,"top":10},
-                                            {"name":"A區A棟域標籤5","id":13,"left":"","top":100},
+                                            {"name":"A區1樓(A0_F30)1","id":1,"left":100,"top":200},
+                                            {"name":"A區1樓(A0_F30)2","id":2,"left":200,"top":""},
+                                            {"name":"A區1樓(A0_F30)3","id":6},
+                                            {"name":"A區1樓(A0_F30)4","id":10,"left":900,"top":10},
+                                            {"name":"A區1樓(A0_F30)5","id":13,"left":"","top":100},
                                         ],
-                                        "floor": [
+                                        "household": [
                                             {
-                                                "name":"1樓",
-                                                "tag":"A1_A_F1",
-                                                "id":1,
-                                                "img": "b1.png",
+                                                "name":"2戶",
+                                                "tag":"A0_F30_H11",
+                                                "id":11,
+                                                "img": "b2.png",
                                                 "label": [
-                                                    {"name":"A區A棟1樓1","id":1,"left":100,"top":200},
-                                                    {"name":"A區A棟1樓2","id":2,"left":200,"top":""},
-                                                    {"name":"A區A棟1樓3","id":6},
-                                                    {"name":"A區A棟1樓4","id":10,"left":900,"top":10},
-                                                    {"name":"A區A棟1樓5","id":13,"left":"","top":1100},
+                                                    {"name":"A區1樓2戶(A0_F30_H11)1","id":1,"left":100,"top":200},
+                                                    {"name":"A區1樓2戶(A0_F30_H11)2","id":2,"left":200,"top":""},
+                                                    {"name":"A區1樓2戶(A0_F30_H11)3","id":6},
+                                                    {"name":"A區1樓2戶(A0_F30_H11)4","id":10,"left":900,"top":10},
+                                                    {"name":"A區1樓2戶(A0_F30_H11)5","id":13,"left":"","top":1100},
                                                 ],
-                                                "household": [
-                                                    {
-                                                        "name":"1戶",
-                                                        "tag":"A1_A_F1_H1",
-                                                        "id":1,
-                                                        "img": "b2.png",
-                                                        "label": [
-                                                            {"name":"A區A棟1樓1戶1","id":1,"left":100,"top":200},
-                                                            {"name":"A區A棟1樓1戶2","id":2,"left":200,"top":""},
-                                                            {"name":"A區A棟1樓1戶3","id":6},
-                                                            {"name":"A區A棟1樓1戶4","id":10,"left":900,"top":10},
-                                                            {"name":"A區A棟1樓1戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    },
-                                                    {
-                                                        "name":"2戶",
-                                                        "tag":"A1_A_F1_H2",
-                                                        "id":2,
-                                                        "img": "b1.png",
-                                                        "label": [
-                                                            {"name":"A區A棟1樓2戶1","id":1,"left":100,"top":200},
-                                                            {"name":"A區A棟1樓2戶2","id":2,"left":200,"top":""},
-                                                            {"name":"A區A棟1樓2戶3","id":6},
-                                                            {"name":"A區A棟1樓2戶4","id":10,"left":900,"top":10},
-                                                            {"name":"A區A棟1樓2戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    }
-                                                ]
                                             },
                                             {
-                                                "name":"2樓",
-                                                "tag":"A1_A_F2",
-                                                "id":1,
-                                                "img": "b3.png",
+                                                "name":"1戶",
+                                                "tag":"A0_F30_H12",
+                                                "id":12,
+                                                "img": "b2.png",
                                                 "label": [
-                                                    {"name":"A區A棟2樓1","id":1,"left":100,"top":200},
-                                                    {"name":"A區A棟2樓2","id":2,"left":200,"top":""},
-                                                    {"name":"A區A棟2樓3","id":6},
-                                                    {"name":"A區A棟2樓4","id":10,"left":900,"top":10},
-                                                    {"name":"A區A棟2樓5","id":13,"left":"","top":1100},
+                                                    {"name":"A區1樓1戶(A0_F30_H12)1","id":1,"left":100,"top":200},
+                                                    {"name":"A區1樓1戶(A0_F30_H12)2","id":2,"left":200,"top":""},
+                                                    {"name":"A區1樓1戶(A0_F30_H12)3","id":6},
+                                                    {"name":"A區1樓1戶(A0_F30_H12)4","id":10,"left":900,"top":10},
+                                                    {"name":"A區1樓1戶(A0_F30_H12)5","id":13,"left":"","top":1100},
                                                 ],
-                                                "household": [
-                                                    {
-                                                        "name":"1戶",
-                                                        "tag":"A1_A_F2_H1",
-                                                        "id":1,
-                                                        "img": "b1.png",
-                                                        "label": [
-                                                            {"name":"A區A棟2樓1戶1","id":1,"left":100,"top":200},
-                                                            {"name":"A區A棟2樓1戶2","id":2,"left":200,"top":""},
-                                                            {"name":"A區A棟2樓1戶3","id":6},
-                                                            {"name":"A區A棟2樓1戶4","id":10,"left":900,"top":10},
-                                                            {"name":"A區A棟2樓1戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    }
-                                                ]
-                                            }
-                                        ],
+                                            },
+                                        ]
                                     },
                                     {
-                                        "name":"B棟",
-                                        "tag":"A1_B",
-                                        "id":2,
-                                        "img": "b1.png",
-                                        "label": [],
-                                        "floor": [
-                                            {
-                                                "name":"1樓",
-                                                "tag":"A1_B_F1",
-                                                "id":1,
-                                                "img": "b2.png",
-                                                "label": [
-                                                    {"name":"A區B棟1樓1","id":1,"left":100,"top":200},
-                                                    {"name":"A區B棟1樓2","id":2,"left":200,"top":""},
-                                                    {"name":"A區B棟1樓3","id":6},
-                                                    {"name":"A區B棟1樓4","id":10,"left":900,"top":10},
-                                                    {"name":"A區B棟1樓5","id":13,"left":"","top":1100},
-                                                ],
-                                                "household": [
-                                                    {
-                                                        "name":"1戶",
-                                                        "tag":"A1_B_F1_H1",
-                                                        "id":1,
-                                                        "img": "b2.png",
-                                                        "label": [
-                                                            {"name":"A區B棟1樓1戶1","id":1,"left":100,"top":200},
-                                                            {"name":"A區B棟1樓1戶2","id":2,"left":200,"top":""},
-                                                            {"name":"A區B棟1樓1戶3","id":6},
-                                                            {"name":"A區B棟1樓1戶4","id":10,"left":900,"top":10},
-                                                            {"name":"A區B棟1樓1戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    },
-                                                    {
-                                                        "name":"2戶",
-                                                        "tag":"A1_B_F1_H2",
-                                                        "id":1,
-                                                        "img": "b1.png",
-                                                        "label": [
-                                                            {"name":"A區B棟1樓2戶1","id":1,"left":100,"top":200},
-                                                            {"name":"A區B棟1樓2戶2","id":2,"left":200,"top":""},
-                                                            {"name":"A區B棟1樓2戶3","id":6},
-                                                            {"name":"A區B棟1樓2戶4","id":10,"left":900,"top":10},
-                                                            {"name":"A區B棟1樓2戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "name":"2樓",
-                                                "tag":"A1_B_F2",
-                                                "id":1,
-                                                "img": "b2.png",
-                                                "label": [
-                                                    {"name":"A區B棟2樓1","id":1,"left":100,"top":200},
-                                                    {"name":"A區B棟2樓2","id":2,"left":200,"top":""},
-                                                    {"name":"A區B棟2樓3","id":6},
-                                                    {"name":"A區B棟2樓4","id":10,"left":900,"top":10},
-                                                    {"name":"A區B棟2樓5","id":13,"left":"","top":1100},
-                                                ],
-                                                "household": [
-                                                    {
-                                                        "name":"1戶",
-                                                        "tag":"A1_B_F2_H1",
-                                                        "id":1,
-                                                        "img": "b2.png",
-                                                        "label": [
-                                                            {"name":"A區B棟2樓1戶1","id":1,"left":100,"top":200},
-                                                            {"name":"A區B棟2樓1戶2","id":2,"left":200,"top":""},
-                                                            {"name":"A區B棟2樓1戶3","id":6},
-                                                            {"name":"A區B棟2樓1戶4","id":10,"left":900,"top":10},
-                                                            {"name":"A區B棟2樓1戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    },
-                                                    {
-                                                        "name":"2戶",
-                                                        "tag":"A1_B_F2_H2",
-                                                        "id":1,
-                                                        "img": "b1.png",
-                                                        "label": [
-                                                            {"name":"A區B棟2樓2戶1","id":1,"left":100,"top":200},
-                                                            {"name":"A區B棟2樓2戶2","id":2,"left":200,"top":""},
-                                                            {"name":"A區B棟2樓2戶3","id":6},
-                                                            {"name":"A區B棟2樓2戶4","id":10,"left":900,"top":10},
-                                                            {"name":"A區B棟2樓2戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ],
-                            },
-                            {
-                                "name":"B全区资料",
-                                "tag":"A2",
-                                "id":1,
-                                "img": "b2.png",
-                                "label": [
-                                    {"name":"B區域標籤1","id":1,"left":200,"top":200},
-                                    {"name":"B區域標籤2","id":2,"left":300,"top":100},
-                                    {"name":"B區域標籤3","id":6},
-                                    {"name":"B區域標籤4","id":10,"left":600,"top":10},
-                                    {"name":"B區域標籤5","id":13,"left":"","top":160},
-                                ],
-                                "building": [
-                                    {
-                                        "name":"A棟",
-                                        "tag":"A2_A",
-                                        "id":1,
-                                        "img": "b1.png",
+                                        "name":"2樓",
+                                        "tag":"A0_F50",
+                                        "id":50,
+                                        "img": "b2.png",
                                         "label": [
-                                            {"name":"B區A棟1","id":1,"left":100,"top":200},
-                                            {"name":"B區A棟2","id":2,"left":200,"top":""},
-                                            {"name":"B區A棟3","id":6},
-                                            {"name":"B區A棟4","id":10,"left":900,"top":10},
-                                            {"name":"B區A棟5","id":13,"left":"","top":1100},
+                                            {"name":"A區2樓(A0_F50)1","id":1,"left":100,"top":200},
+                                            {"name":"A區2樓(A0_F50)2","id":2,"left":200,"top":""},
+                                            {"name":"A區2樓(A0_F50)3","id":6},
+                                            {"name":"A區2樓(A0_F50)4","id":10,"left":900,"top":10},
+                                            {"name":"A區2樓(A0_F50)5","id":13,"left":"","top":100},
                                         ],
-                                        "floor": [
+                                        "household": [
                                             {
-                                                "name":"1樓",
-                                                "tag":"A2_A_F1",
-                                                "id":1,
+                                                "name":"1戶",
+                                                "tag":"A0_F50_H12",
+                                                "id":12,
                                                 "img": "b2.png",
                                                 "label": [
-                                                    {"name":"B區A棟1樓1","id":1,"left":100,"top":200},
-                                                    {"name":"B區A棟1樓2","id":2,"left":200,"top":""},
-                                                    {"name":"B區A棟1樓3","id":6},
-                                                    {"name":"B區A棟1樓4","id":10,"left":900,"top":10},
-                                                    {"name":"B區A棟1樓5","id":13,"left":"","top":1100},
+                                                    {"name":"A區2樓1戶(A0_F50_H12)1","id":1,"left":100,"top":200},
+                                                    {"name":"A區2樓1戶(A0_F50_H12)2","id":2,"left":200,"top":""},
+                                                    {"name":"A區2樓1戶(A0_F50_H12)3","id":6},
+                                                    {"name":"A區2樓1戶(A0_F50_H12)4","id":10,"left":900,"top":10},
+                                                    {"name":"A區2樓1戶(A0_F50_H12)5","id":13,"left":"","top":1100},
                                                 ],
-                                                "household": [
-                                                    {
-                                                        "name":"1戶",
-                                                        "tag":"A2_A_F1_H1",
-                                                        "id":1,
-                                                        "img": "b2.png",
-                                                        "label": [
-                                                            {"name":"B區A棟1樓1戶1","id":1,"left":100,"top":200},
-                                                            {"name":"B區A棟1樓1戶2","id":2,"left":200,"top":""},
-                                                            {"name":"B區A棟1樓1戶3","id":6},
-                                                            {"name":"B區A棟1樓1戶4","id":10,"left":900,"top":10},
-                                                            {"name":"B區A棟1樓1戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    },
-                                                    {
-                                                        "name":"2戶",
-                                                        "tag":"A2_A_F1_H2",
-                                                        "id":2,
-                                                        "img": "b1.png",
-                                                        "label": [
-                                                            {"name":"B區A棟1樓2戶1","id":1,"left":100,"top":200},
-                                                            {"name":"B區A棟1樓2戶2","id":2,"left":200,"top":""},
-                                                            {"name":"B區A棟1樓2戶3","id":6},
-                                                            {"name":"B區A棟1樓2戶4","id":10,"left":900,"top":10},
-                                                            {"name":"B區A棟1樓2戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    }
-                                                ]
                                             },
                                             {
-                                                "name":"2樓",
-                                                "tag":"A2_A_F2",
-                                                "id":1,
-                                                "label": [],
-                                                "household": [
-                                                    {
-                                                        "name":"1戶",
-                                                        "tag":"A2_A_F2_H1",
-                                                        "id":1,
-                                                        "img": "b2.png",
-                                                        "label": [
-                                                            {"name":"B區A棟2樓1","id":1,"left":100,"top":200},
-                                                            {"name":"B區A棟2樓2","id":2,"left":200,"top":""},
-                                                            {"name":"B區A棟2樓3","id":6},
-                                                            {"name":"B區A棟2樓4","id":10,"left":900,"top":10},
-                                                            {"name":"B區A棟2樓5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    }
-                                                ]
-                                            }
-                                        ],
+                                                "name":"2戶",
+                                                "tag":"A0_F50_H11",
+                                                "id":11,
+                                                "img": "b2.png",
+                                                "label": [
+                                                    {"name":"A區2樓2戶(A0_F50_H11)1","id":1,"left":100,"top":200},
+                                                    {"name":"A區2樓2戶(A0_F50_H11)2","id":2,"left":200,"top":""},
+                                                    {"name":"A區2樓2戶(A0_F50_H11)3","id":6},
+                                                    {"name":"A區2樓2戶(A0_F50_H11)4","id":10,"left":900,"top":10},
+                                                    {"name":"A區2樓2戶(A0_F50_H11)5","id":13,"left":"","top":1100},
+                                                ],
+                                            },
+                                        ]
                                     },
-                                    {
-                                        "name":"B棟",
-                                        "tag":"A2_B",
-                                        "id":2,
-                                        "img": "b1.png",
-                                        "label": [
-                                            {"name":"B區B棟1","id":1,"left":100,"top":200},
-                                            {"name":"B區B棟2","id":2,"left":200,"top":""},
-                                            {"name":"B區B棟3","id":6},
-                                            {"name":"B區B棟4","id":10,"left":900,"top":10},
-                                            {"name":"B區B棟5","id":13,"left":"","top":1100},
-                                        ],
-                                        "floor": [
-                                            {
-                                                "name":"1樓",
-                                                "tag":"A2_B_F1",
-                                                "id":1,
-                                                "img": "b2.png",
-                                                "label": [
-                                                    {"name":"B區B棟1樓1","id":1,"left":100,"top":200},
-                                                    {"name":"B區B棟1樓2","id":2,"left":200,"top":""},
-                                                    {"name":"B區B棟1樓3","id":6},
-                                                    {"name":"B區B棟1樓4","id":10,"left":900,"top":10},
-                                                    {"name":"B區B棟1樓5","id":13,"left":"","top":1100},
-                                                ],
-                                                "household": [
-                                                    {
-                                                        "name":"1戶",
-                                                        "tag":"A2_B_F1_H1",
-                                                        "id":1,
-                                                        "img": "b2.png",
-                                                        "label": [
-                                                            {"name":"B區B棟1樓1戶1","id":1,"left":100,"top":200},
-                                                            {"name":"B區B棟1樓1戶2","id":2,"left":200,"top":""},
-                                                            {"name":"B區B棟1樓1戶3","id":6},
-                                                            {"name":"B區B棟1樓1戶4","id":10,"left":900,"top":10},
-                                                            {"name":"B區B棟1樓1戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    },
-                                                    {
-                                                        "name":"2戶",
-                                                        "tag":"A2_B_F1_H2",
-                                                        "id":1,
-                                                        "img": "b2.png",
-                                                        "label": [
-                                                            {"name":"B區B棟1樓2戶1","id":1,"left":100,"top":200},
-                                                            {"name":"B區B棟1樓2戶2","id":2,"left":200,"top":""},
-                                                            {"name":"B區B棟1樓2戶3","id":6},
-                                                            {"name":"B區B棟1樓2戶4","id":10,"left":900,"top":10},
-                                                            {"name":"B區B棟1樓2戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "name":"2樓",
-                                                "tag":"A2_B_F2",
-                                                "id":1,
-                                                "img": "b2.png",
-                                                "label": [
-                                                    {"name":"B區B棟2樓1","id":1,"left":100,"top":200},
-                                                    {"name":"B區B棟2樓2","id":2,"left":200,"top":""},
-                                                    {"name":"B區B棟2樓3","id":6},
-                                                    {"name":"B區B棟2樓4","id":10,"left":900,"top":10},
-                                                    {"name":"B區B棟2樓5","id":13,"left":"","top":1100},
-                                                ],
-                                                "household": [
-                                                    {
-                                                        "name":"1戶",
-                                                        "tag":"A2_B_F2_H1",
-                                                        "id":1,
-                                                        "img": "b2.png",
-                                                        "label": [
-                                                            {"name":"B區B棟2樓1戶1","id":1,"left":100,"top":200},
-                                                            {"name":"B區B棟2樓1戶2","id":2,"left":200,"top":""},
-                                                            {"name":"B區B棟2樓1戶3","id":6},
-                                                            {"name":"B區B棟2樓1戶4","id":10,"left":900,"top":10},
-                                                            {"name":"B區B棟2樓1戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    },
-                                                    {
-                                                        "name":"2戶",
-                                                        "tag":"A2_B_F2_H2",
-                                                        "id":1,
-                                                        "img": "b2.png",
-                                                        "label": [
-                                                            {"name":"B區B棟2樓2戶1","id":1,"left":100,"top":200},
-                                                            {"name":"B區B棟2樓2戶2","id":2,"left":200,"top":""},
-                                                            {"name":"B區B棟2樓2戶3","id":6},
-                                                            {"name":"B區B棟2樓2戶4","id":10,"left":900,"top":10},
-                                                            {"name":"B區B棟2樓2戶5","id":13,"left":"","top":1100},
-                                                        ],
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
+
                                 ],
                             },
+
                         ]
                 }
             };
@@ -860,11 +580,10 @@
             //區域
             //input抓去
             let areaTag = document.querySelector('[data-status="area"]');
-            let buildingTag = document.querySelector('[data-status="building"]');
             let floorTag = document.querySelector('[data-status="floor"]');
             let householdTag = document.querySelector('[data-status="household"]');
             //區域
-            if(buildingTag.value == 0 && floorTag.value == 0 && householdTag.value == 0)
+            if(floorTag.value == 0 && householdTag.value == 0)
             {
                 try{
                     let index = FindIndexPotion(area,Loadid);
@@ -879,36 +598,15 @@
                 }
 
             }
-            //棟
-            if(buildingTag.value != 0 && floorTag.value == 0 && householdTag.value == 0)
-            {
-                try{
-                    let index = FindIndexPotion(area,areaTag.value);
-                    let areajson = area[index]['building'];
-                    let areakey = areaTag.value+"_"+buildingTag.value;
-                    let buildingindex = FindIndexPotion(areajson,areakey);
-                    let buildingjson = areajson[buildingindex]['label'];
-                    let spanindex = FindSpanPotion(buildingjson,Number(spanid));
-                    let spanjson = buildingjson[spanindex];
-                    spanjson[Position] = values;
-                }
-                catch (e)
-                {
-                    console.error("棟移動寫回發生錯誤");
-                }
-            }
             //樓
-            if(buildingTag.value != 0 && floorTag.value != 0 && householdTag.value == 0)
+            if(floorTag.value != 0 && householdTag.value == 0)
             {
                 try{
                     let index = FindIndexPotion(area,areaTag.value);
-                    let areajson = area[index]['building'];
-                    let areakey = areaTag.value+"_"+buildingTag.value;
-                    let buildingindex = FindIndexPotion(areajson,areakey);
-                    let buildingjson = areajson[buildingindex]['floor'];
-                    let floorkey = areaTag.value + "_"+buildingTag.value+"_"+floorTag.value;
-                    let floorindex = FindIndexPotion(buildingjson,floorkey);
-                    let floorjson = buildingjson[floorindex].label;
+                    let areajson = area[index]['floor'];
+                    let floorkey = areaTag.value+"_F"+floorTag.value;
+                    let floorindex = FindIndexPotion(areajson,floorkey);
+                    let floorjson = areajson[floorindex]['label'];
                     let spanindex = FindSpanPotion(floorjson,Number(spanid));
                     let spanjson = floorjson[spanindex];
                     spanjson[Position] = values;
@@ -918,23 +616,53 @@
                     console.error("樓移動寫回發生錯誤");
                 }
             }
+            //樓
+            // if(buildingTag.value != 0 && floorTag.value != 0 && householdTag.value == 0)
+            // {
+            //     try{
+            //         let index = FindIndexPotion(area,areaTag.value);
+            //         let areajson = area[index]['building'];
+            //         let areakey = areaTag.value+"_"+buildingTag.value;
+            //         let buildingindex = FindIndexPotion(areajson,areakey);
+            //         let buildingjson = areajson[buildingindex]['floor'];
+            //         let floorkey = areaTag.value + "_"+buildingTag.value+"_"+floorTag.value;
+            //         let floorindex = FindIndexPotion(buildingjson,floorkey);
+            //         let floorjson = buildingjson[floorindex].label;
+            //         let spanindex = FindSpanPotion(floorjson,Number(spanid));
+            //         let spanjson = floorjson[spanindex];
+            //         spanjson[Position] = values;
+            //     }
+            //     catch (e)
+            //     {
+            //         console.error("樓移動寫回發生錯誤");
+            //     }
+            // }
             //戶
-            if(buildingTag.value != 0 && floorTag.value != 0 && householdTag.value != 0)
+            if(floorTag.value != 0 && householdTag.value != 0)
             {
                 try{
                     let index = FindIndexPotion(area,areaTag.value);
-                    let areajson = area[index]['building'];
-                    let areakey = areaTag.value+"_"+buildingTag.value;
-                    let buildingindex = FindIndexPotion(areajson,areakey);
-                    let buildingjson = areajson[buildingindex]['floor'];
-                    let floorkey = areaTag.value + "_"+buildingTag.value+"_"+floorTag.value;
-                    let floorindex = FindIndexPotion(buildingjson,floorkey);
-                    let floorjson = buildingjson[floorindex]['household'];
-                    let householdkey = areaTag.value + "_"+buildingTag.value+"_"+floorTag.value + "_" + householdTag.value;
+                    let areajson = area[index]['floor'];
+                    let floorkey = areaTag.value+"_F"+floorTag.value;
+                    let floorindex = FindIndexPotion(areajson,floorkey);
+                    // return false
+                    if(floorindex == -1)
+                    {
+                        console.error("戶尋找樓的json失敗！請查看是否json內沒有值"+ floorkey);
+                        return false;
+                    }
+                    let floorjson = areajson[floorindex]['household'];
+                    let householdkey = floorkey+"_H"+householdTag.value;
                     let householdindex = FindIndexPotion(floorjson,householdkey);
-                    let householdjson = floorjson[householdindex].label;
+                    if(householdindex == -1)
+                    {
+                        console.error("戶尋找json失敗！請查看是否json內沒有值");
+                        return false;
+                    }
+                    let householdjson = floorjson[householdindex]['label'];
                     let spanindex = FindSpanPotion(householdjson,Number(spanid));
                     let spanjson = householdjson[spanindex];
+                    spanjson[Position] = values;
                 }
                 catch (e)
                 {
@@ -975,7 +703,7 @@
             //區域開啟切換
             if(status == "area")
             {
-                //開啟新的圖諞
+                //開啟新的圖片
                 let newactivebox = document.querySelector('[data-imgidbox="'+values+'');
                 newactivebox.classList.add('active');
                 newactivebox.classList.add('d-block');
@@ -990,10 +718,9 @@
                 //如果棟別切換，其他下拉選單清除
                 //取得區域
                 let areavalue = document.querySelector('[data-status="area"]');
-                let buildingvalue = document.querySelector('[data-status="building"]');
                 let floorvalue = document.querySelector('[data-status="floor"]');
                 let householdvalue = document.querySelector('[data-status="household"]');
-                buildingvalue.value = 0;
+
                 floorvalue.value = 0;
                 householdvalue.value = 0;
                 //取得區域值
@@ -1009,59 +736,9 @@
                 S_LabelLOAD(area[index].label);
             }
 
-            //棟
-            if(status == "building")
-            {
-                //清除其他選項
-                Clear_Changebar("building");
-
-                let area = AllLabeljson['List']['area'];
-                //取得區域值
-                let areavalue = document.querySelector('[data-status="area"]');
-                let areakey = areavalue.value;
-                console.log("區域值");
-                console.log(areakey);
-                //取得棟別值
-                let buildingvalue = document.querySelector('[data-status="building"]');
-                let buildingkey = buildingvalue.value;
-                console.log("棟別值");
-                console.log(buildingkey);
-                //組合值
-                let buildingsum = areakey+"_"+buildingkey;
-                console.log("組合值");
-                console.log(buildingsum);
-                console.log(document.querySelector('[data-imgidbox="'+buildingsum+''));
-
-                if(document.querySelector('[data-imgidbox="'+buildingsum+''))
-                {
-                    //開啟圖片
-                    let buildingTag = document.querySelector('[data-imgidbox="'+buildingsum+'');
-                    buildingTag.classList.add('active');
-                    buildingTag.classList.remove('d-block');
-                    buildingTag.classList.remove('d-none');
-                    //抓取資料(區)
-                    let area = AllLabeljson['List']['area'];
-                    var index = $.map(area, function(item, index) {
-                        return item.tag;
-                    }).indexOf(areakey);
-                    //抓取資料(棟)
-                    let building = AllLabeljson['List']['area'][index].building;
-                    var buindex = $.map(building, function(item, index) {
-                        return item.tag;
-                    }).indexOf(buildingsum);
-                    let buildingjson = building[buindex];
-
-                    //開啟圖片
-                    NewImageBoxOpen(buildingsum);
-
-                    //載入標籤
-                    S_LabelLOAD(buildingjson.label);
-                }
-            }
             //樓
             if(status == "floor")
             {
-
                 //清除其他選項
                 Clear_Changebar("floor");
 
@@ -1070,51 +747,46 @@
                 let areakey = areavalue.value;
                 console.log("區域值");
                 console.log(areakey);
-                //取得棟別值
-                let buildingvalue = document.querySelector('[data-status="building"]');
-                let buildingkey = buildingvalue.value != 0 ? buildingvalue.value : false;
-                console.log("棟別值");
-                console.log(buildingkey);
                 //取得樓
                 let floorvalue = document.querySelector('[data-status="floor"]');
-                let floorvaluevalue = floorvalue.value;
-
-                if(!buildingkey)
+                let floorkey = floorvalue.value!= 0 ? floorvalue.value : false;
+                if(!floorkey)
                 {
-                    floorvalue.value = 0;
-                    alert('未選取棟別!');
+                   console.error("ChangeAllSelect() 取得不到樓層");
                 }
                 else
                 {
-
                     //取得json資料區域
                     let area = AllLabeljson['List']['area'];
                     var index = $.map(area, function(item, index) {
                         return item.tag;
                     }).indexOf(areakey);
 
-                    //取得json資料棟
-                    let building = AllLabeljson['List']['area'][index]['building'];
-                    var buindex = $.map(building, function(item, index) {
-                        return item.tag;
-                    }).indexOf(areakey+"_"+buildingkey);
-
                     //取得json資料棟樓
-                    let floor = AllLabeljson['List']['area'][index]['building'][buindex]['floor'];
+                    let floor = AllLabeljson['List']['area'][index]['floor'];
+                    let floorkeySumname = areakey+"_F"+floorkey;
                     var flindex = $.map(floor, function(item, index) {
                         return item.tag;
-                    }).indexOf(areakey+"_"+buildingkey+"_"+floorvaluevalue);
+                    }).indexOf(floorkeySumname);
+
                     if(flindex == -1)
                     {
-                        console.error('可能json與頁面html不同步，沒有'+areakey+"_"+buildingkey+"_"+floorvaluevalue);
+                        console.error('可能json與頁面html不同步，沒有'+floorkeySumname);
                     }
                     else
                     {
-                        let floorkey = areakey + "_"+ buildingkey + "_" + floorvaluevalue;
+                        let floorkey = floorkeySumname;
                         //開啟圖片
                         NewImageBoxOpen(floorkey);
                         //載入標籤
-                        S_LabelLOAD(floor[flindex].label);
+                        if(floor[flindex].label && floor[flindex].label.length >= 0)
+                        {
+                            S_LabelLOAD(floor[flindex].label);
+                        }
+                        else
+                        {
+                            console.log("無標籤");
+                        }
                     }
                 }
 
@@ -1128,11 +800,6 @@
                 let areakey = areavalue.value;
                 console.log("區域值");
                 console.log(areakey);
-                //取得棟別值
-                let buildingvalue = document.querySelector('[data-status="building"]');
-                let buildingkey = buildingvalue.value != 0 ? buildingvalue.value : false;
-                console.log("棟別值");
-                console.log(buildingkey);
                 //取得樓
                 let floorvalue = document.querySelector('[data-status="floor"]');
                 let floorvaluevalue = floorvalue.value;
@@ -1144,10 +811,10 @@
                 console.log("戶值");
                 console.log(householdvaluevalue);
 
-                if(buildingkey == 0 || floorvaluevalue == 0)
+                if(floorvaluevalue == 0)
                 {
                     householdvalue.value = 0;
-                    alert("請依序選擇區、棟、樓、戶");
+                    alert("請依序選擇、樓、戶");
                 }
                 else
                 {
@@ -1157,36 +824,43 @@
                         return item.tag;
                     }).indexOf(areakey);
 
-                    //取得json資料棟
-                    let building = AllLabeljson['List']['area'][index]['building'];
-                    var buindex = $.map(building, function(item, index) {
-                        return item.tag;
-                    }).indexOf(areakey+"_"+buildingkey);
+                    if(areakey == -1)
+                    {
+                        console.error("區域尋找資料失敗！可能json檔案沒有區域");
+                        return false;
+                    }
 
                     //取得json資料棟樓
-                    let floor = AllLabeljson['List']['area'][index]['building'][buindex]['floor'];
+                    let floor = AllLabeljson['List']['area'][index]['floor'];
+                    let floorkey = areakey+"_F"+floorvaluevalue;
                     var flindex = $.map(floor, function(item, index) {
                         return item.tag;
-                    }).indexOf(areakey+"_"+buildingkey+"_"+floorvaluevalue);
+                    }).indexOf(floorkey);
+                    if(flindex == -1)
+                    {
+                        console.error("區域尋找資料失敗！可能json檔案沒有區域");
+                        return false;
+                    }
 
                     //取得json資料棟樓
-                    let household = AllLabeljson['List']['area'][index]['building'][buindex]['floor'][flindex]['household'];
+                    let household = floor[flindex]['household'];
+                    let householdkey = floorkey+"_H"+householdvaluevalue;
                     var hoindex = $.map(household, function(item, index) {
                         return item.tag;
-                    }).indexOf(areakey+"_"+buildingkey+"_"+floorvaluevalue+"_"+householdvaluevalue);
+                    }).indexOf(householdkey);
 
                     let Endjson = household[hoindex];
 
                     //開啟圖片
-                    NewImageBoxOpen(areakey+"_"+buildingkey+"_"+floorvaluevalue+"_"+householdvaluevalue);
+                    NewImageBoxOpen(householdkey);
                     //載入標籤
-                    if(!Endjson)
+                    if(Endjson)
                     {
-                        console.error('json檔案內無此資料'+areakey+"_"+buildingkey+"_"+floorvaluevalue+"_"+householdvaluevalue);
+                        S_LabelLOAD(Endjson.label);
                     }
                     else
                     {
-                        S_LabelLOAD(Endjson.label);
+                        console.error('json檔案內無此資料'+householdkey);
                     }
                 }
             }
@@ -1223,7 +897,7 @@
             }
             else
             {
-                console.error('讀取切換數值出錯,可能沒有這個圖片框');
+                console.error('讀取切換數值出錯,可能沒有這個圖片框 ， tag :'+status);
             }
         }
 
@@ -1231,26 +905,25 @@
         function Clear_Changebar(status)
         {
             //取得區域
-            let areavalue = document.querySelector('[data-status="area"]');
-            let buildingvalue = document.querySelector('[data-status="building"]');
-            let floorvalue = document.querySelector('[data-status="floor"]');
-            let householdvalue = document.querySelector('[data-status="household"]');
-            if(status == "area")
+            try
             {
-                buildingvalue.value = 0;
-                floorvalue.value = 0;
-                householdvalue.value = 0;
-            }
+                let areavalue = document.querySelector('[data-status="area"]');
+                let floorvalue = document.querySelector('[data-status="floor"]');
+                let householdvalue = document.querySelector('[data-status="household"]');
+                if(status == "area")
+                {
+                    floorvalue.value = 0;
+                    householdvalue.value = 0;
+                }
 
-            if(status == "building")
-            {
-                floorvalue.value = 0;
-                householdvalue.value = 0;
+                if(status == "floor" && householdvalue)
+                {
+                    householdvalue.value = 0;
+                }
             }
-
-            if(status == "floor")
+            catch
             {
-                householdvalue.value = 0;
+                console.error("清除選單失敗");
             }
 
         }
@@ -1279,7 +952,6 @@
             let householdsplit = [];
             for(let i=0; i<LabelObjkey.length; i++)
             {
-                console.log(LabelObjkey[i]);
                 if(LabelObjkey[i].length == 4)
                 {
                     //拆解字串，抓出區域
