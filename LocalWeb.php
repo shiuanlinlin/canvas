@@ -2355,11 +2355,10 @@
         //區域
         //input抓去
         let areaTag = document.querySelector('[data-status="area"]');
-        let buildingTag = document.querySelector('[data-status="building"]');
         let floorTag = document.querySelector('[data-status="floor"]');
         let householdTag = document.querySelector('[data-status="household"]');
         //區域
-        if(buildingTag.value == 0 && floorTag.value == 0 && householdTag.value == 0)
+        if(floorTag.value == 0 && householdTag.value == 0)
         {
             try{
                 let index = FindIndexPotion(area, Loadid);
@@ -2375,36 +2374,15 @@
             }
 
         }
-        //棟
-        if(buildingTag.value != 0 && floorTag.value == 0 && householdTag.value == 0)
-        {
-            try{
-                let index = FindIndexPotion(area, areaTag.value);
-                let areajson = area[index]['building'];
-                let areakey = areaTag.value+"_"+buildingTag.value;
-                let buildingindex = FindIndexPotion(areajson,areakey);
-                let buildingjson = areajson[buildingindex]['label'];
-                let spanindex = FindSpanPotion(buildingjson,Number(spanid));
-                let spanjson = buildingjson[spanindex];
-                spanjson[Position] = values;
-            }
-            catch (e)
-            {
-                console.error("棟移動寫回發生錯誤");
-            }
-        }
         //樓
-        if(buildingTag.value != 0 && floorTag.value != 0 && householdTag.value == 0)
+        if(floorTag.value != 0 && householdTag.value == 0)
         {
             try{
                 let index = FindIndexPotion(area,areaTag.value);
-                let areajson = area[index]['building'];
-                let areakey = areaTag.value+"_"+buildingTag.value;
-                let buildingindex = FindIndexPotion(areajson,areakey);
-                let buildingjson = areajson[buildingindex]['floor'];
-                let floorkey = areaTag.value + "_"+buildingTag.value+"_"+floorTag.value;
-                let floorindex = FindIndexPotion(buildingjson,floorkey);
-                let floorjson = buildingjson[floorindex].label;
+                let areajson = area[index]['floor'];
+                let floorkey = areaTag.value+"_F"+floorTag.value;
+                let floorindex = FindIndexPotion(areajson,floorkey);
+                let floorjson = areajson[floorindex]['label'];
                 let spanindex = FindSpanPotion(floorjson,Number(spanid));
                 let spanjson = floorjson[spanindex];
                 spanjson[Position] = values;
@@ -2415,22 +2393,31 @@
             }
         }
         //戶
-        if(buildingTag.value != 0 && floorTag.value != 0 && householdTag.value != 0)
+        if(floorTag.value != 0 && householdTag.value != 0)
         {
             try{
                 let index = FindIndexPotion(area,areaTag.value);
-                let areajson = area[index]['building'];
-                let areakey = areaTag.value+"_"+buildingTag.value;
-                let buildingindex = FindIndexPotion(areajson,areakey);
-                let buildingjson = areajson[buildingindex]['floor'];
-                let floorkey = areaTag.value + "_"+buildingTag.value+"_"+floorTag.value;
-                let floorindex = FindIndexPotion(buildingjson,floorkey);
-                let floorjson = buildingjson[floorindex]['household'];
-                let householdkey = areaTag.value + "_"+buildingTag.value+"_"+floorTag.value + "_" + householdTag.value;
+                let areajson = area[index]['floor'];
+                let floorkey = areaTag.value+"_F"+floorTag.value;
+                let floorindex = FindIndexPotion(areajson,floorkey);
+                // return false
+                if(floorindex == -1)
+                {
+                    console.error("戶尋找樓的json失敗！請查看是否json內沒有值"+ floorkey);
+                    return false;
+                }
+                let floorjson = areajson[floorindex]['household'];
+                let householdkey = floorkey+"_H"+householdTag.value;
                 let householdindex = FindIndexPotion(floorjson,householdkey);
-                let householdjson = floorjson[householdindex].label;
+                if(householdindex == -1)
+                {
+                    console.error("戶尋找json失敗！請查看是否json內沒有值");
+                    return false;
+                }
+                let householdjson = floorjson[householdindex]['label'];
                 let spanindex = FindSpanPotion(householdjson,Number(spanid));
                 let spanjson = householdjson[spanindex];
+                spanjson[Position] = values;
             }
             catch (e)
             {
@@ -2475,7 +2462,7 @@
         //區域開啟切換
         if(status == "area")
         {
-            //開啟新的圖諞
+            //開啟新的圖片
             let newactivebox = document.querySelector('[data-imgidbox="'+values+'');
             newactivebox.classList.add('active');
             newactivebox.classList.add('d-block');
@@ -2490,10 +2477,8 @@
             //如果棟別切換，其他下拉選單清除
             //取得區域
             let areavalue = document.querySelector('[data-status="area"]');
-            let buildingvalue = document.querySelector('[data-status="building"]');
             let floorvalue = document.querySelector('[data-status="floor"]');
             let householdvalue = document.querySelector('[data-status="household"]');
-            buildingvalue.value = 0;
             floorvalue.value = 0;
             householdvalue.value = 0;
             //取得區域值
@@ -2509,55 +2494,6 @@
             S_LabelLOAD(area[index].label);
         }
 
-        //棟
-        if(status == "building")
-        {
-            //清除其他選項
-            Clear_Changebar("building");
-
-            let area = AllLabeljson['List']['area'];
-            //取得區域值
-            let areavalue = document.querySelector('[data-status="area"]');
-            let areakey = areavalue.value;
-            console.log("區域值");
-            console.log(areakey);
-            //取得棟別值
-            let buildingvalue = document.querySelector('[data-status="building"]');
-            let buildingkey = buildingvalue.value;
-            console.log("棟別值");
-            console.log(buildingkey);
-            //組合值
-            let buildingsum = areakey+"_"+buildingkey;
-            console.log("組合值");
-            console.log(buildingsum);
-            console.log(document.querySelector('[data-imgidbox="'+buildingsum+''));
-
-            if(document.querySelector('[data-imgidbox="'+buildingsum+''))
-            {
-                //開啟圖片
-                let buildingTag = document.querySelector('[data-imgidbox="'+buildingsum+'');
-                buildingTag.classList.add('active');
-                buildingTag.classList.remove('d-block');
-                buildingTag.classList.remove('d-none');
-                //抓取資料(區)
-                let area = AllLabeljson['List']['area'];
-                var index = $.map(area, function(item, index) {
-                    return item.tag;
-                }).indexOf(areakey);
-                //抓取資料(棟)
-                let building = AllLabeljson['List']['area'][index].building;
-                var buindex = $.map(building, function(item, index) {
-                    return item.tag;
-                }).indexOf(buildingsum);
-                let buildingjson = building[buindex];
-
-                //開啟圖片
-                NewImageBoxOpen(buildingsum);
-
-                //載入標籤
-                S_LabelLOAD(buildingjson.label);
-            }
-        }
         //樓
         if(status == "floor")
         {
@@ -2571,27 +2507,18 @@
             let areakey = areavalue.value;
             console.log("區域值");
             console.log(areakey);
-            //取得棟別值
-            // let buildingvalue = document.querySelector('[data-status="building"]');
-            // let buildingkey = buildingvalue.value != 0 ? buildingvalue.value : false;
-            // console.log("棟別值");
-            // console.log(buildingkey);
             let floorvalue = document.querySelector('[data-status="floor"]');
-            let floorkey = floorvalue.value != 0 ? floorvalue.value : false;
+            let floorkey = floorvalue.value!= 0 ? floorvalue.value : false;
             console.log("floor別值");
             console.log(floorkey);
-            //取得樓
-            // let floorvalue = document.querySelector('[data-status="floor"]');
-            // let floorvaluevalue = floorvalue.value;
 
             if(!floorkey)
             {
                 floorvalue.value = 0;
-                alert('未選取棟別!');
+                console.error("ChangeAllSelect() 取得不到樓層");
             }
             else
             {
-
                 //取得json資料區域
                 let area = AllLabeljson['List']['area'];
                 var index = $.map(area, function(item, index) {
@@ -2599,31 +2526,30 @@
                 }).indexOf(areakey);
 
                 //取得json資料棟
-                // let building = AllLabeljson['List']['area'][index]['building'];
-                // var buindex = $.map(building, function(item, index) {
-                //     return item.tag;
-                // }).indexOf(areakey+"_"+buildingkey);
                 let floor = AllLabeljson['List']['area'][index]['floor'];
+                let floorkeySumname = areakey+"_F"+floorkey;
                 let flindex = $.map(floor, function(item, index) {
                     return item.tag;
-                }).indexOf(areakey+"_"+floorkey);
+                }).indexOf(floorkeySumname);
 
-                //取得json資料棟樓
-                // let floor = AllLabeljson['List']['area'][index]['building'][buindex]['floor'];
-                // var flindex = $.map(floor, function(item, index) {
-                //     return item.tag;
-                // }).indexOf(areakey+"_"+buildingkey+"_"+floorvaluevalue);
                 if(flindex == -1)
                 {
-                    console.error('可能json與頁面html不同步，沒有'+areakey+"_"+buildingkey+"_"+floorvaluevalue);
+                    console.error('可能json與頁面html不同步，沒有'+floorkeySumname);
                 }
                 else
                 {
-                    let floorkey = areakey + "_"+ buildingkey + "_" + floorvaluevalue;
+                    let floorkey = floorkeySumname;
                     //開啟圖片
                     NewImageBoxOpen(floorkey);
                     //載入標籤
-                    S_LabelLOAD(floor[flindex].label);
+                    if(floor[flindex].label && floor[flindex].label.length >= 0)
+                    {
+                        S_LabelLOAD(floor[flindex].label);
+                    }
+                    else
+                    {
+                        console.log("無標籤");
+                    }
                 }
             }
 
@@ -2637,11 +2563,6 @@
             let areakey = areavalue.value;
             console.log("區域值");
             console.log(areakey);
-            //取得棟別值
-            let buildingvalue = document.querySelector('[data-status="building"]');
-            let buildingkey = buildingvalue.value != 0 ? buildingvalue.value : false;
-            console.log("棟別值");
-            console.log(buildingkey);
             //取得樓
             let floorvalue = document.querySelector('[data-status="floor"]');
             let floorvaluevalue = floorvalue.value;
@@ -2653,10 +2574,10 @@
             console.log("戶值");
             console.log(householdvaluevalue);
 
-            if(buildingkey == 0 || floorvaluevalue == 0)
+            if(floorvaluevalue == 0)
             {
                 householdvalue.value = 0;
-                alert("請依序選擇區、棟、樓、戶");
+                alert("請依序選擇、樓、戶");
             }
             else
             {
@@ -2666,36 +2587,44 @@
                     return item.tag;
                 }).indexOf(areakey);
 
-                //取得json資料棟
-                let building = AllLabeljson['List']['area'][index]['building'];
-                var buindex = $.map(building, function(item, index) {
-                    return item.tag;
-                }).indexOf(areakey+"_"+buildingkey);
+                if(areakey == -1)
+                {
+                    console.error("區域尋找資料失敗！可能json檔案沒有區域");
+                    return false;
+                }
 
                 //取得json資料棟樓
-                let floor = AllLabeljson['List']['area'][index]['building'][buindex]['floor'];
+                let floor = AllLabeljson['List']['area'][index]['floor'];
+                let floorkey = areakey+"_F"+floorvaluevalue;
                 var flindex = $.map(floor, function(item, index) {
                     return item.tag;
-                }).indexOf(areakey+"_"+buildingkey+"_"+floorvaluevalue);
+                }).indexOf(floorkey);
+
+                if(flindex == -1)
+                {
+                    console.error("區域尋找資料失敗！可能json檔案沒有區域");
+                    return false;
+                }
 
                 //取得json資料棟樓
-                let household = AllLabeljson['List']['area'][index]['building'][buindex]['floor'][flindex]['household'];
+                let household = floor[flindex]['household'];
+                let householdkey = floorkey+"_H"+householdvaluevalue;
                 var hoindex = $.map(household, function(item, index) {
                     return item.tag;
-                }).indexOf(areakey+"_"+buildingkey+"_"+floorvaluevalue+"_"+householdvaluevalue);
+                }).indexOf(householdkey);
 
                 let Endjson = household[hoindex];
 
                 //開啟圖片
-                NewImageBoxOpen(areakey+"_"+buildingkey+"_"+floorvaluevalue+"_"+householdvaluevalue);
+                NewImageBoxOpen(householdkey);
                 //載入標籤
-                if(!Endjson)
+                if(Endjson)
                 {
-                    console.error('json檔案內無此資料'+areakey+"_"+buildingkey+"_"+floorvaluevalue+"_"+householdvaluevalue);
+                    S_LabelLOAD(Endjson.label);
                 }
                 else
                 {
-                    S_LabelLOAD(Endjson.label);
+                    console.error('json檔案內無此資料'+householdkey);
                 }
             }
         }
@@ -2732,7 +2661,7 @@
         }
         else
         {
-            console.error('讀取切換數值出錯,可能沒有這個圖片框');
+            console.error('讀取切換數值出錯,可能沒有這個圖片框 ， tag :'+status);
         }
     }
 
@@ -2740,26 +2669,25 @@
     function Clear_Changebar(status)
     {
         //取得區域
-        let areavalue = document.querySelector('[data-status="area"]');
-        let buildingvalue = document.querySelector('[data-status="building"]');
-        let floorvalue = document.querySelector('[data-status="floor"]');
-        let householdvalue = document.querySelector('[data-status="household"]');
-        if(status == "area")
+        try
         {
-            buildingvalue.value = 0;
-            floorvalue.value = 0;
-            householdvalue.value = 0;
-        }
+            let areavalue = document.querySelector('[data-status="area"]');
+            let floorvalue = document.querySelector('[data-status="floor"]');
+            let householdvalue = document.querySelector('[data-status="household"]');
+            if(status == "area")
+            {
+                floorvalue.value = 0;
+                householdvalue.value = 0;
+            }
 
-        if(status == "building")
-        {
-            floorvalue.value = 0;
-            householdvalue.value = 0;
+            if(status == "floor" && householdvalue)
+            {
+                householdvalue.value = 0;
+            }
         }
-
-        if(status == "floor")
+        catch
         {
-            householdvalue.value = 0;
+            console.error("清除選單失敗");
         }
 
     }
@@ -2787,7 +2715,6 @@
         let householdsplit = [];
         for(let i=0; i<LabelObjkey.length; i++)
         {
-            console.log(LabelObjkey[i]);
             if(LabelObjkey[i].length == 4)
             {
                 //拆解字串，抓出區域
