@@ -1398,6 +1398,42 @@
         //存儲標籤
         $('#s_SavebuttonLabel').on('click',function(event){
             let typeid = $('#type').val();
+            //存標籤
+            let areavalue = document.querySelector('[data-status="area"]');
+            let floorvalue = document.querySelector('[data-status="floor"]');
+            let householdvalue = document.querySelector('[data-status="household"]');
+            let labelJson = {
+                "label": [],
+            };
+            //區域標籤
+            if(document.querySelector('[data-labelname="imgbox"].active'))
+            {
+                let thisBox = document.querySelector('[data-labelname="imgbox"].active');
+                let spanAll = thisBox.querySelectorAll('span');
+                let labels = [];
+                    spanAll.forEach(item =>{
+                        let left = item.style.left != "" ? item.style.left : 0;
+                        let right = item.style.right != "" ? item.style.right : 0;
+                        let leftspilt = left !=0 ? left.split('px') : false;
+                        let rightdpilt = right != 0 ? right.split('px') : false;
+                        labels.push({"name":item.textContent,"id":Number(item.dataset.labelid),"left":Number((leftspilt?leftspilt[0]:0)),"right":Number((leftspilt?leftspilt[0]:0))});
+                    });
+                //組成id
+                let dataSets = thisBox.dataset.imgidbox;
+                let Split = dataSets.split('_');
+                // A樓 F戶 H樓
+                let idkey = {"t0":"A","t1":"F","t2":"H"}
+                //區
+                for(let i=0;i<Split.length;i++)
+                {
+                    let splitids = Split[i].split(idkey["t"+i]);
+                    labelJson[idkey["t"+i]] =  Number(splitids[1]);
+                }
+
+                labelJson['label'] = labels;
+                console.log(labelJson);
+            }
+
             //存擋後的動作
             console.log(AllLabeljson);
         });
