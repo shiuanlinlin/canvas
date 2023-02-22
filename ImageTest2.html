@@ -902,9 +902,9 @@
                         return item.tag;
                     }).indexOf(areakey);
 
-                    if(areakey == -1)
+                    if(index == -1)
                     {
-                        console.error("區域尋找資料失敗！可能json檔案沒有區域");
+                        console.error("區域尋找資料失敗！可能json檔案沒有區域 " + areakey);
                         return false;
                     }
 
@@ -917,16 +917,27 @@
 
                     if(flindex == -1)
                     {
-                        console.error("區域尋找資料失敗！可能json檔案沒有區域");
+                        console.error("樓尋找資料失敗！可能json檔案沒有樓 " + floorkey);
                         return false;
                     }
-
                     //取得json資料戶(階層3)
                     let household = floor[flindex][JsonKEy[2]];
                     let householdkey = floorkey+"_H"+householdvaluevalue;
+                    if(!household)
+                    {
+                        alert("沒有戶的資料");
+                        householdvalue.value = 0;
+                        return false;
+                    }
+
                     var hoindex = $.map(household, function(item, index) {
                         return item.tag;
                     }).indexOf(householdkey);
+                    if(hoindex == -1)
+                    {
+                        console.error("戶尋找資料失敗！可能json檔案沒有戶 "+householdkey);
+                        return false;
+                    }
 
                     let Endjson = household[hoindex];
 
