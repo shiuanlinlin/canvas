@@ -817,12 +817,9 @@
                 Clear_Changebar(JsonKEy[1]);
 
                 //取得區域值(階層1)
-                console.log("區域值");
-                console.log(areakey);
                 //取得樓(階層2)
                 let floorvaluevalue = floorvalue.value!= 0 ? floorvalue.value : false;
-                console.log("樓值");
-                console.log(floorvaluevalue);
+                console.log("區域值"+areakey+"樓值"+floorvaluevalue);
 
                 if(!floorvaluevalue)
                 {
@@ -878,17 +875,12 @@
             if(status == JsonKEy[2])
             {
                 //取得區域值
-                console.log("區域值");
-                console.log(areakey);
                 //取得樓(階層2)
                 let floorvaluevalue = floorvalue.value;
-                console.log("樓值");
-                console.log(floorvaluevalue);
                 //取得戶(階層3)
                 let householdvalue = document.querySelector('[data-status="'+JsonKEy[2]+'"]');
                 let householdvaluevalue = householdvalue.value;
-                console.log("戶值");
-                console.log(householdvaluevalue);
+                console.log("區域值"+areakey+"樓值"+floorvaluevalue+"戶值"+householdvaluevalue);
 
                 if(floorvaluevalue == 0)
                 {
@@ -978,7 +970,6 @@
             //區域json
             let area = AllLabeljson['List'][JsonKEy[0]];
             console.log("初始化執行");
-            console.log(thisSelect);
 
 
             //如果沒有圖片返回預設，區域的預設為0
@@ -1025,12 +1016,9 @@
                 //判斷有沒有圖片
                 let Images = $('[data-imgidbox="'+status+'"]').find('img') ? $('[data-imgidbox="'+status+'"]').find('img') : false;
                 let ImageSrC = Images != false ? ( Images.attr('src')!= "" ? Images.attr('src') : false ) : false;
-                console.log("//判斷有沒有圖片");
-                console.log(ImageSrC);
 
                 if(ImageSrC)
                 {
-                    console.log("//先將標籤關閉");
                     //先將標籤關閉
                     Clear_SpanLAbel();
                     //先將舊的照片關閉
@@ -1245,7 +1233,7 @@
                 let areajson = area[areaindex];
                 let areaImage = areajson.img = objectURL;
                 $('[data-imgidbox="'+areavalue.value+'"]').find('img').attr('src',areaImage);
-                console.log(areajson);
+                //console.log(areajson);
             }
 
             //棟(展示用)
@@ -1435,7 +1423,7 @@
             }
 
             //存擋後的動作
-            console.log(AllLabeljson);
+            //console.log(AllLabeljson);
         });
 
         //尋找所在位置回傳index
