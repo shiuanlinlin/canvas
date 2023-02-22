@@ -44,6 +44,7 @@
                 </div>
                 <button type="button" class="btn btn-gk-view" id="s_ImageLabel">更換照片</button>
                 <button type="button" class="btn btn-gk-print" id="s_SavebuttonLabel">儲存標籤</button>
+                <button type="button" class="btn btn-secondary" id="s_Clearbtn">清除</button>
             </div>
         </div>
     </div>
@@ -67,6 +68,7 @@
             <option value="0">樓層</option>
             <option value="30">1樓</option>
             <option value="50">2樓</option>
+            <option value="31">3樓</option>
             </select>
         </div>
         <div class="form-group mt-4">
@@ -74,6 +76,7 @@
             <option value="0">戶別</option>
             <option value="11">1</option>
             <option value="12">2</option>
+            <option value="14">3</option>
             </select>
         </div>
     </div>
@@ -117,7 +120,7 @@
                 <!-- 樓 -->
                 <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </div>
-            <div class="s_img_labeBox d-none" data-imgidbox="B1_A_F1" data-labelname="imgbox">
+            <div class="s_img_labeBox d-none" data-imgidbox="A0_F31" data-labelname="imgbox">
                 <!-- 樓 -->
                 <img src="b2.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </div>
@@ -129,7 +132,7 @@
                 <!-- 戶 -->
                 <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </div>
-            <div class="s_img_labeBox d-none" data-imgidbox="A2_A_F1_H1" data-labelname="imgbox">
+            <div class="s_img_labeBox d-none" data-imgidbox="A0_F50_H14" data-labelname="imgbox">
                 <!-- 戶 -->
                 <img src="b1.png" class="img-fluid" alt="" style="width: 100%;height: auto">
             </div>
@@ -205,7 +208,8 @@
     </div>
 
     <script>
-
+        //預設值
+        const presetValue = "A0";
         //標籤按鈕，新增移除效果
         //屬性設定：
         // data-labelname='span' ==  標籤用<span>
@@ -226,6 +230,21 @@
         const ImageLabelAll = document.getElementById('s_ImageLabelAll');
         //名稱輸入
         const s_titleinputLabel = document.getElementById('s_titleinputLabel');
+        //清除按鈕
+        const s_Clearbtn = $('#s_Clearbtn');
+        //取得Select
+        let areavalue = document.querySelector('[data-status="area"]');
+        let floorvalue = document.querySelector('[data-status="floor"]');
+        let householdvalue = document.querySelector('[data-status="household"]');
+
+        //清除按鈕
+        s_Clearbtn.on('click',function(event){
+            areavalue.value = presetValue;
+            floorvalue.value = 0;
+            householdvalue.value = 0;
+            //初始化
+            Clear_OldIMAgeFirstBox(householdvalue,"clear");
+        });
 
         //== 標籤開始
         //== 1.Demoobj ==//
@@ -325,8 +344,34 @@
                                                     {"name":"A區2樓2戶(A0_F50_H11)5","id":13,"left":"","top":1100},
                                                 ],
                                             },
+                                            {
+                                                "name":"3戶",
+                                                "tag":"A0_F50_H14",
+                                                "id":14,
+                                                "img": "b1.png",
+                                                "label": [
+                                                    {"name":"A區2樓3戶(A0_F50_H14)1","id":1,"left":100,"top":200},
+                                                    {"name":"A區2樓3戶(A0_F50_H14)2","id":2,"left":200,"top":""},
+                                                    {"name":"A區2樓3戶(A0_F50_H14)3","id":6},
+                                                    {"name":"A區2樓3戶(A0_F50_H14)4","id":10,"left":900,"top":10},
+                                                    {"name":"A區2樓3戶(A0_F50_H14)5","id":13,"left":"","top":1100},
+                                                ],
+                                            },
                                         ]
                                     },
+                                    {
+                                        "name":"3樓",
+                                        "tag":"A0_F31",
+                                        "id":31,
+                                        "img": "b2.png",
+                                        "label": [
+                                            {"name":"A區3樓(A0_F31)1","id":1,"left":100,"top":200},
+                                            {"name":"A區3樓(A0_F31)2","id":2,"left":200,"top":""},
+                                            {"name":"A區3樓(A0_F31)3","id":6},
+                                            {"name":"A區3樓(A0_F31)4","id":10,"left":900,"top":10},
+                                            {"name":"A區3樓(A0_F31)5","id":13,"left":"","top":100},
+                                        ],
+                                    }
 
                                 ],
                             },
@@ -595,9 +640,9 @@
             let area = AllLabeljson['List']['area'];
             //區域
             //input抓去
-            let areaTag = document.querySelector('[data-status="area"]');
-            let floorTag = document.querySelector('[data-status="floor"]');
-            let householdTag = document.querySelector('[data-status="household"]');
+            let areaTag = areavalue;
+            let floorTag = floorvalue;
+            let householdTag = householdvalue;
             //區域
             if(floorTag.value == 0 && householdTag.value == 0)
             {
@@ -717,11 +762,6 @@
         {
             //用來判斷圖片是否開啟
             let ImageTool = false;
-
-            //取得Select
-            let areavalue = document.querySelector('[data-status="area"]');
-            let floorvalue = document.querySelector('[data-status="floor"]');
-            let householdvalue = document.querySelector('[data-status="household"]');
 
             //取得區域值
             let areakey = areavalue.value;
@@ -915,7 +955,7 @@
 
         //初始化
         //因為沒有圖片，所以自動返回預設值
-        function Clear_OldIMAgeFirstBox(thisSelect)
+        function Clear_OldIMAgeFirstBox(thisSelect,status)
         {
             //取得主key
             let JsonKEy = AllJsonKEyJsonTitle();
@@ -929,8 +969,7 @@
             console.log("初始化執行");
             console.log(thisSelect);
 
-            //取得原本的選擇名稱
-            const text = thisSelect.options[thisSelect.selectedIndex].text;
+
             //如果沒有圖片返回預設，區域的預設為0
             if(thisSelect == document.querySelector('[data-status="area"]'))
             {
@@ -942,14 +981,22 @@
                 thisSelect.value = 0;
             }
 
-            alert(text+"區未上傳圖片");
+            //如果是清除按鈕，就不跳提示
+            if(status != "clear")
+            {
+                //取得原本的選擇名稱
+                const text = thisSelect.options[thisSelect.selectedIndex].text;
+                alert(text+"區未上傳圖片");
+            }
+
+
             //將畫面也切換到預設(避免每一個選擇都是空的，導致畫面與Select所在位置都不同)
             //先將舊的照片關閉
             Clear_ChangeImageBox();
-            document.querySelector('[data-imgidbox="A0"]').classList.add('active');
-            document.querySelector('[data-imgidbox="A0"]').classList.remove('d-none');
+            document.querySelector('[data-imgidbox="'+presetValue+'"]').classList.add('active');
+            document.querySelector('[data-imgidbox="'+presetValue+'"]').classList.remove('d-none');
             //載入標籤
-            let areaindex = FindIndexPotion(area,"A0");
+            let areaindex = FindIndexPotion(area,presetValue);
             let json = area[areaindex].label;
             S_LabelLOAD(json);
         }
