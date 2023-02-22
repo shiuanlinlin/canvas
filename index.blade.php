@@ -2559,7 +2559,8 @@
             let values = target.value;
             let status = ('status' in target.dataset) ? target.dataset.status : false;
             try {
-                ChangeAllSelect(target,values,status);
+                //從頭載入圖片與外框
+                ChangeAllSelect(status);
             }
             catch (e) {
                 console.error("切換出現錯誤");
@@ -2567,7 +2568,7 @@
         });
 
         //切換執行區、棟、樓、戶
-        async function ChangeAllSelect(target,values,status)
+        async function ChangeAllSelect(status)
         {
             //用來判斷圖片是否開啟
             let ImageTool = false;
@@ -2592,7 +2593,7 @@
                 //抓取資料
                 var index = $.map(area, function(item, index) {
                     return item.tag;
-                }).indexOf(values);
+                }).indexOf(areakey);
 
                 //如果棟別切換，其他下拉選單清除
                 floorvalue.value = 0;
@@ -2601,21 +2602,12 @@
                 //清除其他選項
                 Clear_Changebar(JsonKEy[0]);
 
-                //先判斷是否有圖片
+                //先判斷是否有圖片(關閉與開啟標籤與圖片框)
                 ImageTool = NewImageBoxOpen(areakey);
                 if(ImageTool)
                 {
-                    //開啟新的圖片
-                    let newactivebox = document.querySelector('[data-imgidbox="'+values+'');
-                    newactivebox.classList.add('active');
-                    newactivebox.classList.remove('d-none');
                     //載入標籤(待修)
                     S_LabelLOAD(area[index].label);
-                }
-                else
-                {
-                    //初始化
-                    Clear_OldIMAgeFirstBox(areavalue);
                 }
             }
 
@@ -2632,7 +2624,7 @@
 
                 if(!floorvaluevalue)
                 {
-                   console.error("ChangeAllSelect() 取得不到樓層");
+                    console.log("ChangeAllSelect() 取得不到樓層");
                    return false
                 }
 
@@ -2645,6 +2637,12 @@
 
                     //取得json資料樓
                     let floor = area[index]['floor'];
+                    if(!floor)
+                    {
+                        alert("此區無下一層資料");
+                        floorvalue.value = 0;
+                        return false;
+                    }
                     let floorkey = areakey+"_F"+floorvaluevalue;
                     var flindex = $.map(floor, function(item, index) {
                         return item.tag;
@@ -2659,15 +2657,8 @@
                         //先判斷是否有圖片
                         ImageTool = NewImageBoxOpen(floorkey);
 
-                        if(!ImageTool)
-                        {
-                            //初始化
-                            Clear_OldIMAgeFirstBox(floorvalue);
-                            return false
-                        }
-
                         //載入標籤
-                        if(floor[flindex].label && floor[flindex].label.length >= 0)
+                        if(floor[flindex].label && floor[flindex].label.length >= 0  && ImageTool == true)
                         {
                             S_LabelLOAD(floor[flindex].label);
                         }
@@ -2742,18 +2733,14 @@
 
                     let Endjson = household[hoindex];
 
-                    //先判斷是否有圖片
+                    //先判斷是否有圖片(關閉與開啟標籤與圖片框)
                     ImageTool = NewImageBoxOpen(householdkey);
                     if(!ImageTool)
                     {
-                        //初始化
-                        Clear_OldIMAgeFirstBox(householdvalue);
-                        floorvalue.value = 0;
                         return false
                     }
-
                     //載入標籤
-                    if(Endjson && ImageTool)
+                    if(Endjson && ImageTool && ImageTool)
                     {
                         S_LabelLOAD(Endjson.label);
                     }
@@ -2766,51 +2753,53 @@
         }
 
         //初始化
-        //因為沒有圖片，所以自動返回預設值
         function Clear_OldIMAgeFirstBox(thisSelect,status)
         {
-            //取得主key
-            let JsonKEy = AllJsonKEyJsonTitle();
-            if(!JsonKEy && JsonKEy.length == 0)
-            {
-                console.error("取得 AllJsonKEy 的key值失敗，這是用來比對json階層的主Key，Clear_OldIMAgeFirstBox()");
-                return false
-            }
-            //區域json
-            let area = AllLabeljson['List'][JsonKEy[0]];
-            console.log("初始化執行");
-
-
-            //如果沒有圖片返回預設，區域的預設為0
-            if(thisSelect == document.querySelector('[data-status="area"]'))
-            {
-                document.querySelector('[data-status="area"]').value = 'A0';
-            }
-            else
-            {
-                document.querySelector('[data-status="area"]').value = 'A0';
-                thisSelect.value = 0;
-            }
-
-            //如果是清除按鈕，就不跳提示
+            //清除切換功能的label顯示
             if(status != "clear")
             {
-                //取得原本的選擇名稱
-                const text = thisSelect.options[thisSelect.selectedIndex].text;
-                alert(text+"區未上傳圖片");
+                //先將舊的照片關閉
+                Clear_SpanLAbel();
             }
 
 
-            //將畫面也切換到預設(避免每一個選擇都是空的，導致畫面與Select所在位置都不同)
-            //先將舊的照片關閉
-            Clear_ChangeImageBox();
-            document.querySelector('[data-imgidbox="'+presetValue+'"]').classList.add('active');
-            document.querySelector('[data-imgidbox="'+presetValue+'"]').classList.remove('d-none');
-            //載入標籤
-            let areaindex = FindIndexPotion(area,presetValue);
-            let json = area[areaindex].label;
-            S_LabelLOAD(json);
+            //如果是清除按鈕，就不跳提示
+            if(status == "clear")
+            {
+                //取得主key
+                let JsonKEy = AllJsonKEyJsonTitle();
+                if(!JsonKEy && JsonKEy.length == 0)
+                {
+                    console.error("取得 AllJsonKEy 的key值失敗，這是用來比對json階層的主Key，Clear_OldIMAgeFirstBox()");
+                    return false
+                }
+                //區域json
+                let area = AllLabeljson['List'][JsonKEy[0]];
+                console.log("初始化執行");
+
+                //如果沒有圖片返回預設，區域的預設為0
+                if(thisSelect == document.querySelector('[data-status="area"]'))
+                {
+                    document.querySelector('[data-status="area"]').value = presetValue;
+                }
+                else
+                {
+                    document.querySelector('[data-status="area"]').value = presetValue;
+                    thisSelect.value = 0;
+                }
+
+                //將畫面也切換到預設(避免每一個選擇都是空的，導致畫面與Select所在位置都不同)
+                //先將舊的照片關閉
+                Clear_ChangeImageBox();
+                document.querySelector('[data-imgidbox="'+presetValue+'"]').classList.add('active');
+                document.querySelector('[data-imgidbox="'+presetValue+'"]').classList.remove('d-none');
+                //載入標籤
+                let areaindex = FindIndexPotion(area,presetValue);
+                let json = area[areaindex].label;
+                S_LabelLOAD(json);
+            }
         }
+
         //開啟新的圖片
         function NewImageBoxOpen(status)
         {
