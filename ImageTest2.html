@@ -1207,7 +1207,6 @@
             //更換圖片
             const curFile = event.target.files[0]; // 透過 input 取得的 file object
             const objectURL = URL.createObjectURL(curFile);
-            console.log('objectURL', objectURL);
             //檔案存起來
             var Formdata = new FormData();
             Formdata.append('file', curFile);
@@ -1245,7 +1244,7 @@
                     Clear_ChangeImageBox();
                     //從頭載入圖片與外框
                     ChangeAllSelect(JsonKEy[0]);
-                },1000)
+                },100)
             }
 
             //樓(展示用)
@@ -1273,30 +1272,24 @@
                     Clear_ChangeImageBox();
                     //從頭載入圖片與外框
                     ChangeAllSelect(JsonKEy[1]);
-                },1000)
+                },100)
+
             }
             //戶(展示用)
             if(floorvalue.value != 0 && householdvalue.value != 0)
             {
                 let areaindex = FindIndexPotion(area,areavalue.value);
                 let areajson = area[areaindex][JsonKEy[1]];
-                console.log("區");
-                console.log(areajson);
                 let floorkey = areavalue.value+"_F"+floorvalue.value;
                 let floorindex = FindIndexPotion(areajson,floorkey);
                 let floorjson = areajson[floorindex][JsonKEy[2]];
-                console.log("樓");
-                console.log(floorjson);
                 let householdkey = floorkey+"_H"+householdvalue.value;
                 let householdindex = FindIndexPotion(floorjson,householdkey);
                 let householdjson = floorjson[householdindex];
                 householdjson.img = objectURL;
                 let householdImage = householdjson.img;
-                console.log("戶");
-                console.log(householdjson);
                 //$('[data-imgidbox="'+householdkey+'"]').find('img').attr('src',householdImage);
                 //顯示照片
-                console.log(document.querySelector('[data-imgidbox="'+householdkey+'"] img'));
                 if(document.querySelector('[data-imgidbox="'+householdkey+'"] img'))
                 {
                     $('[data-imgidbox="'+householdkey+'"]').find('img').attr('src',householdImage);
@@ -1311,8 +1304,7 @@
                     Clear_ChangeImageBox();
                     //從頭載入圖片與外框
                     ChangeAllSelect(JsonKEy[2]);
-                },1000)
-
+                },100)
             }
 
 
@@ -1327,14 +1319,17 @@
             //     contentType: false,
             //     processData: false,
             //     success:function(data){
+            //         $('#s_ImageLabelfile').val('');
             //         console.log("success");
             //         console.log(data);
             //     },
             //     error: function(data){
+            //         $('#s_ImageLabelfile').val('');
             //         console.log("error");
             //         console.log(data);
             //     }
             // });
+
         });
 
 
