@@ -3036,6 +3036,10 @@
         }
 
         //更換區塊圖片
+        //舊圖
+        let OldImageUrl = '';
+        //用來還原就圖片的id
+        let OldID = 'A0';
         //取得區域
         let area = AllLabeljson['List'][JsonKEy[0]];
         //區域(展示用)
@@ -3046,8 +3050,12 @@
             let areajson = area[areaindex];
             let areaImage = areajson.img = objectURL;
             //顯示照片
+            //id存起來
+            OldID = areavalue.value;
             if(document.querySelector('[data-imgidbox="'+areavalue.value+'"] img'))
             {
+                //將舊圖存起來備用
+                OldImageUrl = $('[data-imgidbox="'+areavalue.value+'"]').find('img').attr('src');
                 $('[data-imgidbox="'+areavalue.value+'"]').find('img').attr('src',areaImage);
             }
             else
@@ -3074,8 +3082,12 @@
             floorjson.img = objectURL;
             let floorImage = floorjson.img;
             //顯示照片
+            //id存起來
+            OldID = floorkey;
             if(document.querySelector('[data-imgidbox="'+floorkey+'"] img'))
             {
+                //將舊圖存起來備用
+                OldImageUrl = $('[data-imgidbox="'+floorkey+'"]').find('img').attr('src');
                 $('[data-imgidbox="'+floorkey+'"]').find('img').attr('src',floorImage);
             }
             else
@@ -3106,8 +3118,12 @@
             let householdImage = householdjson.img;
             //$('[data-imgidbox="'+householdkey+'"]').find('img').attr('src',householdImage);
             //顯示照片
+            //id存起來
+            OldID = householdkey;
             if(document.querySelector('[data-imgidbox="'+householdkey+'"] img'))
             {
+                //將舊圖存起來備用
+                OldImageUrl = $('[data-imgidbox="'+householdkey+'"]').find('img').attr('src');
                 $('[data-imgidbox="'+householdkey+'"]').find('img').attr('src',householdImage);
             }
             else
@@ -3150,12 +3166,19 @@
                         $('#s_ImageLabelfile').val('');
                     }else if(data.result=="no_data"){
                         alert("更改失敗, 資料不存在。");
+                        //存擋失敗清除上傳檔案
                         $('#s_ImageLabelfile').val('');
+                        //更新失敗還原預設
+                        $('[data-imgidbox="'+OldID+'"]').find('img').attr('src',OldImageUrl);
                     }
                 }
                 console.log("success");
             },
             error: function(data){
+                //存擋失敗清除上傳檔案
+                $('#s_ImageLabelfile').val('');
+                //更新失敗還原預設
+                $('[data-imgidbox="'+OldID+'"]').find('img').attr('src',OldImageUrl);
                 console.log("error");
                 console.log(Formdata);
             }
