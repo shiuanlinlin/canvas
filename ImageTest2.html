@@ -460,7 +460,7 @@
         });
 
         //移動標籤
-        $(".s_BtnGroud button").on('click',function(event){
+        $(".s_BtnGroud button[data-simg]").on('click',function(event){
             //先找尋是否有標籤被選取了
             if(document.querySelector("span[data-labelname='span'].active"))
             {
@@ -1002,26 +1002,18 @@
                 let Images = $('[data-imgidbox="'+status+'"]').find('img') ? $('[data-imgidbox="'+status+'"]').find('img') : false;
                 let ImageSrC = Images != false ? ( Images.attr('src')!= "" ? Images.attr('src') : false ) : false;
 
+                //先將標籤關閉
+                Clear_SpanLAbel();
+                //先將舊的照片關閉
+                Clear_ChangeImageBox();
+                newbox.classList.add('active');
+                newbox.classList.remove('d-none');
                 if(ImageSrC)
                 {
-                    //先將標籤關閉
-                    Clear_SpanLAbel();
-                    //先將舊的照片關閉
-                    Clear_ChangeImageBox();
-
-                    newbox.classList.add('active');
-                    newbox.classList.remove('d-none');
                     return true
                 }
                 else
                 {
-                    //沒有圖片
-                    //先將標籤關閉
-                    Clear_SpanLAbel();
-                    //先將舊的照片關閉
-                    Clear_ChangeImageBox();
-                    newbox.classList.add('active');
-                    newbox.classList.remove('d-none');
                     return false
                 }
             }
@@ -1343,16 +1335,9 @@
                 error: function(data){
                     // //存擋失敗清除上傳檔案
                     // $('#s_ImageLabelfile').val('');
+                    // 存擋失敗還原
+                    //$('[data-imgidbox="'+OldID+'"]').find('img').attr('src',"");
                     // //存擋失敗還原
-                    // if(OldID != 0)
-                    // {
-                    //     $('[data-imgidbox="'+OldID+'"]').find('img').attr('src',OldImageUrl);
-                    // }
-
-                    // if(OldID == 0)
-                    // {
-                    //     $('[data-imgidbox="'+OldID+'"]').find('img').attr('src',"");
-                    // }
 
                     console.log("error");
                     console.log(data);
