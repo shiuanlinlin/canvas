@@ -20,34 +20,41 @@
         .h_60x{height: 60px!important;}
         .h_70x{height: 50px!important;}
         .w-20{width: 20%!important;}
-        .month_day_title{border-bottom: 1px solid #DDD; height: 51px;}
-        .month_day_content{border-bottom: 1px solid #DDD; height: 51px; position: relative;}
+        .month_day_title{border-bottom: 1px solid #E5E9F2; height: 51px; position: relative;}
+        .month_day_content{border-bottom: 1px solid #E5E9F2; height: 51px; position: relative;}
         /* .month_day_title ul{width: 300px;} */
         .month_day_title ul li {width: 40px; height: 40px; text-align: center;}
-        .month_day_content ul li{width: 40px; height: 50px; text-align: center; border-right: 1px solid #DDD;}
+        .month_day_content ul li{width: 40px; height: 50px; text-align: center; border-right: 1px solid #E5E9F2;}
 
-        .tabletitle,.tablecontent{ display: flex; align-items: center; border-bottom: solid 1px #DDD;}
+        .tabletitle,.tablecontent{ display: flex; align-items: center; border-bottom: solid 1px #E5E9F2;}
         .tabletitle li,.tablecontent li{ width: calc(100% - 108px - 191px); margin-right: 1rem; height: 50px; line-height: 44px; overflow: hidden;}
-        .tabletitle li:nth-of-type(2),.tablecontent li:nth-of-type(2){ width: 191px; border-right: solid 1px #DDD; text-align: center;}
+        .tabletitle li:nth-of-type(2),.tablecontent li:nth-of-type(2){ width: 191px; border-right: solid 1px #E5E9F2; text-align: center;}
         .tabletitle li:last-of-type,.tablecontent li:last-of-type{ width: 108px; text-align: center;}
         .table_box{display: flex; overflow: hidden;}
-        .table_boxleft,.table_boxirght{width: 50%;}
+        .table_boxleft{width: 50%;}
+        .table_boxirght{width: 738px;}
         .tablecontent{ background: #F6FEFF; }
-        .tablecontent li:nth-of-type(2){border-left: solid 1px #DDD;}
-        /* .table_boxirght{border-left: solid 1px #1E95A7;} */
-        /* .table_boxirght .chartStyle{padding-left: 10px;} */
+        .tablecontent li:nth-of-type(2){border-left: solid 1px #E5E9F2;}
+        .table_boxirght{overflow-x: auto; overflow-y: hidden; padding-bottom: 100px;}
         .monthList{position: relative;}
         .monthList::after{border-left: solid 1px #1E95A7; content: ''; position: absolute; height: 100vh; width: 1px; top:0px; z-index: 10;}
         .monthList p {font-size: 13px; margin-left: 5px;}
-        .Charts{ position: absolute; width: 40px; height: 20px; top: 0px; left: 0;}
+        .monthList ul li.Today::after{content: ''; position: absolute; left: 0; top: 18px; width: 40px; height: 100vh; background: #ffcd002b; z-index: 1;}
+        .Charts{ position: absolute; width: 40px; height: 20px; top: 0px; left: 0; z-index: 5;}
+        .Charts svg{ position: relative; z-index: 50;}
         .Charts.orange{ background: orange;}
         .Charts.blue{ background: #4D82D9;}
         .Charts.blak{ background: #222222;}
         .Charts.green{ border: solid 2px #48B461;}
         .Charts.childCharts{ height: 10px; position: absolute; margin-top: 5px; }
-        .chartList{height: 51px; background: #F6FEFF; position: relative; border-bottom: solid 1px #dddddd;}
+        .chartList{height: 51px; background: #F6FEFF; position: relative; border-bottom: solid 1px #E5E9F2;}
         .bule_border{border-left: solid 1px #1E95A7;}
-
+        /* 顯示隔線 */
+        .lattice{ position: absolute; top: 50px; z-index: 2;}
+        .lattice ul li{ width: 40px; height: 100vh; border-right: solid 1px #E5E9F2;}
+        /* 箭頭顏色 */
+        .arrowBoder {stroke:#084cc9; fill:steelblue; stroke-width:4;}
+        .SvgBoder {stroke:#084cc9; stroke-width:1;}
     </style>
 </head>
 <body>
@@ -136,8 +143,37 @@
                                             <!-- 進度條顯示 -->
                                             <div class="chartStyle">
                                                 <!-- 月份日期顯示 -->
-                                                <div class="month_day_title d-flex">
-                                                    <div class="monthList">
+                                                <div class="month_day_title d-flex" data-id="month_day_title">
+                                                    <!-- 顯示刻度格子線條 -->
+                                                    <div class="lattice" id="lattice">
+                                                        <!--
+                                                            == 刻度用法說明：
+                                                                1.40px 為一個單位，1個單位為5天
+                                                                2.刻度格子需要依照所顯示的天數，也要列出來
+                                                        -->
+                                                        <ul class="d-flex">
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- 顯示刻度格子線條 End-->
+                                                    <div class="monthList" data-id="monthList">
                                                         <p class="mb-0">2020/11</p>
                                                         <ul class="d-flex">
                                                             <li>5</li>
@@ -148,8 +184,19 @@
                                                             <li>30</li>
                                                         </ul>
                                                     </div>
-                                                    <div class="monthList">
-                                                        <p class="mb-0">2020/11</p>
+                                                    <div class="monthList" data-id="monthList">
+                                                        <p class="mb-0">2020/12</p>
+                                                        <ul class="d-flex">
+                                                            <li>5</li>
+                                                            <li class="Today">10</li>
+                                                            <li>15</li>
+                                                            <li>20</li>
+                                                            <li>25</li>
+                                                            <li>30</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="monthList" data-id="monthList">
+                                                        <p class="mb-0">2023/01</p>
                                                         <ul class="d-flex">
                                                             <li>5</li>
                                                             <li>10</li>
@@ -162,24 +209,8 @@
                                                 </div>
                                                 <!-- 月份日期顯示 End-->
                                                 <!-- 進度內容 -->
-                                                <div class="month_day_content d-flex flex-column">
+                                                <div class="month_day_content">
                                                     <div class="chartList">
-                                                        <!-- 顯示刻度格子線條 -->
-                                                        <ul class="d-flex">
-                                                            <li></li>
-                                                            <li></li>
-                                                            <li></li>
-                                                            <li></li>
-                                                            <li></li>
-                                                            <li></li>
-                                                            <li></li>
-                                                            <li></li>
-                                                            <li></li>
-                                                            <li></li>
-                                                            <li></li>
-                                                            <li></li>
-                                                        </ul>
-                                                        <!-- 顯示刻度格子線條 End-->
                                                         <!-- 顯示進度條 -->
                                                         <!--
                                                             == 刻度用法說明：
@@ -209,19 +240,35 @@
                                                                 </div>
 
                                                          -->
-                                                        <div class="Charts blue" style="top:0; left: 0; width: 80px;"></div>
+                                                        <div class="Charts blue" style="top:0; left: 0; width: 80px;">
+                                                            <!-- 下方x軸加2(x2)，必免看不到箭頭 -->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                                                                <defs>
+                                                                    <marker id="arrow"
+                                                                      markerUnits="strokeWidth"
+                                                                      markerWidth="8"
+                                                                      markerHeight="8"
+                                                                      viewBox="0 0 10 10"
+                                                                      refX="5"
+                                                                      refY="5"
+                                                                      orient="auto">
+                                                                      <path d="M 0 0 L 10 5 L 0 10 z" style="fill: #084cc9"></path>
+                                                                    </marker>
+                                                                  </defs>
+                                                                  <!-- x1、y1 起始，x2、y2 結束 -->
+                                                                  <line x1="80" y1="20" x2="42" y2="50" class="SvgBoder" marker-end="url(#arrow)"/>
+                                                            </svg>
+                                                        </div>
                                                         <div class="Charts green" style="top:25px; left: 80px; width: 80px;"></div>
                                                         <!-- 顯示進度條 End-->
                                                     </div>
                                                     <div class="chartList">
                                                         <div class="Charts blue" style="top:0; left: 40px; width: 80px;"></div>
                                                         <div class="Charts green" style="top:25px; left: 80px; width: 80px;"></div>
-
                                                     </div>
                                                     <div class="chartList">
                                                         <div class="Charts blue" style="top:0; left: 80px; width: 80px;"></div>
                                                         <div class="Charts green" style="top:25px; left: 80px; width: 80px;"></div>
-
                                                     </div>
                                                 </div>
                                                 <!-- 進度內容 End-->
@@ -240,5 +287,99 @@
             </div>
         </div>
     </div>
+    <script>
+        //Demo用
+        let startday = "2022/11/03";
+        let endday = "2023/02/03";
+        //時間區塊
+        FindMonthDate(startday,endday);
+        //日期(預計接收項目：maxstartday最早日期,maxendday最晚日期)
+        function FindMonthDate(startday,endday)
+        {
+           let start =  startday.split('/');
+           let end =  endday.split('/');
+
+           //起始日期如果是 11月，要取10月 ; 如果結束日期是 2月，要取1月
+           let startmonth = Number(start[1]) - 1;
+           let endtmonth = Number(end[1]) + 2;
+
+           //起始取得到12月底前的天數
+           let DateArray = [];
+           for(let i=startmonth; i<13; i++)
+           {
+            let days = new Date(Number(start[0]),i,0).getDate();
+            DateArray.push({"year":Number(start[0]),"mon":i,"days":days});
+           }
+
+           //結束時間取道12月底的天數
+           for(let i=1; i<Number(endtmonth); i++)
+           {
+            let days = new Date(Number(end[0]),i,0).getDate();
+            DateArray.push({"year":Number(end[0]),"mon":i,"days":days});
+           }
+
+           console.log(start);
+           console.log(end);
+           console.log(DateArray);
+           //顯示到頁面
+           ShowMonthHTML(DateArray);
+           //console.log(days);
+        }
+
+        //顯示用，顯示月份
+        function ShowMonthHTML(DateArray)
+        {
+            let html = "";
+            let lihtml = "";
+            let SumDays = 1;
+            for(let i=0; i<DateArray.length; i++)
+            {
+                //先組合日期
+                for(let j=1; j<=DateArray[i]['days']; j++)
+                {
+                    //抓出五的倍數
+                    if(Number.isInteger(j/5))
+                    {
+                        SumDays++;
+                        lihtml+= `<li>${j}</li>`;
+                    }
+                }
+
+                //HTML組成
+                html += `
+                <div class="monthList" data-id="monthList">
+                    <p class="mb-0">${DateArray[i].year}/${DateArray[i].mon}</p>
+                    <ul class="d-flex daysul">
+                        ${lihtml}
+                    </ul>
+                </div>
+                `;
+
+                //清空上次的日期計算
+                lihtml = "";
+            }
+
+            //先將舊的移除
+            let monthLists = document.querySelectorAll('[data-id="monthList"]');
+            monthLists.forEach(item=>{
+                item.remove();
+            });
+
+            //將新的日期寫入
+            $('[data-id="month_day_title"]').after().append(html);
+
+            //計算總天數
+            let lattice = $('#lattice');
+            let latticeHtml = "";
+
+            for(let i=0; i<=SumDays; i++)
+            {
+                latticeHtml += `<li>${i}</li>`;
+            }
+
+
+            console.log(SumDays);
+        }
+    </script>
 </body>
 </html>
