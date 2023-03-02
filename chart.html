@@ -295,7 +295,7 @@
                 {"name":"前期報建1","id":1,"date":"2022-11-08","daynumber":31,"main":true,
                     "List":[
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
-                        {"startday":"2022/08/02","daynumber":30,"id":11,"status":2,"control":true}
+                        {"startday":"2022/02/28","daynumber":30,"id":11,"status":2,"control":true}
                     ]
                 },
                 {"name":"前期報建1","id":2,"date":"2022-11-08","daynumber":31,"main":false,
@@ -305,7 +305,7 @@
                     ]
                 }
             ],
-            "maxstartday": "2022/08/03",
+            "maxstartday": "2022/01/03",
             "maxendday": "2023/12/03",
         };
         //開始時間，與最後結束時間
@@ -564,8 +564,8 @@
                         oldleft = oldleft+length;
                     }
 
-                    console.log("//先尋找起始日");
-                    console.log(oldleft);
+                    // console.log("//先尋找起始日");
+                    // console.log(oldleft);
 
                     //還要再加上當月的起始日期(例如:8/11，目前已經移動到8月，但還有11天才是開始日)
                     let oldDayNumber = Math.floor(Number(datastart[2]) / 5) == 0 ? 0.5: Math.floor(Number(datastart[2]) / 5);
@@ -574,6 +574,11 @@
                     console.log(oldleft);
 
                     left = oldleft;
+                    //如果日期的尾數是30、31減半格
+                    if(Number(datastart[2]) == 30 || Number(datastart[2]) == 31 || Number(datastart[1]) == 2)
+                    {
+                        left = left-20;
+                    }
 
                     //取得width(利用剛剛得到的日期來計算寬度)
                     let ChartAddDay = Chartjson[i].List[j].daynumber;
@@ -581,10 +586,10 @@
 
                     //寬度，如果未整除，就添加半格
                     let width = Days*40;
-                    console.log('left');
-                    console.log(left);
-                    console.log('width');
-                    console.log(width);
+                    // console.log('left');
+                    // console.log(left);
+                    // console.log('width');
+                    // console.log(width);
                     childHtml += `
                         <div class="Charts ${ color }" style="top:0px; left: ${left}px; width: ${width}px;"></div>
                     `;
