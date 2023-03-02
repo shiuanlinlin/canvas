@@ -46,6 +46,7 @@
         .Charts.blue{ background: #4D82D9;}
         .Charts.blak{ background: #222222;}
         .Charts.green{ border: solid 2px #48B461;}
+        .Charts.red{ border: solid 2px red;}
         .Charts.childCharts{ height: 10px; position: absolute; margin-top: 5px; }
         .chartList{height: 51px; background: #F6FEFF; position: relative; border-bottom: solid 1px #E5E9F2;}
         .bule_border{border-left: solid 1px #1E95A7;}
@@ -209,7 +210,7 @@
                                                 </div>
                                                 <!-- 月份日期顯示 End-->
                                                 <!-- 進度內容 -->
-                                                <div class="month_day_content">
+                                                <div class="month_day_content" data-id="month_day_content">
                                                     <div class="chartList">
                                                         <!-- 顯示進度條 -->
                                                         <!--
@@ -262,14 +263,14 @@
                                                         <div class="Charts green" style="top:25px; left: 80px; width: 80px;"></div>
                                                         <!-- 顯示進度條 End-->
                                                     </div>
-                                                    <div class="chartList">
+                                                    <!-- <div class="chartList">
                                                         <div class="Charts blue" style="top:0; left: 40px; width: 80px;"></div>
                                                         <div class="Charts green" style="top:25px; left: 80px; width: 80px;"></div>
                                                     </div>
                                                     <div class="chartList">
                                                         <div class="Charts blue" style="top:0; left: 80px; width: 80px;"></div>
                                                         <div class="Charts green" style="top:25px; left: 80px; width: 80px;"></div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <!-- 進度內容 End-->
                                             </div>
@@ -288,9 +289,28 @@
         </div>
     </div>
     <script>
-        //Demo用
-        let startday = "2022/11/03";
-        let endday = "2022/12/03";
+        //json
+        let ChartAll = {
+            "chartdata":[
+                {"name":"前期報建1","id":1,"main":true,
+                    "List":[
+                        //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
+                        {"startday":"2022/11/01","daynumber":20,"id":11,"status":2},
+                    ]
+                },
+                {"name":"前期報建2","id":2,"main":true,
+                    "List":[
+                        //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
+                        {"startday":"2022/09/01","daynumber":15,"id":21,"status":1},
+                    ]
+                }
+            ],
+            "maxstartday": "2022/09/03",
+            "maxendday": "2023/12/03",
+        };
+        //開始時間，與最後結束時間
+        let startday = ChartAll.maxstartday;
+        let endday = ChartAll.maxendday;
         //時間區塊
         FindMonthDate(startday,endday);
 
@@ -381,12 +401,23 @@
             let days = new Date(newYear,newMonth,0).getDate();
             DateArray.push({"year":newYear,"mon":newMonth,"days":days});
            }
-            console.log(DateArray);
+            //console.log(DateArray);
             //顯示到頁面
             ShowMonthHTML(DateArray);
         }
 
-        //顯示用，顯示月份
+
+
+        //增加天數
+        function AddToDay(days,datastart)
+        {
+            //添加的天數量(幾天工作天)
+            var result = new Date(datastart);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+
+        //顯示到頁面，顯示月份與格線
         function ShowMonthHTML(DateArray)
         {
             let html = "";
@@ -407,7 +438,7 @@
 
                 //HTML組成
                 html += `
-                <div class="monthList" data-id="monthList">
+                <div class="monthList" data-id="monthList" data-day="${DateArray[i].year}/${DateArray[i].mon}">
                     <p class="mb-0">${DateArray[i].year}/${DateArray[i].mon}</p>
                     <ul class="d-flex daysul">
                         ${lihtml}
@@ -440,10 +471,135 @@
             lattice.find('ul').remove();
             //添加新的格線
             lattice.append(`<ul class="d-flex">${latticeHtml}</ul>`);
-            console.log(SumDays);
+            //console.log(SumDays);
 
             //寬度同步(日期框與格線)
             $('.chartStyle').width(lattice.width());
+
+            //顯示長條圖
+            ChartShowHtml();
+        }
+
+        //顯示長條圖
+        function ChartShowHtml()
+        {
+            //暫時先清空
+            $('[data-id="month_day_content"]').html('');
+            const month_day_content = $('[data-id="month_day_content"]');
+            //取得json
+            let Chartjson = ChartAll.chartdata;
+            //外層html
+            let Html = '';
+            //長條圖本人
+            let childHtml = '';
+            for(let i=0; i<Chartjson.length; i++)
+            {
+                for(let j=0; j<Chartjson[i].List.length; j++)
+                {
+                    let color = '';
+                    switch(Chartjson[i].List[j].status)
+                    {
+                        case 1:
+                            color = "green";
+                            break;
+                        case 2:
+                            color = "blue";
+                            break;
+                        case 3:
+                            color = "orange";
+                            break;
+                        case 4:
+                            color = "blak";
+                            break;
+                        default:
+                            //偵錯專用
+                            color = "red";
+                            break;
+                    }
+
+                    //抓取前一個月的li數量(計算頁面的格子數)
+                    let monthLists = document.querySelectorAll('[data-id="monthList"]');
+                    let lis = monthLists[0].querySelectorAll('li');
+                    let start_day = monthLists[0].dataset.day;
+                    let start = start_day.split('/');
+
+                    //偵錯
+                    if(start.length < 1)
+                    {
+                        console.error("可能沒有抓到頁面上的日期，也可能 start_day.split('/') 出錯");
+                        return false
+                    }
+
+                    //抓json開始日期
+                    let datastart_day = Chartjson[i].List[j].startday;
+                    console.log(datastart_day);
+                    let datastart = datastart_day.split('/');
+
+                    //偵錯
+                    if(datastart.length < 1)
+                    {
+                        console.error("可能沒有抓到json日期，也可能 datastart_day.split('/') 出錯");
+                        return false
+                    }
+                    //將日期組合
+                    let oldday = datastart[0]+"-"+datastart[1]+"-"+datastart[2]
+
+                    //添加的天數量(起始日期 + 天數)
+                    let daynumber = Number(Chartjson[i].List[j].daynumber);
+                    let jsonday = AddToDay(daynumber,oldday);
+
+                    //將時間轉出來
+                    let newyear = jsonday.getFullYear();
+                    //月份因為是從0開始計算，所以需要加1
+                    let newmonth = jsonday.getMonth()+1;
+                    let newdate = jsonday.getDate();
+
+                    //拼湊年份與月份
+                    let txt = newyear+"/"+Number(newmonth);
+                    console.log("//拼湊年份與月份");
+                    console.log(txt);
+                    //尋找目前總共相差幾格
+                    var index = $.map(monthLists, function(item, index) {
+                        return item.dataset.day;
+                    }).indexOf(txt);
+
+                    //偵錯
+                    if(index == -1)
+                    {
+                       consle.error("在尋找頁面上的月份有 " + txt + " 出現錯誤 ， ChartShowHtml()");
+                       return false
+                    }
+
+                    let left = 0;
+                    //利用算出的相距格數，取得let
+                    for(let i=0; i<index; i++)
+                    {
+                        let length = monthLists[i].querySelectorAll('li').length;
+                        left = left+length;
+                    }
+                    //一個是40px
+                    left = left*40;
+                    //取得width(利用剛剛得到的日期來計算寬度)
+                    let Days = Number(newdate);
+
+                    //寬度，如果未整除，就添加半格
+                    let width = (Days % 5) == 0 ? Math.floor(Days / 5) * 40 : Math.floor(Days / 5) * 40 + 20;
+
+                    childHtml += `
+                        <div class="Charts ${ color }" style="top:0; left: ${left}px; width: ${width}px;"></div>
+                    `;
+                }
+
+                Html += `
+                    <div class="chartList">${ childHtml }</div>
+                `;
+                //每次填完都清空長條圖
+                childHtml = '';
+
+
+            }
+            //console.log(Chartjson);
+            $('[data-id="month_day_content"]').append(Html);
         }
     </script>
 </body>
