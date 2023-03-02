@@ -289,7 +289,7 @@
     </div>
     <script>
         //Demo用
-        let startday = "2022/11/03";
+        let startday = "2021/01/03";
         let endday = "2023/02/03";
         //時間區塊
         FindMonthDate(startday,endday);
@@ -300,22 +300,74 @@
            let end =  endday.split('/');
 
            //起始日期如果是 11月，要取10月 ; 如果結束日期是 2月，要取1月
-           let startmonth = Number(start[1]) - 1;
-           let endtmonth = Number(end[1]) + 2;
+           let startmonth = Number(start[1]);
+           let endtmonth = Number(end[1]);
+
+           var min = new Date();
+           var max = new Date();
+           console.log(min.setFullYear(start[0],start[1]));
 
            //起始取得到12月底前的天數
            let DateArray = [];
-           for(let i=startmonth; i<13; i++)
+           //如果年份相等
+           if(start[0] == end[0])
            {
-            let days = new Date(Number(start[0]),i,0).getDate();
-            DateArray.push({"year":Number(start[0]),"mon":i,"days":days});
+            for(let i=startmonth; i<=endtmonth; i++)
+            {
+                let days = new Date(Number(start[0]),i,0).getDate();
+                DateArray.push({"year":Number(start[0]),"mon":i,"days":days});
+            }
            }
 
-           //結束時間取道12月底的天數
-           for(let i=1; i<Number(endtmonth); i++)
+           //如果年份不相等
+           if(start[0] != end[0])
            {
-            let days = new Date(Number(end[0]),i,0).getDate();
-            DateArray.push({"year":Number(end[0]),"mon":i,"days":days});
+            for(let i=startmonth; i<=12; i++)
+            {
+                let days = new Date(Number(start[0]),i,0).getDate();
+                DateArray.push({"year":Number(start[0]),"mon":i,"days":days});
+            }
+
+            for(let i=1; i<=endtmonth; i++)
+            {
+                let days = new Date(Number(end[0]),i,0).getDate();
+                DateArray.push({"year":Number(end[0]),"mon":i,"days":days});
+            }
+           }
+
+           //添加起始月份(如果初始月份扣除小於1)
+           if(Number(start[1]) - 1 < 1)
+           {
+             let newYear = Number(start[0]) - 1;
+             let newMonth = 12;
+             let days = new Date(newYear,newMonth,0).getDate();
+             DateArray.unshift({"year":newYear,"mon":newMonth,"days":days});
+           }
+
+           //添加起始月份
+           if(Number(start[1]) - 1 >= 1)
+           {
+            let newMonth = Number(start[1]) - 1;
+            let days = new Date(Number(start[0]),newMonth,0).getDate();
+            DateArray.unshift({"year":Number(start[0]),"mon":newMonth,"days":days});
+           }
+
+           //添加結束月份(如果結束月份相加大於12)
+           if(Number(end[1]) + 1 > 12)
+           {
+            let newYear = Number(end[0]) + 1;
+            let newMonth = 1;
+            let days = new Date(newYear,newMonth,0).getDate();
+            DateArray.push({"year":newYear,"mon":newMonth,"days":days});
+           }
+
+           //添加結束月份
+           if(Number(end[1]) + 1 <= 12)
+           {
+            let newYear = Number(end[0]);
+            let newMonth = Number(end[1]) + 1;
+            let days = new Date(newYear,newMonth,0).getDate();
+            DateArray.push({"year":newYear,"mon":newMonth,"days":days});
            }
 
            console.log(start);
@@ -368,17 +420,22 @@
             //將新的日期寫入
             $('[data-id="month_day_title"]').after().append(html);
 
-            //計算總天數
+            //計算總天數格線
             let lattice = $('#lattice');
             let latticeHtml = "";
 
-            for(let i=0; i<=SumDays; i++)
+            for(let i=0; i<=(SumDays-2); i++)
             {
-                latticeHtml += `<li>${i}</li>`;
+                latticeHtml += `<li></li>`;
             }
-
-
+            //清除舊的
+            lattice.find('ul').remove();
+            //添加新的格線
+            lattice.append(`<ul class="d-flex">${latticeHtml}</ul>`);
             console.log(SumDays);
+
+            //寬度同步(日期框與格線)
+            $('.chartStyle').width(lattice.width());
         }
     </script>
 </body>
