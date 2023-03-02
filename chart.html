@@ -289,51 +289,63 @@
     </div>
     <script>
         //Demo用
-        let startday = "2021/01/03";
-        let endday = "2023/02/03";
+        let startday = "2022/11/03";
+        let endday = "2022/12/03";
         //時間區塊
         FindMonthDate(startday,endday);
+
+        //尋找範圍內的月份
+        //有參考：
+        function FindDate(startday,endday)
+        {
+            var result = [];
+            let start =  startday.split('/');
+            let end =  endday.split('/');
+            var min = new Date();
+            var max = new Date();
+            //設置起始時間與結束時間(將時間轉為數值)
+            min.setFullYear(start[0],start[1])
+            max.setFullYear(end[0],end[1]);
+
+            //複製(用來每次回圈更新)
+            var curr = min;
+            //添加字串
+            var str = "";
+            //起始时间在结束时间之前
+            while(curr <= max){
+                //取得每個月份
+                var month = curr.getMonth();
+                //如果月份為0表示12月
+                if(month===0){
+                    //這邊的年份會多一年所以要扣除
+                    str=(curr.getFullYear()-1)+"-"+12;
+                }else{
+                    //正常月份
+                    str=curr.getFullYear()+"-"+(month<10?("0"+month):month);
+                }
+                result.push(str);
+                //更新
+                curr.setMonth(month+1);
+            }
+            return result;
+        }
+
         //日期(預計接收項目：maxstartday最早日期,maxendday最晚日期)
         function FindMonthDate(startday,endday)
         {
-           let start =  startday.split('/');
-           let end =  endday.split('/');
-
-           //起始日期如果是 11月，要取10月 ; 如果結束日期是 2月，要取1月
-           let startmonth = Number(start[1]);
-           let endtmonth = Number(end[1]);
-
-           var min = new Date();
-           var max = new Date();
-           console.log(min.setFullYear(start[0],start[1]));
-
-           //起始取得到12月底前的天數
-           let DateArray = [];
-           //如果年份相等
-           if(start[0] == end[0])
-           {
-            for(let i=startmonth; i<=endtmonth; i++)
+            let Findscope = FindDate(startday,endday);
+            let DateArray = [];
+            //拆解所有月份，取得天數
+            for(let i=0; i<Findscope.length; i++)
             {
-                let days = new Date(Number(start[0]),i,0).getDate();
-                DateArray.push({"year":Number(start[0]),"mon":i,"days":days});
+                let Dates = Findscope[i].split('-');
+                let year = Number(Dates[0]);
+                let month = Number(Dates[1]);
+                let days = new Date(year,month,0).getDate();
+                DateArray.push({"year":year,"mon":month,"days":days});
             }
-           }
-
-           //如果年份不相等
-           if(start[0] != end[0])
-           {
-            for(let i=startmonth; i<=12; i++)
-            {
-                let days = new Date(Number(start[0]),i,0).getDate();
-                DateArray.push({"year":Number(start[0]),"mon":i,"days":days});
-            }
-
-            for(let i=1; i<=endtmonth; i++)
-            {
-                let days = new Date(Number(end[0]),i,0).getDate();
-                DateArray.push({"year":Number(end[0]),"mon":i,"days":days});
-            }
-           }
+            let start =  startday.split('/');
+            let end =  endday.split('/');
 
            //添加起始月份(如果初始月份扣除小於1)
            if(Number(start[1]) - 1 < 1)
@@ -369,13 +381,9 @@
             let days = new Date(newYear,newMonth,0).getDate();
             DateArray.push({"year":newYear,"mon":newMonth,"days":days});
            }
-
-           console.log(start);
-           console.log(end);
-           console.log(DateArray);
-           //顯示到頁面
-           ShowMonthHTML(DateArray);
-           //console.log(days);
+            console.log(DateArray);
+            //顯示到頁面
+            ShowMonthHTML(DateArray);
         }
 
         //顯示用，顯示月份
