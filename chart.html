@@ -295,7 +295,7 @@
                 {"name":"前期報建1","id":1,"date":"2022-11-08","daynumber":31,"main":true,
                     "List":[
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
-                        {"startday":"2022/02/28","daynumber":30,"id":11,"status":2,"control":true}
+                        {"startday":"2022/02/05","daynumber":31,"id":11,"status":2,"control":true}
                     ]
                 },
                 {"name":"前期報建1","id":2,"date":"2022-11-08","daynumber":31,"main":false,
@@ -305,7 +305,7 @@
                     ]
                 }
             ],
-            "maxstartday": "2022/01/03",
+            "maxstartday": "2022/02/28",
             "maxendday": "2023/12/03",
         };
         //開始時間，與最後結束時間
@@ -575,9 +575,9 @@
 
                     left = oldleft;
                     //如果日期的尾數是30、31減半格
-                    if(Number(datastart[2]) == 30 || Number(datastart[2]) == 31 || Number(datastart[1]) == 2)
+                    if(Number(datastart[2]) == 30 || Number(datastart[2]) == 31 || (Number(datastart[1]) == 2 && Number(datastart[2]) > 24 ))
                     {
-                        left = left-20;
+                        left = left-5;
                     }
 
                     //取得width(利用剛剛得到的日期來計算寬度)
