@@ -21,7 +21,7 @@
         .h_70x{height: 50px!important;}
         .w-20{width: 20%!important;}
         .month_day_title{border-bottom: 1px solid #E5E9F2; height: 51px; position: relative; }
-        .month_day_content{border-bottom: 1px solid #E5E9F2; height: 51px; position: relative; z-index: 4; }
+        .month_day_content{border-bottom: 1px solid #E5E9F2; position: relative; z-index: 4; }
         /* .month_day_title ul{width: 300px;} */
         .month_day_title ul li {width: 40px; height: 40px; text-align: center; z-index: 4;}
         .month_day_content ul li{width: 40px; height: 50px; text-align: center; border-right: 1px solid #E5E9F2;}
@@ -35,12 +35,13 @@
         .table_boxirght{width: 738px;}
         .tablecontent{ background: #F6FEFF; }
         .tablecontent li:nth-of-type(2){border-left: solid 1px #E5E9F2;}
-        .table_boxirght{overflow-x: auto; overflow-y: hidden; padding-bottom: 100px;}
+        .table_boxirght{overflow: hidden;  overflow-x: auto;}
         .monthList{position: relative;}
         .monthList::after{border-left: solid 1px #1E95A7; content: ''; position: absolute; height: 100vh; width: 1px; top:0px; z-index: 10;}
         .monthList p {font-size: 13px; margin-left: 5px;}
         .monthList span {position: relative; z-index: 2;}
         .monthList ul li.Today::after{content: ''; position: absolute; left: 0; top: 18px; width: 40px; height: 100vh; background: #ffd90036; z-index: 1;}
+        .chartStyle{overflow: hidden;}
         .Charts{ width: 40px; height: 20px; margin-bottom: 5px; z-index: 5;}
         .Charts svg{ position:absolute; z-index: 50; width: 100%;}
         .Charts.child{ height: 10px;}
@@ -51,7 +52,7 @@
         .Charts.red{ background: red;}
         .Charts.test{ border: solid 2px red;}
         .Charts.childCharts{ height: 10px; position: absolute; margin-top: 5px; }
-        .chartList{height: 51px; border-bottom: solid 1px #E5E9F2;}
+        .chartList{min-height: 51px; border-bottom: solid 1px #E5E9F2;}
         .bule_border{border-left: solid 1px #1E95A7;}
         /* 顯示隔線 */
         .lattice{ position: absolute; top: 50px; z-index: 2; border-top: 1px solid #E5E9F2;}
@@ -316,6 +317,7 @@
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
                         {"startday":"2023/01/08","daynumber":60,"id":11,"status":2,"control":true ,"linkid":51},
                         {"startday":"2023/02/01","daynumber":20,"id":12,"status":2,"control":false,"child":true,"linkid":21},
+                        {"startday":"2023/03/01","daynumber":20,"id":13,"status":2,"control":false,"child":true,"linkid":0},
                     ]
                 },
                 {"name":"前期報建1","id":2,"date":"2022-11-08","daynumber":31,
@@ -732,16 +734,40 @@
                     `;
                 $(`[data-id="${item.dataid}"]`).append(Html);
             });
-
-
-
-
-
         }
+
+
+        //在頁面高度控制
+        function HeightChange()
+        {
+            //控制單格進度條與左側輸入寬高
+            let chartList = document.querySelectorAll('.chartList');
+            let tablecontent = document.querySelectorAll('.tablecontent li');
+            let heights = [];
+            let check = false;
+            chartList.forEach(item=>{
+                if(item.offsetHeight > 51)
+                {
+                    check = true;
+                }
+            });
+
+            if(check)
+            {
+                let i =0;
+                chartList.forEach(item=>{
+                    tablecontent[i].style.height = item.offsetHeight + "px";
+                    i++;
+                });
+            }
+        }
+
         //在頁面上顯示藍色關聯箭頭
         BlueLinkArrow()
         //在頁面上顯示今天
         ToDayShow();
+        //在頁面高度控制
+        HeightChange()
     </script>
 </body>
 </html>
