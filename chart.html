@@ -20,10 +20,10 @@
         .h_60x{height: 60px!important;}
         .h_70x{height: 50px!important;}
         .w-20{width: 20%!important;}
-        .month_day_title{border-bottom: 1px solid #E5E9F2; height: 51px; position: relative;}
-        .month_day_content{border-bottom: 1px solid #E5E9F2; height: 51px; position: relative;}
+        .month_day_title{border-bottom: 1px solid #E5E9F2; height: 51px; position: relative; }
+        .month_day_content{border-bottom: 1px solid #E5E9F2; height: 51px; position: relative; z-index: 4; }
         /* .month_day_title ul{width: 300px;} */
-        .month_day_title ul li {width: 40px; height: 40px; text-align: center;}
+        .month_day_title ul li {width: 40px; height: 40px; text-align: center; z-index: 4;}
         .month_day_content ul li{width: 40px; height: 50px; text-align: center; border-right: 1px solid #E5E9F2;}
 
         .tabletitle,.tablecontent{ display: flex; align-items: center; border-bottom: solid 1px #E5E9F2;}
@@ -39,7 +39,8 @@
         .monthList{position: relative;}
         .monthList::after{border-left: solid 1px #1E95A7; content: ''; position: absolute; height: 100vh; width: 1px; top:0px; z-index: 10;}
         .monthList p {font-size: 13px; margin-left: 5px;}
-        .monthList ul li.Today::after{content: ''; position: absolute; left: 0; top: 18px; width: 40px; height: 100vh; background: #ffcd002b; z-index: 1;}
+        .monthList span {position: relative; z-index: 2;}
+        .monthList ul li.Today::after{content: ''; position: absolute; left: 0; top: 18px; width: 40px; height: 100vh; background: #ffd90036; z-index: 1;}
         .Charts{ position: relative; width: 40px; height: 20px; margin-bottom: 5px; z-index: 5;}
         .Charts svg{ position: relative; z-index: 50;}
         .Charts.child{ height: 10px;}
@@ -49,11 +50,12 @@
         .Charts.green{ border: solid 2px #48B461;}
         .Charts.red{ background: red;}
         .Charts.childCharts{ height: 10px; position: absolute; margin-top: 5px; }
-        .chartList{height: 51px; background: #F6FEFF; position: relative; border-bottom: solid 1px #E5E9F2;}
+        .chartList{height: 51px; position: relative; border-bottom: solid 1px #E5E9F2;}
         .bule_border{border-left: solid 1px #1E95A7;}
         /* 顯示隔線 */
-        .lattice{ position: absolute; top: 50px; z-index: 2;}
+        .lattice{ position: absolute; top: 50px; z-index: 2; border-top: 1px solid #E5E9F2;}
         .lattice ul li{ width: 40px; height: 100vh; border-right: solid 1px #E5E9F2;}
+        .lattice ul{ background:#F6FEFF;}
         /* 箭頭顏色 */
         .arrowBoder {stroke:#084cc9; fill:steelblue; stroke-width:4;}
         .SvgBoder {stroke:#084cc9; stroke-width:1;}
@@ -293,26 +295,27 @@
         //json
         let ChartAll = {
             "chartdata":[
-                {"name":"前期報建1","id":1,"date":"2022-11-08","daynumber":31,
+                {"name":"前期報建1","id":1,"date":"2023-01-08","daynumber":31,
                     "List":[
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
-                        {"startday":"2022/02/05","daynumber":31,"id":11,"status":2,"control":true ,"linkid":21},
-                        {"startday":"2022/03/01","daynumber":20,"id":11,"status":3,"control":false,"child":true},
+                        {"startday":"2023/01/08","daynumber":60,"id":11,"status":2,"control":true ,"linkid":21},
+                        {"startday":"2023/02/01","daynumber":20,"id":12,"status":3,"control":false,"child":true,"linkid":0},
                     ]
                 },
                 {"name":"前期報建1","id":2,"date":"2022-11-08","daynumber":31,
                     "List":[
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
-                        {"startday":"2022/02/10","daynumber":18,"id":21,"status":2,"control":false ,"linkid":0},
+                        {"startday":"2023/01/10","daynumber":18,"id":21,"status":2,"control":false ,"linkid":0},
                     ]
                 }
             ],
-            "maxstartday": "2022/02/28",
+            "maxstartday": "2023/01/28",
             "maxendday": "2023/12/03",
         };
         //開始時間，與最後結束時間
         let startday = ChartAll.maxstartday;
         let endday = ChartAll.maxendday;
+
         //時間區塊
         FindMonthDate(startday,endday);
 
@@ -355,6 +358,7 @@
         //日期(預計接收項目：maxstartday最早日期,maxendday最晚日期)
         function FindMonthDate(startday,endday)
         {
+            //尋找範圍內的月份
             let Findscope = FindDate(startday,endday);
             let DateArray = [];
             //拆解所有月份，取得天數
@@ -404,16 +408,8 @@
             DateArray.push({"year":newYear,"mon":newMonth,"days":days});
            }
             //console.log(DateArray);
-            //顯示到頁面
+            //顯示到頁面，顯示月份與格線
             ShowMonthHTML(DateArray);
-        }
-        //增加天數
-        function AddToDay(days,datastart)
-        {
-            //添加的天數量(幾天工作天)
-            var result = new Date(datastart);
-            result.setDate(result.getDate() + days);
-            return result;
         }
 
         //顯示到頁面，顯示月份與格線
@@ -431,7 +427,7 @@
                     if(Number.isInteger(j/5))
                     {
                         SumDays++;
-                        lihtml+= `<li>${j}</li>`;
+                        lihtml+= `<li><span>${j}</span></li>`;
                     }
                 }
 
@@ -535,7 +531,7 @@
 
                     //抓json開始日期
                     let datastart_day = Chartjson[i].List[j].startday;
-                    console.log(datastart_day);
+                    //console.log(datastart_day);
                     let datastart = datastart_day.split('/');
 
                     //偵錯
@@ -575,8 +571,8 @@
                     //還要再加上當月的起始日期(例如:8/11，目前已經移動到8月，但還有11天才是開始日)
                     let oldDayNumber = Math.floor(Number(datastart[2]) / 5) == 0 ? 0.5: Math.floor(Number(datastart[2]) / 5);
                     oldleft = (oldleft+oldDayNumber)*40;
-                    console.log("//一個是40px(加入開始天數)");
-                    console.log(oldleft);
+                    // console.log("//一個是40px(加入開始天數)");
+                    // console.log(oldleft);
 
                     left = oldleft;
                     //如果日期的尾數是30、31減半格
@@ -596,7 +592,7 @@
                     // console.log('width');
                     // console.log(width);
                     childHtml += `
-                        <div class="Charts ${ color }" style="margin-left: ${left}px; width: ${width}px;"></div>
+                        <div class="Charts ${ color }" style="margin-left: ${left}px; width: ${width}px;" data-id="${Chartjson[i].List[j].id}"></div>
                     `;
                 }
 
@@ -605,12 +601,37 @@
                 `;
                 //每次填完都清空長條圖
                 childHtml = '';
-
-
             }
             //console.log(Chartjson);
             $('[data-id="month_day_content"]').append(Html);
         }
+
+        //在頁面上顯示今天
+        function ToDayShow()
+        {
+            //抓出今天
+            let Dates = new Date();
+            let Years = Dates.getFullYear();
+            let Months = Dates.getMonth()+1;
+            let Days = Dates.getDate();
+
+            //尋找頁面上的今天
+            if(document.querySelector(`[data-day="${Years}/${Months}"]`))
+            {
+                let monthbox = document.querySelector(`[data-day="${Years}/${Months}"]`);
+                let monthList = monthbox.querySelectorAll('li');
+                let DayNum = Math.floor(Days/5);
+                monthList[DayNum].classList.add('Today');
+            }
+
+            console.log(Dates);
+            console.log(Years);
+            console.log(Months);
+            console.log(Days);
+        }
+
+        //在頁面上顯示今天
+        ToDayShow();
     </script>
 </body>
 </html>
