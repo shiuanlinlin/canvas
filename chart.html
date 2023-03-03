@@ -33,16 +33,19 @@
         .table_box{display: flex; overflow: hidden;}
         .table_boxleft{width: 50%;}
         .table_boxirght{width: 738px;}
-        .tablecontent{ background: #F6FEFF; }
-        .tablecontent li:nth-of-type(2){border-left: solid 1px #E5E9F2;}
+        .tablecontent{ background: #F6FEFF;}
+        .tablecontent li:nth-of-type(2){border-left: solid 1px #E5E9F2; justify-content: center;}
+        .tablecontent li:nth-of-type(3){justify-content: center;}
+        .tablecontent li {display: flex; align-items: center;}
         .table_boxirght{overflow: hidden;  overflow-x: auto;}
         .monthList{position: relative;}
-        .monthList::after{border-left: solid 1px #1E95A7; content: ''; position: absolute; height: 100vh; width: 1px; top:0px; z-index: 10;}
+        .monthList::after{border-left: solid 1px #1E95A7; content: ''; position: absolute; height: 100vh; width: 1px; top:0px; z-index: 2;}
         .monthList p {font-size: 13px; margin-left: 5px;}
         .monthList span {position: relative; z-index: 2;}
         .monthList ul li.Today::after{content: ''; position: absolute; left: 0; top: 18px; width: 40px; height: 100vh; background: #ffd90036; z-index: 1;}
         .chartStyle{overflow: hidden;}
-        .Charts{ width: 40px; height: 20px; margin-bottom: 5px; z-index: 5;}
+        .Charts{ width: 40px; height: 20px; margin-bottom: 5px; padding-top: 5px;}
+        .Charts .Charts { height: 10px;}
         .Charts svg{ position:absolute; z-index: 50; width: 100%;}
         .Charts.child{ height: 10px;}
         .Charts.orange{ background: rgb(255, 123, 0);}
@@ -113,7 +116,7 @@
                                     <!-- 上半部End -->
                                     <!-- 進度條表格 -->
                                     <div class="mt-2 table_box">
-                                        <div class="table_boxleft">
+                                        <div class="table_boxleft" data-id="table_boxleft">
                                             <!-- table_boxleft -->
                                             <ul class="tabletitle">
                                                 <li>
@@ -127,36 +130,38 @@
                                                 <li>開始日期</li>
                                                 <li>天數</li>
                                             </ul>
-                                            <ul class="tablecontent">
-                                                <li><b>前期報建</b></li>
-                                                <li>2022-11-08</li>
-                                                <li>31天</li>
-                                            </ul>
-                                            <ul class="tablecontent">
-                                                <li>立項批文</li>
-                                                <li>2022-11-08</li>
-                                                <li>31天</li>
-                                            </ul>
-                                            <ul class="tablecontent">
-                                                <li><b>前期報建</b></li>
-                                                <li>2022-11-08</li>
-                                                <li>31天</li>
-                                            </ul>
-                                            <ul class="tablecontent">
-                                                <li><b>前期報建</b></li>
-                                                <li>2022-11-08</li>
-                                                <li>31天</li>
-                                            </ul>
-                                            <ul class="tablecontent">
-                                                <li><b>前期報建</b></li>
-                                                <li>2022-11-08</li>
-                                                <li>31天</li>
-                                            </ul>
-                                            <ul class="tablecontent">
-                                                <li><b>前期報建</b></li>
-                                                <li>2022-11-08</li>
-                                                <li>31天</li>
-                                            </ul>
+                                            <div class="table_contentbox" data-id="table_contentbox">
+                                                <ul class="tablecontent">
+                                                    <li><b>前期報建</b></li>
+                                                    <li>2022-11-08</li>
+                                                    <li>31天</li>
+                                                </ul>
+                                                <ul class="tablecontent">
+                                                    <li>立項批文</li>
+                                                    <li>2022-11-08</li>
+                                                    <li>31天</li>
+                                                </ul>
+                                                <ul class="tablecontent">
+                                                    <li><b>前期報建</b></li>
+                                                    <li>2022-11-08</li>
+                                                    <li>31天</li>
+                                                </ul>
+                                                <ul class="tablecontent">
+                                                    <li><b>前期報建</b></li>
+                                                    <li>2022-11-08</li>
+                                                    <li>31天</li>
+                                                </ul>
+                                                <ul class="tablecontent">
+                                                    <li><b>前期報建</b></li>
+                                                    <li>2022-11-08</li>
+                                                    <li>31天</li>
+                                                </ul>
+                                                <ul class="tablecontent">
+                                                    <li><b>前期報建</b></li>
+                                                    <li>2022-11-08</li>
+                                                    <li>31天</li>
+                                                </ul>
+                                            </div>
                                             <!-- table_boxleft End-->
                                         </div>
                                         <div class="table_boxirght" data-id="table_boxirght">
@@ -312,39 +317,46 @@
         //json
         let ChartAll = {
             "chartdata":[
-                {"name":"前期報建1","id":1,"date":"2023-01-08","daynumber":31,
+                //"control":true 控制項，判斷粗體字
+                {"name":"前期報建1","id":1,"date":"2023-01-08","daynumber":31,"control":true,
                     "List":[
+                        //"List"
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
-                        {"startday":"2023/01/08","daynumber":60,"id":11,"status":2,"control":true ,"linkid":51},
-                        {"startday":"2023/02/01","daynumber":20,"id":12,"status":2,"control":false,"child":true,"linkid":21},
-                        {"startday":"2023/03/01","daynumber":20,"id":13,"status":2,"control":false,"child":true,"linkid":0},
+                        //"control":true 控制項，目前無用途
+                        //"child":true, 子項目，顯示在(2.藍色進度計畫)裡面的進度條
+                        {"startday":"2023/01/08","daynumber":60,"id":11,"status":2,"control":true ,"child":false,"linkid":12},
+                        {"startday":"2023/02/01","daynumber":20,"id":12,"status":2,"control":false,"child":false,"linkid":21},
+                        {"startday":"2023/03/01","daynumber":20,"id":13,"status":2,"control":false,"child":false,"linkid":0},
+                        {"startday":"2023/01/08","daynumber":90,"id":14,"status":4,"control":false,"child":true,"linkid":0,"childlinkid":11},
+                        {"startday":"2023/02/01/","daynumber":10,"id":15,"status":5,"control":false,"child":true,"linkid":0,"childlinkid":12},
+                        {"startday":"2023/02/21/","daynumber":16,"id":16,"status":3,"control":false,"child":false,"linkid":0},
                     ]
                 },
-                {"name":"前期報建1","id":2,"date":"2022-11-08","daynumber":31,
+                {"name":"前期報建2","id":2,"date":"2022-11-08","daynumber":31,"control":false,
                     "List":[
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
                         {"startday":"2023/01/10","daynumber":18,"id":21,"status":2,"control":false ,"linkid":31},
                     ]
                 },
-                {"name":"前期報建1","id":3,"date":"2022-11-08","daynumber":31,
+                {"name":"前期報建3","id":3,"date":"2022-11-08","daynumber":31,"control":false,
                     "List":[
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
                         {"startday":"2023/03/10","daynumber":18,"id":31,"status":2,"control":false ,"linkid":41},
                     ]
                 },
-                {"name":"前期報建1","id":4,"date":"2022-11-08","daynumber":31,
+                {"name":"前期報建4","id":4,"date":"2022-11-08","daynumber":31,"control":false,
                     "List":[
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
                         {"startday":"2023/02/20","daynumber":18,"id":41,"status":2,"control":false ,"linkid":0},
                     ]
                 },
-                {"name":"前期報建1","id":4,"date":"2022-11-08","daynumber":31,
+                {"name":"前期報建5","id":4,"date":"2022-11-08","daynumber":31,"control":true,
                     "List":[
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
                         {"startday":"2023/01/05","daynumber":10,"id":51,"status":2,"control":false ,"linkid":61},
                     ]
                 },
-                {"name":"前期報建1","id":4,"date":"2022-11-08","daynumber":31,
+                {"name":"前期報建6","id":4,"date":"2022-11-08","daynumber":31,"control":false,
                     "List":[
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
                         {"startday":"2023/01/15","daynumber":18,"id":61,"status":2,"control":false ,"linkid":0},
@@ -358,8 +370,41 @@
         let startday = ChartAll.maxstartday;
         let endday = ChartAll.maxendday;
 
+        //載入左側工程進度表
+        LoadLeftData();
+
         //時間區塊
         FindMonthDate(startday,endday);
+
+        //載入左側工程進度表
+        function LoadLeftData()
+        {
+            $('[data-id="table_contentbox"]').html("");
+            let table_boxleft = document.querySelector('[data-id="table_boxleft"]');
+            let Chartjson = ChartAll.chartdata;
+            let Html = "";
+            let ChildHtml = "";
+            for(let i=0; i<Chartjson.length; i++)
+            {
+                ChildHtml = `
+                    <li> ${ Chartjson[i].control == true ? `<b> ${Chartjson[i].name} </b>` :  Chartjson[i].name }</li>
+                    <li> ${Chartjson[i].date}</li>
+                    <li> ${Chartjson[i].daynumber}</li>
+                `;
+
+                Html += `
+                    <ul class="tablecontent">
+                        ${ChildHtml}
+                    </ul>
+                `;
+                ChildHtml = "";
+
+            }
+            $('[data-id="table_contentbox"]').append(Html);
+            console.log(Html);
+            console.log(Chartjson);
+        }
+
 
         //尋找範圍內的月份
         //有參考：
@@ -534,108 +579,111 @@
             {
                 for(let j=0; j<Chartjson[i].List.length; j++)
                 {
-                    let color = '';
-                    switch(Chartjson[i].List[j].status)
+                    if(Chartjson[i].List[j].child != true)
                     {
-                        case 1:
-                            color = "green";
-                            break;
-                        case 2:
-                            color = "blue";
-                            break;
-                        case 3:
-                            color = "orange";
-                            break;
-                        case 4:
-                            color = "blak";
-                            break;
-                        case 5:
-                            color = "red";
-                            break;
-                        default:
-                            //偵錯專用
-                            color = "test";
-                            break;
-                    }
+                        let color = '';
+                        switch(Chartjson[i].List[j].status)
+                        {
+                            case 1:
+                                color = "green";
+                                break;
+                            case 2:
+                                color = "blue";
+                                break;
+                            case 3:
+                                color = "orange";
+                                break;
+                            case 4:
+                                color = "blak";
+                                break;
+                            case 5:
+                                color = "red";
+                                break;
+                            default:
+                                //偵錯專用
+                                color = "test";
+                                break;
+                        }
 
-                    //抓取前一個月的li數量(計算頁面的格子數)
-                    let monthLists = document.querySelectorAll('[data-id="monthList"]');
-                    let lis = monthLists[0].querySelectorAll('li');
-                    let start_day = monthLists[0].dataset.day;
-                    let start = start_day.split('/');
+                        //抓取前一個月的li數量(計算頁面的格子數)
+                        let monthLists = document.querySelectorAll('[data-id="monthList"]');
+                        let lis = monthLists[0].querySelectorAll('li');
+                        let start_day = monthLists[0].dataset.day;
+                        let start = start_day.split('/');
 
-                    //偵錯
-                    if(start.length < 1)
-                    {
-                        console.error("可能沒有抓到頁面上的日期，也可能 start_day.split('/') 出錯");
+                        //偵錯
+                        if(start.length < 1)
+                        {
+                            console.error("可能沒有抓到頁面上的日期，也可能 start_day.split('/') 出錯");
+                            return false
+                        }
+
+                        //抓json開始日期
+                        let datastart_day = Chartjson[i].List[j].startday;
+                        //console.log(datastart_day);
+                        let datastart = datastart_day.split('/');
+
+                        //偵錯
+                        if(datastart.length < 1)
+                        {
+                            console.error("可能沒有抓到json日期，也可能 datastart_day.split('/') 出錯");
+                            return false
+                        }
+                        //將日期組合
+                        let oldday = datastart[0]+"-"+datastart[1]+"-"+datastart[2];
+
+                        //先尋找起始日
+                        let oldtxt = datastart[0]+"/"+Number(datastart[1]);
+                        let oldindex = $.map(monthLists, function(item, index) {
+                            return item.dataset.day;
+                        }).indexOf(oldtxt);
+
+                        //偵錯
+                        if(oldindex == -1)
+                        {
+                        consle.error("在尋找頁面上的月份有 " + oldtxt + " 出現錯誤 ， ChartShowHtml()");
                         return false
+                        }
+
+                        //尋找到起始日要多少寬度
+                        let oldleft = 0;
+                        //利用算出的相距格數，取得let
+                        for(let i=0; i<oldindex; i++)
+                        {
+                            let length = monthLists[i].querySelectorAll('li').length;
+                            oldleft = oldleft+length;
+                        }
+
+                        // console.log("//先尋找起始日");
+                        // console.log(oldleft);
+
+                        //還要再加上當月的起始日期(例如:8/11，目前已經移動到8月，但還有11天才是開始日)
+                        let oldDayNumber = Math.floor(Number(datastart[2]) / 5) == 0 ? 0.5: Math.floor(Number(datastart[2]) / 5);
+                        oldleft = (oldleft+oldDayNumber)*40;
+                        // console.log("//一個是40px(加入開始天數)");
+                        // console.log(oldleft);
+
+                        left = oldleft;
+                        //如果日期的尾數是30、31減半格
+                        if(Number(datastart[2]) == 30 || Number(datastart[2]) == 31 || (Number(datastart[1]) == 2 && Number(datastart[2]) > 24 ))
+                        {
+                            left = left-5;
+                        }
+
+                        //取得width(利用剛剛得到的日期來計算寬度)
+                        let ChartAddDay = Chartjson[i].List[j].daynumber;
+                        let Days = ChartAddDay / 5;
+
+                        //寬度，如果未整除，就添加半格
+                        let width = Days*40;
+                        // console.log('left');
+                        // console.log(left);
+                        // console.log('width');
+                        // console.log(width);
+                        childHtml += `
+                            <div class="Charts ${ color }" style="margin-left: ${left}px; width: ${width}px;" data-id="${Chartjson[i].List[j].id}" data-linkid="${Chartjson[i].List[j].linkid}"></div>
+                        `;
                     }
-
-                    //抓json開始日期
-                    let datastart_day = Chartjson[i].List[j].startday;
-                    //console.log(datastart_day);
-                    let datastart = datastart_day.split('/');
-
-                    //偵錯
-                    if(datastart.length < 1)
-                    {
-                        console.error("可能沒有抓到json日期，也可能 datastart_day.split('/') 出錯");
-                        return false
-                    }
-                    //將日期組合
-                    let oldday = datastart[0]+"-"+datastart[1]+"-"+datastart[2];
-
-                    //先尋找起始日
-                    let oldtxt = datastart[0]+"/"+Number(datastart[1]);
-                    let oldindex = $.map(monthLists, function(item, index) {
-                        return item.dataset.day;
-                    }).indexOf(oldtxt);
-
-                    //偵錯
-                    if(oldindex == -1)
-                    {
-                       consle.error("在尋找頁面上的月份有 " + oldtxt + " 出現錯誤 ， ChartShowHtml()");
-                       return false
-                    }
-
-                    //尋找到起始日要多少寬度
-                    let oldleft = 0;
-                    //利用算出的相距格數，取得let
-                    for(let i=0; i<oldindex; i++)
-                    {
-                        let length = monthLists[i].querySelectorAll('li').length;
-                        oldleft = oldleft+length;
-                    }
-
-                    // console.log("//先尋找起始日");
-                    // console.log(oldleft);
-
-                    //還要再加上當月的起始日期(例如:8/11，目前已經移動到8月，但還有11天才是開始日)
-                    let oldDayNumber = Math.floor(Number(datastart[2]) / 5) == 0 ? 0.5: Math.floor(Number(datastart[2]) / 5);
-                    oldleft = (oldleft+oldDayNumber)*40;
-                    // console.log("//一個是40px(加入開始天數)");
-                    // console.log(oldleft);
-
-                    left = oldleft;
-                    //如果日期的尾數是30、31減半格
-                    if(Number(datastart[2]) == 30 || Number(datastart[2]) == 31 || (Number(datastart[1]) == 2 && Number(datastart[2]) > 24 ))
-                    {
-                        left = left-5;
-                    }
-
-                    //取得width(利用剛剛得到的日期來計算寬度)
-                    let ChartAddDay = Chartjson[i].List[j].daynumber;
-                    let Days = ChartAddDay / 5;
-
-                    //寬度，如果未整除，就添加半格
-                    let width = Days*40;
-                    // console.log('left');
-                    // console.log(left);
-                    // console.log('width');
-                    // console.log(width);
-                    childHtml += `
-                        <div class="Charts ${ color }" style="margin-left: ${left}px; width: ${width}px;" data-id="${Chartjson[i].List[j].id}" data-linkid="${Chartjson[i].List[j].linkid}"></div>
-                    `;
                 }
 
                 Html += `
@@ -664,6 +712,67 @@
                 let monthList = monthbox.querySelectorAll('li');
                 let DayNum = Math.floor(Days/5);
                 monthList[DayNum].classList.add('Today');
+            }
+        }
+
+        //在頁面上顯示已完成與進行中
+        function DoingOrFinishChildChart()
+        {
+            let Chartjson = ChartAll.chartdata;
+
+            for(let i=0; i<Chartjson.length; i++)
+            {
+                for(let j=0; j<Chartjson[i].List.length; j++)
+                {
+                    if(Chartjson[i].List[j].child && Chartjson[i].List[j].child == true)
+                    {
+                        let linkid = Chartjson[i].List[j].childlinkid;
+                        let month_day_content  = document.querySelector('[data-id="month_day_content"]');
+                        let Charts = month_day_content.querySelector(`[data-id="${linkid}"]`);
+                        if(!Charts)
+                        {
+                            console.error(`找不到 .month_day_content 內的 [data-id="${linkid}"]`);
+                            return false;
+                        }
+
+                        //顏色
+                        let color = '';
+                        switch(Chartjson[i].List[j].status)
+                        {
+                            case 1:
+                                color = "green";
+                                break;
+                            case 2:
+                                color = "blue";
+                                break;
+                            case 3:
+                                color = "orange";
+                                break;
+                            case 4:
+                                color = "blak";
+                                break;
+                            case 5:
+                                color = "red";
+                                break;
+                            default:
+                                //偵錯專用
+                                color = "test";
+                                break;
+                        }
+
+                        //寬度計算
+                        let Days = Chartjson[i].List[j].daynumber;
+                        let sum = Math.floor(Days/5)*40;
+                        let html = `
+                            <div class="Charts ${color}" style="width: ${sum}px;"></div>
+                        `;
+
+                        $(`[data-id="${linkid}"]`).append(html);
+
+                    }
+
+                }
+
             }
         }
 
@@ -762,12 +871,16 @@
             }
         }
 
+
+
+        //在頁面上顯示已完成與進行中
+        DoingOrFinishChildChart();
         //在頁面上顯示藍色關聯箭頭
-        BlueLinkArrow()
+        BlueLinkArrow();
         //在頁面上顯示今天
         ToDayShow();
         //在頁面高度控制
-        HeightChange()
+        HeightChange();
     </script>
 </body>
 </html>
