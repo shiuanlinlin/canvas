@@ -316,6 +316,58 @@
         </div>
     </div>
     <script>
+        //json 範例
+        // let ChartAll = {
+        //     "chartdata":[
+        //         //"control":true 控制項，判斷粗體字
+        //         {"name":"前期報建1","id":1,"date":"2023-01-08","daynumber":31,"control":true,
+        //             "List":[
+        //                 //"List"
+        //                 //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
+        //                 //"control":true 控制項，目前無用途
+        //                 //"child":true, 子項目，顯示在(2.藍色進度計畫)裡面的進度條
+        //                 {"startday":"2023/01/08","daynumber":60,"id":11,"status":2,"control":true ,"child":false,"linkid":12},
+        //                 {"startday":"2023/02/01","daynumber":20,"id":12,"status":2,"control":false,"child":false,"linkid":21},
+        //                 {"startday":"2023/03/01","daynumber":20,"id":13,"status":2,"control":false,"child":false,"linkid":0},
+        //                 {"startday":"2023/01/08","daynumber":90,"id":14,"status":4,"control":false,"child":true,"linkid":0,"childlinkid":11},
+        //                 {"startday":"2023/02/01/","daynumber":10,"id":15,"status":5,"control":false,"child":true,"linkid":0,"childlinkid":12},
+        //                 {"startday":"2023/02/21/","daynumber":16,"id":16,"status":3,"control":false,"child":false,"linkid":0},
+        //             ]
+        //         },
+        //         {"name":"前期報建2","id":2,"date":"2022-11-08","daynumber":31,"control":false,
+        //             "List":[
+        //                 //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
+        //                 {"startday":"2023/01/10","daynumber":18,"id":21,"status":2,"control":false ,"linkid":31},
+        //             ]
+        //         },
+        //         {"name":"前期報建3","id":3,"date":"2022-11-08","daynumber":31,"control":false,
+        //             "List":[
+        //                 //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
+        //                 {"startday":"2023/03/10","daynumber":18,"id":31,"status":2,"control":false ,"linkid":41},
+        //             ]
+        //         },
+        //         {"name":"前期報建4","id":4,"date":"2022-11-08","daynumber":31,"control":false,
+        //             "List":[
+        //                 //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
+        //                 {"startday":"2023/02/20","daynumber":18,"id":41,"status":2,"control":false ,"linkid":0},
+        //             ]
+        //         },
+        //         {"name":"前期報建5","id":4,"date":"2022-11-08","daynumber":31,"control":true,
+        //             "List":[
+        //                 //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
+        //                 {"startday":"2023/01/05","daynumber":10,"id":51,"status":2,"control":false ,"linkid":61},
+        //             ]
+        //         },
+        //         {"name":"前期報建6","id":4,"date":"2022-11-08","daynumber":31,"control":false,
+        //             "List":[
+        //                 //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
+        //                 {"startday":"2023/01/15","daynumber":18,"id":61,"status":2,"control":false ,"linkid":0},
+        //             ]
+        //         }
+        //     ],
+        //     "maxstartday": "2023/01/28",
+        //     "maxendday": "2023/12/03",
+        // };
         //json
         let ChartAll = {
             "chartdata":[
@@ -326,12 +378,7 @@
                         //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
                         //"control":true 控制項，目前無用途
                         //"child":true, 子項目，顯示在(2.藍色進度計畫)裡面的進度條
-                        {"startday":"2023/01/08","daynumber":60,"id":11,"status":2,"control":true ,"child":false,"linkid":12},
-                        {"startday":"2023/02/01","daynumber":20,"id":12,"status":2,"control":false,"child":false,"linkid":21},
-                        {"startday":"2023/03/01","daynumber":20,"id":13,"status":2,"control":false,"child":false,"linkid":0},
-                        {"startday":"2023/01/08","daynumber":90,"id":14,"status":4,"control":false,"child":true,"linkid":0,"childlinkid":11},
-                        {"startday":"2023/02/01/","daynumber":10,"id":15,"status":5,"control":false,"child":true,"linkid":0,"childlinkid":12},
-                        {"startday":"2023/02/21/","daynumber":16,"id":16,"status":3,"control":false,"child":false,"linkid":0},
+                        {"startday":"2023/01/08","daynumber":60,"id":11,"status":2,"control":true ,"child":false,"linkid":21},
                     ]
                 },
                 {"name":"前期報建2","id":2,"date":"2022-11-08","daynumber":31,"control":false,
@@ -340,30 +387,6 @@
                         {"startday":"2023/01/10","daynumber":18,"id":21,"status":2,"control":false ,"linkid":31},
                     ]
                 },
-                {"name":"前期報建3","id":3,"date":"2022-11-08","daynumber":31,"control":false,
-                    "List":[
-                        //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
-                        {"startday":"2023/03/10","daynumber":18,"id":31,"status":2,"control":false ,"linkid":41},
-                    ]
-                },
-                {"name":"前期報建4","id":4,"date":"2022-11-08","daynumber":31,"control":false,
-                    "List":[
-                        //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
-                        {"startday":"2023/02/20","daynumber":18,"id":41,"status":2,"control":false ,"linkid":0},
-                    ]
-                },
-                {"name":"前期報建5","id":4,"date":"2022-11-08","daynumber":31,"control":true,
-                    "List":[
-                        //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
-                        {"startday":"2023/01/05","daynumber":10,"id":51,"status":2,"control":false ,"linkid":61},
-                    ]
-                },
-                {"name":"前期報建6","id":4,"date":"2022-11-08","daynumber":31,"control":false,
-                    "List":[
-                        //status: 1.原始計畫進度 2.藍色進度計畫 3.實際進度 4.完成進度
-                        {"startday":"2023/01/15","daynumber":18,"id":61,"status":2,"control":false ,"linkid":0},
-                    ]
-                }
             ],
             "maxstartday": "2023/01/28",
             "maxendday": "2023/12/03",
